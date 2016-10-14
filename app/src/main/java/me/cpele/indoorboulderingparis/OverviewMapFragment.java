@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
-public class MapFragment extends SupportMapFragment implements OnMapReadyCallback {
+public class OverviewMapFragment extends MapFragment implements OnMapReadyCallback {
 
     @Override
     public void onAttach(Activity activity) {
