@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "me.cpele.indoorboulderingparis"
         minSdkVersion 15
@@ -11,11 +11,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/15862328cd35e8cb60af835bdc28c9a1/raw/6bfe3ce75507174907a446eb220f6d09a4ea17f4/places.json"')
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        development {
+            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
+        }
+        production {
+            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
         }
     }
 }
@@ -27,6 +39,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     compile 'com.google.code.gson:gson:2.7'
 

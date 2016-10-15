@@ -4,21 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 public class PlacesActivity extends Activity {
 
-    private Gson gson;
+    private static final String TAG = PlacesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,24 +33,37 @@ public class PlacesActivity extends Activity {
 
         RecyclerView placesRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
 
-        gson = new Gson();
-        InputStream inputStream = getResources().openRawResource(R.raw.places);
-        InputStreamReader reader = new InputStreamReader(inputStream);
-        PlaceList placeList = gson.fromJson(reader, PlaceList.class);
-
-        PlacesAdapter adapter = new PlacesAdapter(placeList.getPlaces());
+        final PlacesAdapter adapter = new PlacesAdapter();
         placesRecyclerView.setAdapter(adapter);
         placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.PLACES_API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PlacesService placesService = retrofit.create(PlacesService.class);
+
+        placesService.findAll().enqueue(new Callback<PlaceList>() {
+
+            @Override
+            public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
+
+                adapter.addAll(response.body().getPlaces());
+            }
+
+            @Override
+            public void onFailure(Call<PlaceList> call, Throwable t) {
+
+                Toast.makeText(PlacesActivity.this, "Error getting places", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Error getting places", t);
+            }
+        });
     }
 
     private class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
-        private final List<Place> mPlaces;
-
-        PlacesAdapter(List<Place> places) {
-
-            mPlaces = places;
-        }
+        private List<Place> places = new ArrayList<>();
 
         @Override
         public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,7 +76,7 @@ public class PlacesActivity extends Activity {
         @Override
         public void onBindViewHolder(PlaceViewHolder holder, int position) {
 
-            Place place = mPlaces.get(position);
+            Place place = places.get(position);
 
             TextView nameTextView = (TextView) holder.itemView.findViewById(R.id.place_item_tv_name);
             nameTextView.setText(place.getName());
@@ -69,7 +87,12 @@ public class PlacesActivity extends Activity {
 
         @Override
         public int getItemCount() {
-            return mPlaces.size();
+            return places.size();
+        }
+
+        void addAll(List<Place> places) {
+            this.places.addAll(places);
+            notifyDataSetChanged();
         }
     }
 
@@ -78,5 +101,11 @@ public class PlacesActivity extends Activity {
         PlaceViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    private interface PlacesService {
+
+        @GET(BuildConfig.PLACES_API_PATH)
+        Call<PlaceList> findAll();
     }
 }
