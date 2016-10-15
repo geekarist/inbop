@@ -12,7 +12,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/15862328cd35e8cb60af835bdc28c9a1/raw/6bfe3ce75507174907a446eb220f6d09a4ea17f4/places.json"')
+        buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
     }
 
     buildTypes {
@@ -42,6 +42,8 @@ dependencies {
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    compile 'com.github.bumptech.glide:glide:3.6.1'
 
     compile 'com.google.code.gson:gson:2.7'
 

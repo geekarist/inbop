@@ -23,14 +23,8 @@ class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
     @Override
     public void onBindViewHolder(PlaceViewHolder holder, int position) {
-
         Place place = places.get(position);
-
-        TextView nameTextView = (TextView) holder.itemView.findViewById(R.id.place_item_tv_name);
-        nameTextView.setText(place.getName());
-
-        TextView cityTextView = (TextView) holder.itemView.findViewById(R.id.place_item_tv_city);
-        cityTextView.setText(place.getCity());
+        holder.bind(place);
     }
 
     @Override
