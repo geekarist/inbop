@@ -1,19 +1,19 @@
 package me.cpele.indoorboulderingparis;
 
 class Place {
-    private final String mName;
-    private final String mCity;
+    private final String name;
+    private final String city;
 
-    Place(String mName, String mCity) {
-        this.mName = mName;
-        this.mCity = mCity;
+    Place(String name, String city) {
+        this.name = name;
+        this.city = city;
     }
 
     String getName() {
-        return mName;
+        return name;
     }
 
     String getCity() {
-        return mCity;
+        return city;
     }
 }

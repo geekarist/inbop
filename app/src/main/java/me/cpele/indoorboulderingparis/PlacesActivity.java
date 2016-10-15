@@ -9,10 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
 public class PlacesActivity extends Activity {
+
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +28,12 @@ public class PlacesActivity extends Activity {
 
         RecyclerView placesRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
 
-        List<Place> places = Arrays.asList(
-                new Place("Antrebloc", "Villejuif"),
-                new Place("Arkose", "Montreuil"),
-                new Place("Hardbloc", "Alfortville"));
+        gson = new Gson();
+        InputStream inputStream = getResources().openRawResource(R.raw.places);
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        PlaceList placeList = gson.fromJson(reader, PlaceList.class);
 
-        PlacesAdapter adapter = new PlacesAdapter(places);
+        PlacesAdapter adapter = new PlacesAdapter(placeList.getPlaces());
         placesRecyclerView.setAdapter(adapter);
         placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
