@@ -1,19 +1,18 @@
 package me.cpele.indoorboulderingparis;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PlacesActivity extends Activity {
+public class PlacesActivity extends AppCompatActivity {
 
     private static final String TAG = PlacesActivity.class.getSimpleName();
 
@@ -22,6 +21,9 @@ public class PlacesActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_places);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.places_tb);
+        setSupportActionBar(toolbar);
 
         RecyclerView placesRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
 
