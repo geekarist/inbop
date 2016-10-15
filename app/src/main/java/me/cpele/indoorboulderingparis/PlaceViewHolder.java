@@ -25,6 +25,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
         String url = BuildConfig.PLACES_API_BASE_URL + place.getImgUrl();
         Glide.with(itemView.getContext())
                 .load(url)
+                .centerCrop()
                 .into(imageView);
     }
 }
