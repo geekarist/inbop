@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_place_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item, parent, false);
 
         return new PlaceViewHolder(view);
     }
