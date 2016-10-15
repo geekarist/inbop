@@ -9,11 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBc89yCe-QlHL5cd9u7jU5GcedpSAhMVYQ" />
-
-        <activity android:name=".OverviewActivity">
+        <activity android:name=".PlacesActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />

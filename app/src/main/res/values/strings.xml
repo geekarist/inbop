@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Indoor Bouldering Paris</string>
+    <string name="place_item_dark_overlay">Dark Overlay</string>
+    <string name="place_item_picture">Picture of Place</string>
 </resources>
