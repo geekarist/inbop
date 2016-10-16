@@ -14,9 +14,9 @@
         android:theme="@style/ActionBarThemeOverlay"
         tools:targetApi="lollipop" />
 
-    <fragment
-        android:id="@+id/fragment_address"
-        class="me.cpele.indoorboulderingparis.detail.fragment.AddressFragment"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/detail_vp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
