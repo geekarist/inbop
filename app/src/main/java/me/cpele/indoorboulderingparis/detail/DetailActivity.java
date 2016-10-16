@@ -21,6 +21,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.detail_tv_name)
     TextView nameTextView;
+    @BindView(R.id.detail_tv_address)
+    TextView addressTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +33,9 @@ public class DetailActivity extends AppCompatActivity {
 
         Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
         Place place = Parcels.unwrap(extra);
+
         nameTextView.setText(place.getName());
+        addressTextView.setText(place.getAddress());
     }
 
     public static Intent newIntent(Context context, Place place) {

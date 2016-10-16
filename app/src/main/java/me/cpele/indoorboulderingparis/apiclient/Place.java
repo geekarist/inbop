@@ -8,14 +8,12 @@ public class Place {
     String name;
     String city;
     String imgUrl;
+    String address;
+    String transport;
+    PlaceHours hours;
+    PlacePrice price;
 
     Place() {
-    }
-
-    Place(String name, String city, String imgUrl) {
-        this.name = name;
-        this.city = city;
-        this.imgUrl = imgUrl;
     }
 
     public String getName() {
@@ -28,5 +26,21 @@ public class Place {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getTransport() {
+        return transport;
+    }
+
+    public PlaceHours getHours() {
+        return hours;
+    }
+
+    public PlacePrice getPrice() {
+        return price;
     }
 }

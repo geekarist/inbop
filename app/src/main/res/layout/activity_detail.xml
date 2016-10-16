@@ -12,4 +12,11 @@
         android:padding="10dp"
         tools:text="Place name" />
 
+    <TextView
+        android:id="@+id/detail_tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        tools:text="Place address" />
+
 </LinearLayout>
