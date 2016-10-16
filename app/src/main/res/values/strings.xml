@@ -9,5 +9,5 @@
     <string name="detail_desc_address_label">Address</string>
     <string name="detail_desc_hours_label">Hours</string>
     <string name="transport_hours">Weekdays from %1$s to %2$s, weekend from %3$s to %4$s.</string>
-    <string name="climbthere_what">What you''ll find here</string>
+    <string name="climbthere_what">What you\'ll find here</string>
 </resources>
