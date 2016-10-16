@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -23,6 +24,8 @@ public class DetailActivity extends AppCompatActivity {
     TextView nameTextView;
     @BindView(R.id.detail_tv_address)
     TextView addressTextView;
+    @BindView(R.id.detail_tb)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class DetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
         Place place = Parcels.unwrap(extra);
