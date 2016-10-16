@@ -12,6 +12,7 @@ public class Place {
     String transport;
     PlaceHours hours;
     PlacePrice price;
+    String description;
 
     Place() {
     }
@@ -42,5 +43,9 @@ public class Place {
 
     public PlacePrice getPrice() {
         return price;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

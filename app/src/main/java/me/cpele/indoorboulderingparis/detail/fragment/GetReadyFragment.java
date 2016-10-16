@@ -16,7 +16,7 @@ import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
 
-public class TransportFragment extends Fragment {
+public class GetReadyFragment extends Fragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
@@ -29,7 +29,7 @@ public class TransportFragment extends Fragment {
 
     public static Fragment newInstance(Place place) {
 
-        TransportFragment fragment = new TransportFragment();
+        GetReadyFragment fragment = new GetReadyFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ARG_PLACE, Parcels.wrap(place));
         fragment.setArguments(bundle);
@@ -40,7 +40,7 @@ public class TransportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_transport, container, false);
+        View view = inflater.inflate(R.layout.fragment_getready, container, false);
         ButterKnife.bind(this, view);
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
