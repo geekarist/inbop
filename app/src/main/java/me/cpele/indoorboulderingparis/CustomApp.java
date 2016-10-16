@@ -1,6 +1,7 @@
 package me.cpele.indoorboulderingparis;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -35,7 +36,9 @@ public class CustomApp extends Application {
 
         placesService = retrofit.create(PlacesService.class);
 
-        // TODO: StrictMode
+        if (BuildConfig.DEBUG) {
+            StrictMode.enableDefaults();
+        }
     }
 
     public static CustomApp getInstance() {
