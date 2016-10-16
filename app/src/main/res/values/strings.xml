@@ -5,4 +5,6 @@
     <string name="loading">Loading…</string>
     <string name="places_try_again">Try again</string>
     <string name="places_error_loading">Sorry, there was an error.</string>
+    <string name="detail_image_desc">Picture of the place</string>
+    <string name="detail_desc_address_label">Address</string>
 </resources>
