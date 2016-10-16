@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.indoorboulderingparis.BuildConfig;
 import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.Place;
+import me.cpele.indoorboulderingparis.apiclient.model.Place;
 import me.cpele.indoorboulderingparis.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {

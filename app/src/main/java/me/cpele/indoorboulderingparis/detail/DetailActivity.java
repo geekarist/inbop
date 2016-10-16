@@ -13,7 +13,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.Place;
+import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
 public class DetailActivity extends AppCompatActivity {
 

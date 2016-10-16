@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.Place;
+import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
 class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
