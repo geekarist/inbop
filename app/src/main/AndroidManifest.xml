@@ -24,7 +24,15 @@
         </activity>
 
         <activity android:name=".list.PlacesActivity" />
-        <activity android:name=".detail.DetailActivity" />
+
+        <activity
+            android:name=".detail.DetailActivity"
+            android:parentActivityName=".list.PlacesActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".list.PlacesActivity" />
+        </activity>
 
     </application>
 

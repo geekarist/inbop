@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -35,6 +37,8 @@ public class DetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
         Place place = Parcels.unwrap(extra);
@@ -48,5 +52,19 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(EXTRA_PLACE, Parcels.wrap(place));
         return intent;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
