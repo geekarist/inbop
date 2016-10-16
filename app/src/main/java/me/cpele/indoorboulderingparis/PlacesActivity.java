@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +14,9 @@ import retrofit2.Response;
 public class PlacesActivity extends AppCompatActivity {
 
     private static final String TAG = PlacesActivity.class.getSimpleName();
+
+    private RecyclerView recyclerView;
+    private PlacesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,32 @@ public class PlacesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.places_tb);
         setSupportActionBar(toolbar);
 
-        RecyclerView placesRecyclerView = (RecyclerView) findViewById(R.id.places_rv);
+        recyclerView = (RecyclerView) findViewById(R.id.places_rv);
 
-        final PlacesAdapter adapter = new PlacesAdapter();
-        placesRecyclerView.setAdapter(adapter);
-        placesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        reload();
+
+        adapter = new PlacesAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        View reloadButton = findViewById(R.id.places_bt_reload);
+
+        reloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
+    }
+
+    private void reload() {
+
+        final View loadingLayout = findViewById(R.id.places_ll_loading);
+        final View errorLoadingLayout = findViewById(R.id.places_ll_error_loading);
+
+        loadingLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        errorLoadingLayout.setVisibility(View.INVISIBLE);
 
         PlacesService placesService = CustomApp.getInstance().getPlacesService();
 
@@ -38,12 +61,16 @@ public class PlacesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
                 adapter.addAll(response.body().getPlaces());
+                loadingLayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                errorLoadingLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<PlaceList> call, Throwable t) {
-                Toast.makeText(PlacesActivity.this, "Error getting places", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Error getting places", t);
+                loadingLayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+                errorLoadingLayout.setVisibility(View.VISIBLE);
             }
         });
     }
