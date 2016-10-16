@@ -1,5 +1,6 @@
 package me.cpele.indoorboulderingparis.list;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import me.cpele.indoorboulderingparis.BuildConfig;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.Place;
+import me.cpele.indoorboulderingparis.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,5 +33,14 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
                 .load(url)
                 .centerCrop()
                 .into(imageView);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                itemView.getContext().startActivity(intent);
+            }
+        });
     }
 }

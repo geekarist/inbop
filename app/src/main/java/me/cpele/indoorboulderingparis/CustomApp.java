@@ -34,6 +34,8 @@ public class CustomApp extends Application {
                 .build();
 
         placesService = retrofit.create(PlacesService.class);
+
+        // TODO: StrictMode
     }
 
     public static CustomApp getInstance() {

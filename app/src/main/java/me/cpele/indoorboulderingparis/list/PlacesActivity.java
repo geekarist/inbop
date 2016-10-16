@@ -41,6 +41,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         View reloadButton = findViewById(R.id.places_bt_reload);
 
+        // TODO: ButterKnife
         reloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
