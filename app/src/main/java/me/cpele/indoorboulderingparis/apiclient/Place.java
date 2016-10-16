@@ -1,9 +1,16 @@
 package me.cpele.indoorboulderingparis.apiclient;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Place {
-    private final String name;
-    private final String city;
-    private final String imgUrl;
+
+    String name;
+    String city;
+    String imgUrl;
+
+    Place() {
+    }
 
     Place(String name, String city, String imgUrl) {
         this.name = name;

@@ -1,5 +1,6 @@
 package me.cpele.indoorboulderingparis.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,6 +19,8 @@ import me.cpele.indoorboulderingparis.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
 
+    private Place place;
+
     @BindView(R.id.place_item_tv_name)
     TextView nameTextView;
     @BindView(R.id.place_item_tv_city)
@@ -32,6 +35,8 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
 
     void bind(Place place) {
 
+        this.place = place;
+
         nameTextView.setText(place.getName());
         cityTextView.setText(place.getCity());
 
@@ -45,7 +50,8 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.place_item_cv)
     void onClick() {
 
-        Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-        itemView.getContext().startActivity(intent);
+        Context context = itemView.getContext();
+        Intent intent = DetailActivity.newIntent(context, place);
+        context.startActivity(intent);
     }
 }
