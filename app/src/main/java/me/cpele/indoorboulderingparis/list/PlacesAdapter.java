@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.indoorboulderingparis.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.cpele.indoorboulderingparis.R;
+import me.cpele.indoorboulderingparis.apiclient.Place;
 
 class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 

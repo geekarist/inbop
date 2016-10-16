@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.indoorboulderingparis.list;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import me.cpele.indoorboulderingparis.CustomApp;
+import me.cpele.indoorboulderingparis.R;
+import me.cpele.indoorboulderingparis.apiclient.PlaceList;
+import me.cpele.indoorboulderingparis.apiclient.PlacesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

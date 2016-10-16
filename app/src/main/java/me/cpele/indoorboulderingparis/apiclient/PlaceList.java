@@ -1,12 +1,12 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.indoorboulderingparis.apiclient;
 
 import java.util.List;
 
-class PlaceList {
+public class PlaceList {
 
     private List<Place> places;
 
-    List<Place> getPlaces() {
+    public List<Place> getPlaces() {
         return places;
     }
 

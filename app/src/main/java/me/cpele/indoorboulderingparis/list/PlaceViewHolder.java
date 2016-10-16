@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.indoorboulderingparis.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,6 +6,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import me.cpele.indoorboulderingparis.BuildConfig;
+import me.cpele.indoorboulderingparis.R;
+import me.cpele.indoorboulderingparis.apiclient.Place;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
 

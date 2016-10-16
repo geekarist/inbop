@@ -1,6 +1,6 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.indoorboulderingparis.apiclient;
 
-class Place {
+public class Place {
     private final String name;
     private final String city;
     private final String imgUrl;
@@ -11,15 +11,15 @@ class Place {
         this.imgUrl = imgUrl;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    String getCity() {
+    public String getCity() {
         return city;
     }
 
-    String getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 }
