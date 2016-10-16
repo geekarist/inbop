@@ -7,4 +7,6 @@
     <string name="places_error_loading">Sorry, there was an error.</string>
     <string name="detail_image_desc">Picture of the place</string>
     <string name="detail_desc_address_label">Address</string>
+    <string name="detail_desc_hours_label">Hours</string>
+    <string name="transport_hours">Weekdays from %1$s to %2$s, weekend from %3$s to %4$s.</string>
 </resources>
