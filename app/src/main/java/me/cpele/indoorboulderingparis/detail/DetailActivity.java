@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class DetailActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.detail_vp)
     ViewPager viewPager;
+    @BindView(R.id.detail_tl)
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class DetailActivity extends AppCompatActivity {
         detailPagerAdapter.add(ClimbThereFragment.newInstance(place));
         detailPagerAdapter.add(GetReadyFragment.newInstance(place));
         viewPager.setAdapter(detailPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     public static Intent newIntent(Context context, Place place) {

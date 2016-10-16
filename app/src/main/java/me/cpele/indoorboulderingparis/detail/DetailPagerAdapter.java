@@ -7,9 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.cpele.indoorboulderingparis.detail.fragment.DetailFragment;
+
 class DetailPagerAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<DetailFragment> fragmentList = new ArrayList<>();
 
     DetailPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -25,7 +27,12 @@ class DetailPagerAdapter extends FragmentPagerAdapter {
         return fragmentList.size();
     }
 
-    void add(Fragment fragment) {
+    void add(DetailFragment fragment) {
         fragmentList.add(fragment);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return fragmentList.get(position).getTitle();
     }
 }

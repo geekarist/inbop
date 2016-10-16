@@ -2,7 +2,6 @@ package me.cpele.indoorboulderingparis.detail.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import me.cpele.indoorboulderingparis.BuildConfig;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public class ClimbThereFragment extends Fragment {
+public class ClimbThereFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
@@ -28,7 +27,7 @@ public class ClimbThereFragment extends Fragment {
     @BindView(R.id.fragment_climbthere_tv_what)
     TextView whatsHereTextView;
 
-    public static Fragment newInstance(Place place) {
+    public static DetailFragment newInstance(Place place) {
 
         ClimbThereFragment fragment = new ClimbThereFragment();
         Bundle bundle = new Bundle();
@@ -51,5 +50,10 @@ public class ClimbThereFragment extends Fragment {
         whatsHereTextView.setText(place.getDescription());
 
         return view;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Climb there";
     }
 }

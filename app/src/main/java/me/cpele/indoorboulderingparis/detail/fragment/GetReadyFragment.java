@@ -2,7 +2,6 @@ package me.cpele.indoorboulderingparis.detail.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
 
-public class GetReadyFragment extends Fragment {
+public class GetReadyFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
@@ -27,7 +26,7 @@ public class GetReadyFragment extends Fragment {
 
     private Place place;
 
-    public static Fragment newInstance(Place place) {
+    public static DetailFragment newInstance(Place place) {
 
         GetReadyFragment fragment = new GetReadyFragment();
         Bundle bundle = new Bundle();
@@ -63,5 +62,10 @@ public class GetReadyFragment extends Fragment {
         return getString(R.string.transport_hours,
                 weekdaysOpening, weekdaysClosing,
                 weekendOpening, weekendClosing);
+    }
+
+    @Override
+    public String getTitle() {
+        return "Get ready";
     }
 }
