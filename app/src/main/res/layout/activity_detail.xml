@@ -17,7 +17,9 @@
     <ScrollView
         android:id="@+id/detail_sv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:id="@+id/detail_ll_description"
@@ -36,10 +38,10 @@
                 style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:text="@string/detail_desc_address_label" />
 
@@ -48,10 +50,10 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
                 android:paddingEnd="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 tools:text="Place address" />
 
