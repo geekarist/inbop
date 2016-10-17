@@ -67,21 +67,21 @@ public class PlacesActivity extends AppCompatActivity implements ListContract.Vi
     }
 
     @Override
-    public void onDisplayProgressBar() {
+    public void displayProgressBar() {
         loadingLayout.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.INVISIBLE);
     }
 
     @Override
-    public void onHideProgressBar() {
+    public void hideProgressBar() {
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         errorLoadingLayout.setVisibility(View.GONE);
     }
 
     @Override
-    public void onDisplayError() {
+    public void displayError() {
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorLoadingLayout.setVisibility(View.VISIBLE);

@@ -13,11 +13,11 @@ interface ListContract {
 
     interface View {
 
-        void onDisplayProgressBar();
+        void displayProgressBar();
 
-        void onHideProgressBar();
+        void hideProgressBar();
 
-        void onDisplayError();
+        void displayError();
 
         void displayPlaces(List<Place> places);
     }

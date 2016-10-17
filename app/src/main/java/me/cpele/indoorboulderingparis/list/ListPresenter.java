@@ -28,19 +28,23 @@ class ListPresenter implements ListContract.Presenter {
 
     public void reload() {
 
-        view.onDisplayProgressBar();
+        view.displayProgressBar();
 
         model.findAll(new ListContract.Callback<List<Place>>() {
 
             @Override
             public void success(List<Place> places) {
-                view.displayPlaces(places);
-                view.onHideProgressBar();
+                if (view != null) {
+                    view.displayPlaces(places);
+                    view.hideProgressBar();
+                }
             }
 
             @Override
             public void error() {
-                view.onDisplayError();
+                if (view != null) {
+                    view.displayError();
+                }
             }
         });
     }
