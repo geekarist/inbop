@@ -4,10 +4,11 @@ import java.util.List;
 
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public interface ListContract {
+interface ListContract {
 
     interface Model {
 
+        void findAll(Callback<List<Place>> callback);
     }
 
     interface View {
@@ -23,5 +24,17 @@ public interface ListContract {
 
     interface Presenter {
 
+        void attach(View view, Model model);
+
+        void reload();
+
+        void detach();
+    }
+
+    interface Callback<T> {
+
+        void success(T data);
+
+        void error();
     }
 }

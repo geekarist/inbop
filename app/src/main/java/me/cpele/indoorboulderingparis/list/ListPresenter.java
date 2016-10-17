@@ -2,28 +2,24 @@ package me.cpele.indoorboulderingparis.list;
 
 import java.util.List;
 
-import me.cpele.indoorboulderingparis.CustomApp;
-import me.cpele.indoorboulderingparis.apiclient.PlacesService;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.apiclient.model.PlaceList;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class ListPresenter {
+class ListPresenter implements ListContract.Presenter {
 
     private ListContract.View view;
     private ListContract.Model model;
 
-    public ListPresenter() {
+    ListPresenter() {
     }
 
+    @Override
     public void detach() {
 
         this.view = null;
         this.model = null;
     }
 
+    @Override
     public void attach(ListContract.View view, ListContract.Model model) {
 
         this.view = view;
@@ -34,19 +30,16 @@ public class ListPresenter {
 
         view.onDisplayProgressBar();
 
-        PlacesService placesService = CustomApp.getInstance().getPlacesService();
-
-        placesService.findAll().enqueue(new Callback<PlaceList>() {
+        model.findAll(new ListContract.Callback<List<Place>>() {
 
             @Override
-            public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
-                List<Place> places = response.body().getPlaces();
+            public void success(List<Place> places) {
                 view.displayPlaces(places);
                 view.onHideProgressBar();
             }
 
             @Override
-            public void onFailure(Call<PlaceList> call, Throwable t) {
+            public void error() {
                 view.onDisplayError();
             }
         });

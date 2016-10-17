@@ -30,8 +30,8 @@ public class PlacesActivity extends AppCompatActivity implements ListContract.Vi
     @BindView(R.id.places_tb)
     Toolbar toolbar;
 
-    private ListPresenter presenter;
-    private ListModel model;
+    private ListContract.Presenter presenter;
+    private ListContract.Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
