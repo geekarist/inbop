@@ -15,7 +15,7 @@ import butterknife.OnClick;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public class PlacesActivity extends AppCompatActivity implements ListContract.View {
+public class PlacesActivity extends AppCompatActivity implements PlacesContract.View {
 
     private static final String TAG = PlacesActivity.class.getSimpleName();
 
@@ -30,15 +30,15 @@ public class PlacesActivity extends AppCompatActivity implements ListContract.Vi
     @BindView(R.id.places_tb)
     Toolbar toolbar;
 
-    private ListContract.Presenter presenter;
-    private ListContract.Model model;
+    private PlacesContract.Presenter presenter;
+    private PlacesContract.Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new ListPresenter();
-        model = new ListModel();
+        presenter = new PlacesPresenter();
+        model = new PlacesModel();
         presenter.attach(this, model);
 
         setContentView(R.layout.activity_places);

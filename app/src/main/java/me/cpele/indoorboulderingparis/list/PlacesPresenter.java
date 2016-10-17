@@ -4,12 +4,12 @@ import java.util.List;
 
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-class ListPresenter implements ListContract.Presenter {
+class PlacesPresenter implements PlacesContract.Presenter {
 
-    private ListContract.View view;
-    private ListContract.Model model;
+    private PlacesContract.View view;
+    private PlacesContract.Model model;
 
-    ListPresenter() {
+    PlacesPresenter() {
     }
 
     @Override
@@ -20,7 +20,7 @@ class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
-    public void attach(ListContract.View view, ListContract.Model model) {
+    public void attach(PlacesContract.View view, PlacesContract.Model model) {
 
         this.view = view;
         this.model = model;
@@ -30,7 +30,7 @@ class ListPresenter implements ListContract.Presenter {
 
         view.displayProgressBar();
 
-        model.findAll(new ListContract.Callback<List<Place>>() {
+        model.findAll(new PlacesContract.Callback<List<Place>>() {
 
             @Override
             public void success(List<Place> places) {

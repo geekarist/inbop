@@ -12,19 +12,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class ListModel implements ListContract.Model {
+class PlacesModel implements PlacesContract.Model {
 
-    private static final String TAG = ListModel.class.getSimpleName();
+    private static final String TAG = PlacesModel.class.getSimpleName();
 
     private final PlacesService placesService;
 
-    ListModel() {
+    PlacesModel() {
 
         placesService = CustomApp.getInstance().getPlacesService();
     }
 
     @Override
-    public void findAll(final ListContract.Callback<List<Place>> presenterCall) {
+    public void findAll(final PlacesContract.Callback<List<Place>> presenterCall) {
 
         placesService.findAll().enqueue(new Callback<PlaceList>() {
 
