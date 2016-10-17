@@ -7,18 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.indoorboulderingparis.CustomApp;
 import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.PlacesService;
-import me.cpele.indoorboulderingparis.apiclient.model.PlaceList;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public class PlacesActivity extends AppCompatActivity {
+public class PlacesActivity extends AppCompatActivity implements ListContract.View {
 
     private static final String TAG = PlacesActivity.class.getSimpleName();
 
@@ -33,52 +30,65 @@ public class PlacesActivity extends AppCompatActivity {
     @BindView(R.id.places_tb)
     Toolbar toolbar;
 
+    private ListPresenter presenter;
+    private ListModel model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        presenter = new ListPresenter();
+        model = new ListModel();
+        presenter.attach(this, model);
 
         setContentView(R.layout.activity_places);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
 
-        reload();
+        presenter.reload();
 
         adapter = new PlacesAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @OnClick(R.id.places_bt_reload)
-    public void onClickReload() {
-        reload();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        presenter.detach();
+        presenter = null;
     }
 
-    private void reload() {
+    @OnClick(R.id.places_bt_reload)
+    public void onClickReload() {
+        presenter.reload();
+    }
 
+    @Override
+    public void onDisplayProgressBar() {
         loadingLayout.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.INVISIBLE);
-
-        PlacesService placesService = CustomApp.getInstance().getPlacesService();
-
-        placesService.findAll().enqueue(new Callback<PlaceList>() {
-
-            @Override
-            public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
-                adapter.addAll(response.body().getPlaces());
-                loadingLayout.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                errorLoadingLayout.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<PlaceList> call, Throwable t) {
-                loadingLayout.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.GONE);
-                errorLoadingLayout.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
+    @Override
+    public void onHideProgressBar() {
+        loadingLayout.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        errorLoadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDisplayError() {
+        loadingLayout.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        errorLoadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayPlaces(List<Place> places) {
+        adapter.addAll(places);
+    }
 }
