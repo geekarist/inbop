@@ -31,6 +31,6 @@ public class AppTest {
         onView(allOf(withId(R.id.place_item_tv_name), withText(itemToClick))).perform(click());
 
         onView(withId(R.id.fragment_climbthere_tv_what))
-                .check(ViewAssertions.matches(withText(containsString("Boulders and not walls"))));
+                .check(ViewAssertions.matches(withText(containsString("Boulders and walls"))));
     }
 }
