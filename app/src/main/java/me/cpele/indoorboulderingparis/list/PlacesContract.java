@@ -22,15 +22,6 @@ interface PlacesContract {
         void displayPlaces(List<Place> places);
     }
 
-    interface Presenter {
-
-        void attach(View view, Model model);
-
-        void reload();
-
-        void detach();
-    }
-
     interface Callback<T> {
 
         void success(T data);

@@ -30,7 +30,7 @@ public class PlacesActivity extends AppCompatActivity implements PlacesContract.
     @BindView(R.id.places_tb)
     Toolbar toolbar;
 
-    private PlacesContract.Presenter presenter;
+    private PlacesPresenter presenter;
     private PlacesContract.Model model;
 
     @Override
