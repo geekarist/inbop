@@ -9,19 +9,15 @@ class PlacesPresenter implements PlacesContract.Callback<List<Place>> {
     private PlacesContract.View view;
     private PlacesContract.Model model;
 
-    PlacesPresenter() {
+    PlacesPresenter(PlacesContract.View view, PlacesContract.Model model) {
+        this.view = view;
+        this.model = model;
     }
 
     void detach() {
 
         this.view = null;
         this.model = null;
-    }
-
-    void attach(PlacesContract.View view, PlacesContract.Model model) {
-
-        this.view = view;
-        this.model = model;
     }
 
     void reload() {

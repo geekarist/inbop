@@ -37,9 +37,8 @@ public class PlacesActivity extends AppCompatActivity implements PlacesContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new PlacesPresenter();
+        presenter = new PlacesPresenter(this, model);
         model = new PlacesModel();
-        presenter.attach(this, model);
 
         setContentView(R.layout.activity_places);
         ButterKnife.bind(this);
