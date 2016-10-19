@@ -4,7 +4,7 @@ import java.util.List;
 
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-class PlacesPresenter {
+class PlacesPresenter implements PlacesContract.Callback<List<Place>> {
 
     private PlacesContract.View view;
     private PlacesContract.Model model;
@@ -28,22 +28,21 @@ class PlacesPresenter {
 
         view.displayProgressBar();
 
-        model.findAll(new PlacesContract.Callback<List<Place>>() {
+        model.findAll(this);
+    }
 
-            @Override
-            public void success(List<Place> places) {
-                if (view != null) {
-                    view.displayPlaces(places);
-                    view.hideProgressBar();
-                }
-            }
+    @Override
+    public void success(List<Place> data) {
+        if (view != null) {
+            view.displayPlaces(data);
+            view.hideProgressBar();
+        }
+    }
 
-            @Override
-            public void error() {
-                if (view != null) {
-                    view.displayError();
-                }
-            }
-        });
+    @Override
+    public void error() {
+        if (view != null) {
+            view.displayError();
+        }
     }
 }
