@@ -8,7 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import me.cpele.indoorboulderingparis.list.PlacesActivity;
+import me.cpele.indoorboulderingparis.list.ListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.containsString;
 public class AppTest {
 
     @Rule
-    public ActivityTestRule<PlacesActivity> activityTestRule = new ActivityTestRule<>(PlacesActivity.class);
+    public ActivityTestRule<ListActivity> activityTestRule = new ActivityTestRule<>(ListActivity.class);
 
     @Test
     public void shouldDisplayPlace() {

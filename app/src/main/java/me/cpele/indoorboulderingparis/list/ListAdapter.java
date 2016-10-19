@@ -11,14 +11,14 @@ import java.util.List;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
+class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
     private List<Place> places = new ArrayList<>();
 
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_place, parent, false);
 
         return new PlaceViewHolder(view);
     }

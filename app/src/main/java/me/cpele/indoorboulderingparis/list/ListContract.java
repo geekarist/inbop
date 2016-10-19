@@ -4,7 +4,7 @@ import java.util.List;
 
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-interface PlacesContract {
+interface ListContract {
 
     interface Model {
 

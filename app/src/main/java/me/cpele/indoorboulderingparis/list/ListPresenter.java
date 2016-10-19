@@ -4,12 +4,12 @@ import java.util.List;
 
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-class PlacesPresenter implements PlacesContract.Callback<List<Place>> {
+class ListPresenter implements ListContract.Callback<List<Place>> {
 
-    private PlacesContract.View view;
-    private PlacesContract.Model model;
+    private ListContract.View view;
+    private ListContract.Model model;
 
-    PlacesPresenter(PlacesContract.View view, PlacesContract.Model model) {
+    ListPresenter(ListContract.View view, ListContract.Model model) {
         this.view = view;
         this.model = model;
     }

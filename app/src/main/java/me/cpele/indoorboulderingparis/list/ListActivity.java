@@ -15,11 +15,11 @@ import butterknife.OnClick;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public class PlacesActivity extends AppCompatActivity implements PlacesContract.View {
+public class ListActivity extends AppCompatActivity implements ListContract.View {
 
-    private static final String TAG = PlacesActivity.class.getSimpleName();
+    private static final String TAG = ListActivity.class.getSimpleName();
 
-    private PlacesAdapter adapter;
+    private ListAdapter adapter;
 
     @BindView(R.id.places_rv)
     RecyclerView recyclerView;
@@ -30,24 +30,24 @@ public class PlacesActivity extends AppCompatActivity implements PlacesContract.
     @BindView(R.id.places_tb)
     Toolbar toolbar;
 
-    private PlacesPresenter presenter;
-    private PlacesContract.Model model;
+    private ListPresenter presenter;
+    private ListContract.Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new PlacesPresenter(this, model);
-        model = new PlacesModel();
+        presenter = new ListPresenter(this, model);
+        model = new ListModel();
 
-        setContentView(R.layout.activity_places);
+        setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
 
         presenter.reload();
 
-        adapter = new PlacesAdapter();
+        adapter = new ListAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
