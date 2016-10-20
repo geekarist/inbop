@@ -37,8 +37,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new ListPresenter(this, model);
         model = new ListModel();
+        presenter = new ListPresenter(this, model);
 
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
