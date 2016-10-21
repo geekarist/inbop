@@ -22,9 +22,9 @@ class ListPresenter implements ListContract.Callback<List<Place>> {
 
     void reload() {
 
-        view.displayProgressBar();
-
         model.findAll(this);
+
+        view.displayProgressBar();
     }
 
     @Override
