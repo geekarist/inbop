@@ -3,17 +3,18 @@ apply plugin: 'android-apt'
 
 //noinspection GroovyMissingReturnStatement
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
     defaultConfig {
+
+        buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
+
         applicationId "me.cpele.indoorboulderingparis"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
     }
 
     buildTypes {
@@ -26,22 +27,26 @@ android {
     productFlavors {
         development {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
+            applicationId "me.cpele.indoorboulderingparis.dev"
         }
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
+            applicationId "me.cpele.indoorboulderingparis.prod"
         }
     }
 }
+
+def supportVersion = '25.0.0'
 
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+    compile "com.android.support:recyclerview-v7:${supportVersion}"
+    compile "com.android.support:cardview-v7:${supportVersion}"
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+    compile "com.android.support:design:${supportVersion}"
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
