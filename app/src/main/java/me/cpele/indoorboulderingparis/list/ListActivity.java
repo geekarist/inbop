@@ -18,11 +18,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlacesActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
-    private static final String TAG = PlacesActivity.class.getSimpleName();
+    private static final String TAG = ListActivity.class.getSimpleName();
 
-    private PlacesAdapter adapter;
+    private ListAdapter adapter;
 
     @BindView(R.id.places_rv)
     RecyclerView recyclerView;
@@ -44,7 +44,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         reload();
 
-        adapter = new PlacesAdapter();
+        adapter = new ListAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

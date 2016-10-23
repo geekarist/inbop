@@ -11,7 +11,7 @@ import java.util.List;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-class PlacesAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
+class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
     private List<Place> places = new ArrayList<>();
 
