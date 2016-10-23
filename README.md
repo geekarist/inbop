@@ -15,3 +15,4 @@ Inbop will improve your climbing experience.
 - Show a map
 - List places in order of proximity
 - Pretty splash screen
+- Eiffel tower in icon
