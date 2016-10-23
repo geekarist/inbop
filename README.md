@@ -5,10 +5,12 @@ Inbop will improve your climbing experience.
 
 ## Features
 
-- List places
+- List places near Paris
 
 ## Planned
 
 - Display useful info about places
 - Display pictures
-- Show the itinerary
+- Display directions
+- Show a map
+- List places in order of proximity
