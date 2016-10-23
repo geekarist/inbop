@@ -19,9 +19,9 @@ public class GetReadyFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
-    @BindView(R.id.fragment_transport_tv_address)
+    @BindView(R.id.itinerary_tv_address)
     TextView addressTextView;
-    @BindView(R.id.fragment_transport_tv_hours)
+    @BindView(R.id.itinerary_tv_hours)
     TextView hoursTextView;
 
     private Place place;
@@ -39,7 +39,7 @@ public class GetReadyFragment extends DetailFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_getready, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));

@@ -18,7 +18,7 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
     @Override
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_place, parent, false);
 
         return new PlaceViewHolder(view);
     }

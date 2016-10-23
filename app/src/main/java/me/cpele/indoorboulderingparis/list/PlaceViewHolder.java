@@ -21,11 +21,11 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
 
     private Place place;
 
-    @BindView(R.id.place_item_tv_name)
+    @BindView(R.id.place_tv_name)
     TextView nameTextView;
-    @BindView(R.id.place_item_tv_city)
+    @BindView(R.id.place_tv_city)
     TextView cityTextView;
-    @BindView(R.id.place_item_iv_picture)
+    @BindView(R.id.place_iv_picture)
     ImageView imageView;
 
     PlaceViewHolder(View itemView) {
@@ -47,7 +47,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
                 .into(imageView);
     }
 
-    @OnClick(R.id.place_item_cv)
+    @OnClick(R.id.place_cv)
     void onClick() {
 
         Context context = itemView.getContext();

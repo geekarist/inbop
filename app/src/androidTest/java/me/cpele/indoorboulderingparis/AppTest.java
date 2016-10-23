@@ -28,9 +28,9 @@ public class AppTest {
 
         String itemToClick = "Antrebloc";
 
-        onView(allOf(withId(R.id.place_item_tv_name), withText(itemToClick))).perform(click());
+        onView(allOf(withId(R.id.place_tv_name), withText(itemToClick))).perform(click());
 
-        onView(withId(R.id.fragment_climbthere_tv_what))
+        onView(withId(R.id.useful_tv_what))
                 .check(ViewAssertions.matches(withText(containsString("Boulders and walls"))));
     }
 }

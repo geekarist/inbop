@@ -22,9 +22,9 @@ public class ClimbThereFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
-    @BindView(R.id.fragment_climbthere_iv)
+    @BindView(R.id.useful_iv)
     ImageView imageView;
-    @BindView(R.id.fragment_climbthere_tv_what)
+    @BindView(R.id.useful_tv_what)
     TextView whatsHereTextView;
 
     public static DetailFragment newInstance(Place place) {
@@ -40,7 +40,7 @@ public class ClimbThereFragment extends DetailFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_climbthere, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_useful_info, container, false);
         ButterKnife.bind(this, view);
 
         Place place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));

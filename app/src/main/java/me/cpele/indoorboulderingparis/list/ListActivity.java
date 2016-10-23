@@ -24,20 +24,20 @@ public class ListActivity extends AppCompatActivity {
 
     private ListAdapter adapter;
 
-    @BindView(R.id.places_rv)
+    @BindView(R.id.list_rv)
     RecyclerView recyclerView;
-    @BindView(R.id.places_ll_loading)
+    @BindView(R.id.list_ll_loading)
     View loadingLayout;
-    @BindView(R.id.places_ll_error_loading)
+    @BindView(R.id.list_ll_error_loading)
     View errorLoadingLayout;
-    @BindView(R.id.places_tb)
+    @BindView(R.id.list_tb)
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_places);
+        setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -49,7 +49,7 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    @OnClick(R.id.places_bt_reload)
+    @OnClick(R.id.list_bt_reload)
     public void onClickReload() {
         reload();
     }
