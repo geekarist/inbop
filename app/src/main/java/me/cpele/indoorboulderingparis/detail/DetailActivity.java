@@ -18,8 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.detail.fragment.ClimbThereFragment;
-import me.cpele.indoorboulderingparis.detail.fragment.GetReadyFragment;
+import me.cpele.indoorboulderingparis.detail.fragment.UsefulInfoFragment;
+import me.cpele.indoorboulderingparis.detail.fragment.ItineraryFragment;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -48,8 +48,8 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(place.getName());
 
         DetailPagerAdapter detailPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager());
-        detailPagerAdapter.add(ClimbThereFragment.newInstance(place));
-        detailPagerAdapter.add(GetReadyFragment.newInstance(place));
+        detailPagerAdapter.add(UsefulInfoFragment.newInstance(place));
+        detailPagerAdapter.add(ItineraryFragment.newInstance(place));
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);

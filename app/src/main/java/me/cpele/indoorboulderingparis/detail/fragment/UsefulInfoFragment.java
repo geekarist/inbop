@@ -18,7 +18,7 @@ import me.cpele.indoorboulderingparis.BuildConfig;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 
-public class ClimbThereFragment extends DetailFragment {
+public class UsefulInfoFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
@@ -29,7 +29,7 @@ public class ClimbThereFragment extends DetailFragment {
 
     public static DetailFragment newInstance(Place place) {
 
-        ClimbThereFragment fragment = new ClimbThereFragment();
+        UsefulInfoFragment fragment = new UsefulInfoFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("ARG_PLACE", Parcels.wrap(place));
         fragment.setArguments(bundle);
@@ -54,6 +54,6 @@ public class ClimbThereFragment extends DetailFragment {
 
     @Override
     public String getTitle() {
-        return "Climb there";
+        return "Useful info";
     }
 }

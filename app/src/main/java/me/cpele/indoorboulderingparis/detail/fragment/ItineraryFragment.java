@@ -15,7 +15,7 @@ import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
 import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
 
-public class GetReadyFragment extends DetailFragment {
+public class ItineraryFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
@@ -24,11 +24,9 @@ public class GetReadyFragment extends DetailFragment {
     @BindView(R.id.itinerary_tv_hours)
     TextView hoursTextView;
 
-    private Place place;
-
     public static DetailFragment newInstance(Place place) {
 
-        GetReadyFragment fragment = new GetReadyFragment();
+        ItineraryFragment fragment = new ItineraryFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ARG_PLACE, Parcels.wrap(place));
         fragment.setArguments(bundle);
@@ -42,7 +40,7 @@ public class GetReadyFragment extends DetailFragment {
         View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
-        place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        Place place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
         addressTextView.setText(place.getAddress());
 
@@ -66,6 +64,6 @@ public class GetReadyFragment extends DetailFragment {
 
     @Override
     public String getTitle() {
-        return "Get ready";
+        return "Itinerary";
     }
 }
