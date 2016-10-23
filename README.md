@@ -14,3 +14,4 @@ Inbop will improve your climbing experience.
 - Display directions
 - Show a map
 - List places in order of proximity
+- Pretty splash screen
