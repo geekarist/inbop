@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import me.cpele.indoorboulderingparis.BuildConfig;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
+import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
 
 public class UsefulInfoFragment extends DetailFragment {
 
@@ -24,8 +25,8 @@ public class UsefulInfoFragment extends DetailFragment {
 
     @BindView(R.id.useful_iv)
     ImageView imageView;
-    @BindView(R.id.useful_tv_what)
-    TextView whatsHereTextView;
+    @BindView(R.id.useful_tv_hours_value)
+    TextView hoursTextView;
 
     public static DetailFragment newInstance(Place place) {
 
@@ -47,9 +48,22 @@ public class UsefulInfoFragment extends DetailFragment {
 
         Glide.with(this).load(BuildConfig.PLACES_API_BASE_URL + place.getImgUrl()).centerCrop().into(imageView);
 
-        whatsHereTextView.setText(place.getDescription());
+        String hours = buildHoursLabel(place.getHours());
+        hoursTextView.setText(hours);
 
         return view;
+    }
+
+    private String buildHoursLabel(PlaceHours hours) {
+
+        String weekdaysOpening = hours.getWeekdays().getOpening();
+        String weekdaysClosing = hours.getWeekdays().getClosing();
+        String weekendOpening = hours.getWeekend().getOpening();
+        String weekendClosing = hours.getWeekend().getClosing();
+
+        return getString(R.string.detail_hours,
+                weekdaysOpening, weekdaysClosing,
+                weekendOpening, weekendClosing);
     }
 
     @Override

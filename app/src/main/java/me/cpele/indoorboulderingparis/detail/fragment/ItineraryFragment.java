@@ -21,8 +21,6 @@ public class ItineraryFragment extends DetailFragment {
 
     @BindView(R.id.itinerary_tv_address)
     TextView addressTextView;
-    @BindView(R.id.itinerary_tv_hours)
-    TextView hoursTextView;
 
     public static DetailFragment newInstance(Place place) {
 
@@ -44,22 +42,7 @@ public class ItineraryFragment extends DetailFragment {
 
         addressTextView.setText(place.getAddress());
 
-        String hours = buildHoursLabel(place.getHours());
-        hoursTextView.setText(hours);
-
         return view;
-    }
-
-    private String buildHoursLabel(PlaceHours hours) {
-
-        String weekdaysOpening = hours.getWeekdays().getOpening();
-        String weekdaysClosing = hours.getWeekdays().getClosing();
-        String weekendOpening = hours.getWeekend().getOpening();
-        String weekendClosing = hours.getWeekend().getClosing();
-
-        return getString(R.string.detail_hours,
-                weekdaysOpening, weekdaysClosing,
-                weekendOpening, weekendClosing);
     }
 
     @Override

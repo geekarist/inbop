@@ -17,11 +17,11 @@
         <ImageView
             android:id="@+id/useful_iv"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="200dp"
             android:contentDescription="@string/detail_image_desc" />
 
         <TextView
-            android:id="@+id/useful_tv_what_label"
+            android:id="@+id/useful_tv_hours_label"
             style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,10 +30,10 @@
             android:paddingRight="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
-            android:text="@string/detail_what" />
+            android:text="@string/detail_hours_label" />
 
         <TextView
-            android:id="@+id/useful_tv_what"
+            android:id="@+id/useful_tv_hours_value"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
