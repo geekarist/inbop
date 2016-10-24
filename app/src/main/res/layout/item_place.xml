@@ -18,7 +18,7 @@
             android:id="@+id/place_iv_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/place_item_picture" />
+            android:contentDescription="@string/place_picture" />
 
         <ImageView
             android:id="@+id/place_iv_overlay"
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:alpha=".3"
             android:background="@android:color/black"
-            android:contentDescription="@string/place_item_dark_overlay" />
+            android:contentDescription="@string/place_dark_overlay" />
 
         <TextView
             android:id="@+id/place_tv_name"

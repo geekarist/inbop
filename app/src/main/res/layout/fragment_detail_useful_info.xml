@@ -30,7 +30,7 @@
             android:paddingRight="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
-            android:text="@string/climbthere_what" />
+            android:text="@string/detail_what" />
 
         <TextView
             android:id="@+id/useful_tv_what"

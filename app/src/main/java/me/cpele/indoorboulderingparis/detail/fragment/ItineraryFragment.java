@@ -57,7 +57,7 @@ public class ItineraryFragment extends DetailFragment {
         String weekendOpening = hours.getWeekend().getOpening();
         String weekendClosing = hours.getWeekend().getClosing();
 
-        return getString(R.string.transport_hours,
+        return getString(R.string.detail_hours,
                 weekdaysOpening, weekdaysClosing,
                 weekendOpening, weekendClosing);
     }

@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Inbop</string>
-    <string name="place_item_dark_overlay">Dark Overlay</string>
-    <string name="place_item_picture">Picture of Place</string>
-    <string name="loading">Loading…</string>
-    <string name="places_try_again">Try again</string>
-    <string name="places_error_loading">Sorry, there was an error.</string>
+    <string name="place_dark_overlay">Dark Overlay</string>
+    <string name="place_picture">Picture of Place</string>
+
+    <string name="list_loading">Loading…</string>
+    <string name="list_try_again">Try again</string>
+    <string name="list_error_loading">Sorry, there was an error.</string>
+
     <string name="detail_image_desc">Picture of the place</string>
-    <string name="detail_desc_address_label">Address</string>
-    <string name="detail_desc_hours_label">Hours</string>
-    <string name="transport_hours">Weekdays from %1$s to %2$s, weekend from %3$s to %4$s.</string>
-    <string name="climbthere_what">What you\'ll find here</string>
+    <string name="detail_address_label">Address</string>
+    <string name="detail_hours_label">Hours</string>
+    <string name="detail_hours">Weekdays from %1$s to %2$s, weekend from %3$s to %4$s.</string>
+    <string name="detail_what">What you\'ll find here</string>
 </resources>
