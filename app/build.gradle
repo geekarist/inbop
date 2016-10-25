@@ -66,3 +66,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
+
+task disableAnimations(type: Exec, dependsOn: 'installDebug') {
+    commandLine "adb shell settings put global window_animation_scale 0".split(" ")
+}
+
+tasks.whenTaskAdded { task ->
+    if (System.getenv()['CI'] && task.name.startsWith('connected')) {
+        task.dependsOn disableAnimations
+    }
+}
