@@ -67,7 +67,7 @@ dependencies {
     })
 }
 
-task disableAnimations(type: Exec, dependsOn: 'installDebug') {
+task disableAnimations(type: Exec, dependsOn: 'installDevelopmentDebug') {
     commandLine "adb shell settings put global window_animation_scale 0".split(" ")
 }
 
