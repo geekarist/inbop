@@ -14,50 +14,30 @@
 
         <TextView
             android:id="@+id/itinerary_tv_address_label"
-            style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+            style="@style/CustomTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
             android:text="@string/detail_address_label" />
 
         <TextView
             android:id="@+id/itinerary_tv_address"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
             tools:text="Place address" />
 
         <TextView
             android:id="@+id/itinerary_tv_hours_label"
-            style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+            style="@style/CustomTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
             android:text="@string/detail_hours_label" />
 
         <TextView
             android:id="@+id/itinerary_tv_hours"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
             tools:text="Place hours" />
 
     </LinearLayout>
