@@ -34,6 +34,19 @@
             android:layout_height="wrap_content"
             tools:text="From 07:00 to 23:30" />
 
+        <TextView
+            style="@style/CustomTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/prices" />
+
+        <TextView
+            android:id="@+id/useful_tv_prices_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CustomBody"
+            tools:text="Child 7.5 €. Student 12 €. Adult 13.5 €."/>
+
     </LinearLayout>
 
 </ScrollView>
