@@ -55,29 +55,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/list_ll_loading"
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/list_pb_loading"
+            style="@android:style/Widget.Material.Light.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <android.support.v4.widget.ContentLoadingProgressBar
-                style="@android:style/Widget.Material.Light.ProgressBar.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:targetApi="lollipop" />
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="@string/list_loading" />
-
-        </LinearLayout>
+            android:visibility="visible"
+            tools:targetApi="lollipop" />
 
     </FrameLayout>
 

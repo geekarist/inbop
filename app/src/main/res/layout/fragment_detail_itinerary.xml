@@ -26,20 +26,6 @@
             android:layout_height="wrap_content"
             tools:text="Place address" />
 
-        <TextView
-            android:id="@+id/itinerary_tv_hours_label"
-            style="@style/CustomTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_hours_label" />
-
-        <TextView
-            android:id="@+id/itinerary_tv_hours"
-            style="@style/CustomBody"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Place hours" />
-
     </LinearLayout>
 
 </ScrollView>

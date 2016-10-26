@@ -27,7 +27,7 @@ public class ListActivity extends AppCompatActivity {
 
     @BindView(R.id.list_rv)
     RecyclerView recyclerView;
-    @BindView(R.id.list_ll_loading)
+    @BindView(R.id.list_pb_loading)
     View loadingLayout;
     @BindView(R.id.list_ll_error_loading)
     View errorLoadingLayout;
