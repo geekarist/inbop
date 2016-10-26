@@ -5,6 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatTextView;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
+@Ignore
 public class AppTest {
 
     @Rule
