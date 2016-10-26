@@ -38,7 +38,7 @@
             style="@style/CustomTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/prices" />
+            android:text="@string/detail_prices" />
 
         <TextView
             android:id="@+id/useful_tv_prices_value"

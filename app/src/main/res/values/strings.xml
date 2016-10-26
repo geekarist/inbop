@@ -11,7 +11,10 @@
     <string name="detail_image_desc">Picture of the place</string>
     <string name="detail_address_label">Address</string>
     <string name="detail_hours_label">Hours</string>
-    <string name="detail_hours">Weekdays from %1$s to %2$s, weekend from %3$s to %4$s.</string>
+    <string name="detail_hours">Weekdays from %1$s to %2$s - Weekend from %3$s to %4$s</string>
     <string name="detail_what">What you\'ll find here</string>
-    <string name="prices">Prices</string>
+    <string name="detail_price_adult">Adult: </string>
+    <string name="detail_price_student">Student:</string>
+    <string name="detail_price_child">Child:</string>
+    <string name="detail_prices">Prices</string>
 </resources>
