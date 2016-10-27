@@ -21,31 +21,74 @@
             android:contentDescription="@string/detail_image_desc" />
 
         <TextView
-            android:id="@+id/useful_tv_hours_label"
-            style="@style/CustomTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_hours_label" />
-
-        <TextView
             android:id="@+id/useful_tv_hours_value"
             style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_schedule_black_24dp"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/ic_schedule_black_24dp"
             tools:text="From 07:00 to 23:30" />
+
+        <TextView
+            android:id="@+id/useful_tv_prices_value"
+            style="@style/CustomBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/ic_attach_money_black_24dp"
+            tools:text="Child 7.5 €. Student 12 €. Adult 13.5 €." />
+
+        <TextView
+            android:id="@+id/useful_tv_specificity"
+            style="@style/CustomBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_note_black_24dp"
+            android:drawablePadding="4dp"
+            android:drawableStart="@drawable/ic_note_black_24dp"
+            tools:text="Hard. Routes are longer, most of them are hangovers. Well equipped." />
 
         <TextView
             style="@style/CustomTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/detail_prices" />
+            android:text="Web" />
 
         <TextView
-            android:id="@+id/useful_tv_prices_value"
+            android:id="@+id/useful_tv_web"
+            style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="www.antrebloc.com" />
+
+        <TextView
+            style="@style/CustomTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook" />
+
+        <TextView
+            android:id="@+id/useful_tv_facebook"
             style="@style/CustomBody"
-            tools:text="Child 7.5 €. Student 12 €. Adult 13.5 €."/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="https://www.facebook.com/antrebloc94" />
+
+        <TextView
+            style="@style/CustomTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email" />
+
+        <TextView
+            android:id="@+id/useful_tv_email"
+            style="@style/CustomBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="contact@antrebloc.com" />
+
 
     </LinearLayout>
 
