@@ -30,9 +30,9 @@ public class UsefulInfoFragment extends DetailFragment {
 
     @BindView(R.id.useful_iv)
     ImageView imageView;
-    @BindView(R.id.useful_tv_hours_value)
+    @BindView(R.id.useful_tv_hours)
     TextView hoursTextView;
-    @BindView(R.id.useful_tv_prices_value)
+    @BindView(R.id.useful_tv_prices)
     TextView pricesTextView;
 
     public static DetailFragment newInstance(Place place) {

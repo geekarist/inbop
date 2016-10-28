@@ -21,7 +21,7 @@
             android:contentDescription="@string/detail_image_desc" />
 
         <TextView
-            android:id="@+id/useful_tv_hours_value"
+            android:id="@+id/useful_tv_hours"
             style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             tools:text="From 07:00 to 23:30" />
 
         <TextView
-            android:id="@+id/useful_tv_prices_value"
+            android:id="@+id/useful_tv_prices"
             style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
