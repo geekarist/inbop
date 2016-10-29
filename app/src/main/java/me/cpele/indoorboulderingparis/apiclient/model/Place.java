@@ -13,6 +13,7 @@ public class Place {
     PlaceHours hours;
     PlacePrice price;
     String description;
+    String url;
 
     Place() {
     }
@@ -47,5 +48,9 @@ public class Place {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

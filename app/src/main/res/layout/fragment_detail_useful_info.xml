@@ -55,6 +55,7 @@
             style="@style/CustomBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:drawableLeft="@drawable/ic_web_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_web_black_24dp"

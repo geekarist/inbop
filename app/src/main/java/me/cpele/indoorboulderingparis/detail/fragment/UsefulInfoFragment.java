@@ -34,6 +34,10 @@ public class UsefulInfoFragment extends DetailFragment {
     TextView hoursTextView;
     @BindView(R.id.useful_tv_prices)
     TextView pricesTextView;
+    @BindView(R.id.useful_tv_specificity)
+    TextView specificityTextView;
+    @BindView(R.id.useful_tv_web)
+    TextView urlTextView;
 
     public static DetailFragment newInstance(Place place) {
 
@@ -59,6 +63,8 @@ public class UsefulInfoFragment extends DetailFragment {
         hoursTextView.setText(hours);
 
         pricesTextView.setText(toPricesString(place.getPrice()));
+        specificityTextView.setText(place.getDescription());
+        urlTextView.setText(place.getUrl());
 
         return view;
     }
