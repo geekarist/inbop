@@ -14,6 +14,7 @@ public class Place {
     PlacePrice price;
     String description;
     String url;
+    String facebook;
 
     Place() {
     }
@@ -52,5 +53,29 @@ public class Place {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", address='" + address + '\'' +
+                ", transport='" + transport + '\'' +
+                ", hours=" + hours +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", facebook='" + facebook + '\'' +
+                '}';
     }
 }

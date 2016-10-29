@@ -17,4 +17,6 @@
     <string name="detail_price_student">Student: </string>
     <string name="detail_price_child">Child: </string>
     <string name="detail_prices">Prices</string>
+    <string name="detail_facebook_unknown">Unknown</string>
+    <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
 </resources>

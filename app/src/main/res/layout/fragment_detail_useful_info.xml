@@ -61,14 +61,15 @@
             android:drawableStart="@drawable/ic_web_black_24dp"
             tools:text="www.antrebloc.com" />
 
-        <TextView
+        <Button
             android:id="@+id/useful_tv_facebook"
-            style="@style/CustomBody"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_facebook_box_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_facebook_box_black_24dp"
+            android:textAllCaps="false"
             tools:text="https://www.facebook.com/antrebloc94" />
 
         <TextView
