@@ -44,8 +44,10 @@ public class UsefulInfoFragment extends DetailFragment {
     TextView specificityTextView;
     @BindView(R.id.useful_tv_web)
     TextView urlTextView;
-    @BindView(R.id.useful_tv_facebook)
+    @BindView(R.id.useful_bt_facebook)
     Button facebookButton;
+    @BindView(R.id.useful_tv_email)
+    TextView emailTextView;
 
     private Place place;
 
@@ -99,10 +101,15 @@ public class UsefulInfoFragment extends DetailFragment {
             facebookButton.setVisibility(View.VISIBLE);
         }
 
+        if (place.getEmail() != null) {
+            emailTextView.setText(place.getEmail());
+            emailTextView.setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 
-    @OnClick(R.id.useful_tv_facebook)
+    @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
 
         Log.i(TAG, "Clicked on facebook: " + place);

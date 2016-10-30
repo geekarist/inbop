@@ -15,6 +15,7 @@ public class Place {
     String description;
     String url;
     String facebook;
+    String email;
 
     Place() {
     }
@@ -63,6 +64,50 @@ public class Place {
         this.facebook = facebook;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTransport(String transport) {
+        this.transport = transport;
+    }
+
+    public void setHours(PlaceHours hours) {
+        this.hours = hours;
+    }
+
+    public void setPrice(PlacePrice price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Place{" +
@@ -76,6 +121,7 @@ public class Place {
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
                 ", facebook='" + facebook + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
