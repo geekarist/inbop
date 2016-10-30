@@ -27,8 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_schedule_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_schedule_black_24dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             tools:text="From 07:00 to 23:30" />
 
@@ -38,8 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_attach_money_black_24dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             tools:text="Child 7.5 €. Student 12 €. Adult 13.5 €." />
 
@@ -49,8 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_note_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_note_black_24dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             tools:text="Hard. Routes are longer, most of them are hangovers. Well equipped." />
 
@@ -61,8 +64,9 @@
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:drawableLeft="@drawable/ic_web_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_web_black_24dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             tools:text="www.antrebloc.com" />
 
@@ -72,8 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_facebook_box_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_facebook_box_black_24dp"
+            android:gravity="center_vertical"
             android:textAllCaps="false"
             android:visibility="gone"
             tools:text="https://www.facebook.com/antrebloc94" />
@@ -84,8 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_email_black_24dp"
-            android:drawablePadding="4dp"
+            android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_email_black_24dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             tools:text="contact@antrebloc.com" />
 
