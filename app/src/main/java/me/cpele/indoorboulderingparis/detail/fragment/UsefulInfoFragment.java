@@ -67,17 +67,37 @@ public class UsefulInfoFragment extends DetailFragment {
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
-        Glide.with(this).load(BuildConfig.PLACES_API_BASE_URL + place.getImgUrl()).centerCrop().into(imageView);
+        if (place.getImgUrl() != null) {
+            Glide.with(this).load(BuildConfig.PLACES_API_BASE_URL + place.getImgUrl()).centerCrop().into(imageView);
+            imageView.setVisibility(View.VISIBLE);
+        }
 
-        String hours = toHoursString(place.getHours());
-        hoursTextView.setText(hours);
+        if (place.getHours() != null) {
+            String hours = toHoursString(place.getHours());
+            hoursTextView.setText(hours);
+            hoursTextView.setVisibility(View.VISIBLE);
+        }
 
-        pricesTextView.setText(toPricesString(place.getPrice()));
-        specificityTextView.setText(place.getDescription());
-        urlTextView.setText(place.getUrl());
+        if (place.getPrice() != null) {
+            pricesTextView.setText(toPricesString(place.getPrice()));
+            pricesTextView.setVisibility(View.VISIBLE);
+        }
 
-        String fbPage = extractPageName(place.getFacebook());
-        facebookButton.setText(fbPage);
+        if (place.getDescription() != null) {
+            specificityTextView.setText(place.getDescription());
+            specificityTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (place.getUrl() != null) {
+            urlTextView.setText(place.getUrl());
+            urlTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (place.getFacebook() != null) {
+            String fbPage = extractPageName(place.getFacebook());
+            facebookButton.setText(fbPage);
+            facebookButton.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }

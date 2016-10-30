@@ -18,7 +18,8 @@
             android:id="@+id/useful_iv"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:contentDescription="@string/detail_image_desc" />
+            android:contentDescription="@string/detail_image_desc"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/useful_tv_hours"
@@ -28,6 +29,7 @@
             android:drawableLeft="@drawable/ic_schedule_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_schedule_black_24dp"
+            android:visibility="gone"
             tools:text="From 07:00 to 23:30" />
 
         <TextView
@@ -38,6 +40,7 @@
             android:drawableLeft="@drawable/ic_attach_money_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_attach_money_black_24dp"
+            android:visibility="gone"
             tools:text="Child 7.5 €. Student 12 €. Adult 13.5 €." />
 
         <TextView
@@ -48,6 +51,7 @@
             android:drawableLeft="@drawable/ic_note_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_note_black_24dp"
+            android:visibility="gone"
             tools:text="Hard. Routes are longer, most of them are hangovers. Well equipped." />
 
         <TextView
@@ -59,6 +63,7 @@
             android:drawableLeft="@drawable/ic_web_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_web_black_24dp"
+            android:visibility="gone"
             tools:text="www.antrebloc.com" />
 
         <Button
@@ -70,6 +75,7 @@
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_facebook_box_black_24dp"
             android:textAllCaps="false"
+            android:visibility="gone"
             tools:text="https://www.facebook.com/antrebloc94" />
 
         <TextView
@@ -80,8 +86,8 @@
             android:drawableLeft="@drawable/ic_email_black_24dp"
             android:drawablePadding="4dp"
             android:drawableStart="@drawable/ic_email_black_24dp"
+            android:visibility="gone"
             tools:text="contact@antrebloc.com" />
-
 
     </LinearLayout>
 
