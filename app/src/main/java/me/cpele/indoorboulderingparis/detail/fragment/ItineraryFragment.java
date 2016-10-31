@@ -7,20 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.indoorboulderingparis.R;
 import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
 
-public class ItineraryFragment extends DetailFragment {
+public class ItineraryFragment extends DetailFragment implements OnMapReadyCallback {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
     @BindView(R.id.itinerary_tv_address)
     TextView addressTextView;
+    @BindView(R.id.itinerary_mv)
+    MapView mapView;
+
+    private Place place;
 
     public static DetailFragment newInstance(Place place) {
 
@@ -38,9 +47,11 @@ public class ItineraryFragment extends DetailFragment {
         View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
-        Place place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
         addressTextView.setText(place.getAddress());
+
+        mapView.getMapAsync(this);
 
         return view;
     }
@@ -48,5 +59,13 @@ public class ItineraryFragment extends DetailFragment {
     @Override
     public String getTitle() {
         return "Itinerary";
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        double lat = 48.8033786;
+        double lon = 2.3659669;
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)));
     }
 }
