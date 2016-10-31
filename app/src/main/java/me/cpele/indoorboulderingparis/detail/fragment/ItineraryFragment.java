@@ -1,14 +1,16 @@
 package me.cpele.indoorboulderingparis.detail.fragment;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -26,8 +28,8 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
     @BindView(R.id.itinerary_tv_address)
     TextView addressTextView;
-    @BindView(R.id.itinerary_mv)
-    MapView mapView;
+
+    private MapFragment mapFragment;
 
     private Place place;
 
@@ -51,7 +53,10 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
         addressTextView.setText(place.getAddress());
 
-        mapView.getMapAsync(this);
+        FragmentActivity activity = getActivity();
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
+        mapFragment.getMapAsync(this);
 
         return view;
     }
