@@ -52,14 +52,23 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
-        addressTextView.setText(place.getAddress());
+        addressTextView.setText(place.getPosition().getAddress());
 
         FragmentActivity activity = getActivity();
         FragmentManager fragmentManager = activity.getFragmentManager();
         mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
-        mapFragment.getMapAsync(this);
+
+        if (hasValidPosition(place)) {
+            mapFragment.getMapAsync(this);
+        }
 
         return view;
+    }
+
+    private boolean hasValidPosition(Place place) {
+        return place.getPosition() != null
+                && place.getPosition().getLat() != null
+                && place.getPosition().getLon() != null;
     }
 
     @Override
@@ -70,10 +79,10 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        double lat = 48.8033786;
-        double lon = 2.3659669;
+        double lat = place.getPosition().getLat();
+        double lon = place.getPosition().getLon();
         LatLng placePosition = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(placePosition));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(placePosition));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
     }
 }
