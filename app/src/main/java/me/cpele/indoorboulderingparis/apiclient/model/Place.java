@@ -8,8 +8,7 @@ public class Place {
     String name;
     String city;
     String imgUrl;
-    String address;
-    String transport;
+    PlacePosition position;
     PlaceHours hours;
     PlacePrice price;
     String description;
@@ -24,36 +23,64 @@ public class Place {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getImgUrl() {
         return imgUrl;
     }
 
-    public String getAddress() {
-        return address;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public String getTransport() {
-        return transport;
+    public PlacePosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(PlacePosition position) {
+        this.position = position;
     }
 
     public PlaceHours getHours() {
         return hours;
     }
 
+    public void setHours(PlaceHours hours) {
+        this.hours = hours;
+    }
+
     public PlacePrice getPrice() {
         return price;
+    }
+
+    public void setPrice(PlacePrice price) {
+        this.price = price;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getFacebook() {
@@ -64,40 +91,12 @@ public class Place {
         this.facebook = facebook;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
     public void setAddress(String address) {
-        this.address = address;
+        this.position.setAddress(address);
     }
 
     public void setTransport(String transport) {
-        this.transport = transport;
-    }
-
-    public void setHours(PlaceHours hours) {
-        this.hours = hours;
-    }
-
-    public void setPrice(PlacePrice price) {
-        this.price = price;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+        this.position.setTransport(transport);
     }
 
     public String getEmail() {
@@ -114,8 +113,7 @@ public class Place {
                 "name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
-                ", address='" + address + '\'' +
-                ", transport='" + transport + '\'' +
+                ", position=" + position +
                 ", hours=" + hours +
                 ", price=" + price +
                 ", description='" + description + '\'' +

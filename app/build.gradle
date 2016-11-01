@@ -48,6 +48,11 @@ dependencies {
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:design:${supportVersion}"
 
+    //noinspection GradleDependency
+    compile 'com.google.android.gms:play-services:9.6.1'
+    //noinspection GradleDependency
+    compile 'com.google.android.gms:play-services-maps:9.6.1'
+
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 

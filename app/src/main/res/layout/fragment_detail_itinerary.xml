@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <fragment
+            android:id="@+id/itinerary_mf"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
         <TextView
             android:id="@+id/itinerary_tv_address_label"
             style="@style/CustomTitle"
