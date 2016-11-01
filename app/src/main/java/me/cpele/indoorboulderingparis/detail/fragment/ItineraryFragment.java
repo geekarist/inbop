@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -71,6 +72,8 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
         double lat = 48.8033786;
         double lon = 2.3659669;
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)));
+        LatLng placePosition = new LatLng(lat, lon);
+        googleMap.addMarker(new MarkerOptions().position(placePosition));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(placePosition));
     }
 }
