@@ -60,6 +60,8 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
         if (hasValidPosition(place)) {
             mapFragment.getMapAsync(this);
+        } else {
+            fragmentManager.beginTransaction().hide(mapFragment).commit();
         }
 
         return view;
