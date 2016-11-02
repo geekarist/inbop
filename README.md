@@ -5,6 +5,8 @@ Make climbing easier using an Android application.
 ## Features
 
 - List places near Paris
+- Display useful info 
+- Show a map
 
 ## Planned
 
