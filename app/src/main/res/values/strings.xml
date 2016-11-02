@@ -1,22 +1,23 @@
 <resources>
     <string name="app_name">Inbop</string>
 
-    <string name="place_dark_overlay">Dark Overlay</string>
-    <string name="place_picture">Picture of Place</string>
+    <string name="place_dark_overlay">Calque sombre</string>
+    <string name="place_picture">Image du lieu</string>
 
-    <string name="list_loading">Loading…</string>
-    <string name="list_try_again">Try again</string>
-    <string name="list_error_loading">Sorry, there was an error.</string>
+    <string name="list_loading">Chargement en cours…</string>
+    <string name="list_try_again">Réessayer</string>
+    <string name="list_error_loading">Désolé, une erreur est survenue.</string>
 
-    <string name="detail_image_desc">Picture of the place</string>
-    <string name="detail_address_label">Address</string>
-    <string name="detail_hours_label">Hours</string>
-    <string name="detail_hours">Weekdays from %1$s to %2$s - Weekend from %3$s to %4$s</string>
-    <string name="detail_what">What you\'ll find here</string>
-    <string name="detail_price_adult">Adult: </string>
-    <string name="detail_price_student">Student: </string>
-    <string name="detail_price_child">Child: </string>
-    <string name="detail_prices">Prices</string>
-    <string name="detail_facebook_unknown">Unknown</string>
+    <string name="detail_image_desc">Image du lieu</string>
+    <string name="detail_address_label">Adresse</string>
+    <string name="detail_hours_label">Horaires</string>
+    <string name="detail_hours">Semaine de %1$s à %2$s - Weekend de %3$s à %4$s</string>
+    <string name="detail_price_adult">Adulte : </string>
+    <string name="detail_price_student">Etudiant : </string>
+    <string name="detail_price_child">Enfant : </string>
+    <string name="detail_prices">Tarifs</string>
+    <string name="detail_facebook_unknown">Inconnu</string>
     <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
+    <string name="detail_title_useful">Informations pratiques</string>
+    <string name="detail_title_itinerary">Accès</string>
 </resources>

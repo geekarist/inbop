@@ -75,7 +75,7 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
     @Override
     public String getTitle() {
-        return "Itinerary";
+        return getString(R.string.detail_title_itinerary);
     }
 
     @Override

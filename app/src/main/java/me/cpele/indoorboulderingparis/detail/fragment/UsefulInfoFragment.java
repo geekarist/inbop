@@ -170,6 +170,6 @@ public class UsefulInfoFragment extends DetailFragment {
 
     @Override
     public String getTitle() {
-        return "Useful info";
+        return getString(R.string.detail_title_useful);
     }
 }
