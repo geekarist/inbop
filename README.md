@@ -1,7 +1,6 @@
 # Inbop
 
-You are in Paris, you want to do bouldering? It's raining/snowing/night? Don't have a car?
-Inbop will improve your climbing experience.
+Make climbing easier using an Android application.
 
 ## Features
 
@@ -9,13 +8,15 @@ Inbop will improve your climbing experience.
 
 ## Planned
 
-- Display useful info about places
-- Display pictures
-- Display directions
-- Show a map
-- List places in order of proximity
-- Pretty splash screen
-- Eiffel tower in icon
-- Use Java 8 language features: https://developer.android.com/guide/platform/j8-jack.html
-  
-  
+- Describe places
+  - Useful info
+  - Pictures
+  - Directions
+  - Map
+  - List places in order of proximity
+- Follow progress
+- UI
+  - Pretty splash screen
+  - Eiffel tower in icon
+- Technical
+  - Use Java 8 language features: https://developer.android.com/guide/platform/j8-jack.html
