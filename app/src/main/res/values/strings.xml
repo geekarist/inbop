@@ -18,6 +18,6 @@
     <string name="detail_prices">Tarifs</string>
     <string name="detail_facebook_unknown">Inconnu</string>
     <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
-    <string name="detail_title_useful">Informations pratiques</string>
+    <string name="detail_title_useful">Informations</string>
     <string name="detail_title_itinerary">Accès</string>
 </resources>
