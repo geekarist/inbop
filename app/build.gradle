@@ -34,6 +34,10 @@ android {
             applicationId "me.cpele.indoorboulderingparis.prod"
         }
     }
+
+    lintOptions {
+        warning 'InvalidPackage'
+    }
 }
 
 def supportVersion = '25.0.0'
