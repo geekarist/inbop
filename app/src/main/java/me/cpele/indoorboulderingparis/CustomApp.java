@@ -1,7 +1,7 @@
 package me.cpele.indoorboulderingparis;
 
-import android.app.Application;
 import android.os.StrictMode;
+import android.support.multidex.MultiDexApplication;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -11,7 +11,7 @@ import me.cpele.indoorboulderingparis.apiclient.PlacesService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CustomApp extends Application {
+public class CustomApp extends MultiDexApplication {
 
     private static CustomApp instance;
 

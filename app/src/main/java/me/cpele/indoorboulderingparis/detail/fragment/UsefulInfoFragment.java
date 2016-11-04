@@ -1,5 +1,6 @@
 package me.cpele.indoorboulderingparis.detail.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,12 +52,10 @@ public class UsefulInfoFragment extends DetailFragment {
 
     private Place place;
 
-    public static DetailFragment newInstance(Place place) {
+    public static DetailFragment newInstance(Context context, Place place) {
 
         UsefulInfoFragment fragment = new UsefulInfoFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("ARG_PLACE", Parcels.wrap(place));
-        fragment.setArguments(bundle);
+        fragment.setup(context, place);
         return fragment;
     }
 
@@ -170,6 +169,6 @@ public class UsefulInfoFragment extends DetailFragment {
 
     @Override
     public String getTitle() {
-        return "Useful info";
+        return getContext().getString(R.string.detail_title_useful);
     }
 }

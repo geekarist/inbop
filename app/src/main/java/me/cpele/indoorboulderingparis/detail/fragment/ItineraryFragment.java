@@ -1,6 +1,7 @@
 package me.cpele.indoorboulderingparis.detail.fragment;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -34,12 +35,10 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
     private Place place;
 
-    public static DetailFragment newInstance(Place place) {
+    public static DetailFragment newInstance(Context context, Place place) {
 
         ItineraryFragment fragment = new ItineraryFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ARG_PLACE, Parcels.wrap(place));
-        fragment.setArguments(bundle);
+        fragment.setup(context, place);
         return fragment;
     }
 
@@ -75,7 +74,7 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
     @Override
     public String getTitle() {
-        return "Itinerary";
+        return getContext().getString(R.string.detail_title_itinerary);
     }
 
     @Override
