@@ -7,7 +7,6 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
 
-        // TODO: Use hash for production
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
 
         applicationId "me.cpele.inbop"
@@ -36,6 +35,7 @@ android {
         }
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
+            buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/6efa6c19efd466f0a7fd2e84397f07c12ca4d9d9/places.json"')
             applicationId "me.cpele.inbop.prod"
         }
     }
