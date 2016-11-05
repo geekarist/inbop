@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.list;
+package me.cpele.inbop.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.model.Place;
 
 class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 

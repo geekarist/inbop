@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.list;
+package me.cpele.inbop.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,10 +12,10 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.indoorboulderingparis.BuildConfig;
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.detail.DetailActivity;
+import me.cpele.inbop.BuildConfig;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
 

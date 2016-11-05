@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.apiclient.model;
+package me.cpele.inbop.apiclient.model;
 
 import org.parceler.Parcel;
 

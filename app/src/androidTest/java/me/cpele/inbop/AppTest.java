@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis;
+package me.cpele.inbop;
 
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import me.cpele.indoorboulderingparis.list.ListActivity;
+import me.cpele.inbop.list.ListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

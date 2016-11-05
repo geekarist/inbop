@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.detail;
+package me.cpele.inbop.detail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +16,10 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.detail.fragment.ItineraryFragment;
-import me.cpele.indoorboulderingparis.detail.fragment.UsefulInfoFragment;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.fragment.ItineraryFragment;
+import me.cpele.inbop.detail.fragment.UsefulInfoFragment;
 
 public class DetailActivity extends AppCompatActivity {
 

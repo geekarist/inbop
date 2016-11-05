@@ -7,13 +7,14 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
 
+        // TODO: Use hash for production
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
 
-        applicationId "me.cpele.indoorboulderingparis"
+        applicationId "me.cpele.inbop"
         minSdkVersion 15
         targetSdkVersion 25
+        versionName "0.0.1"
         versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr"
 
@@ -31,11 +32,11 @@ android {
     productFlavors {
         development {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
-            applicationId "me.cpele.indoorboulderingparis.dev"
+            applicationId "me.cpele.inbop.dev"
         }
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
-            applicationId "me.cpele.indoorboulderingparis.prod"
+            applicationId "me.cpele.inbop.prod"
         }
     }
 
