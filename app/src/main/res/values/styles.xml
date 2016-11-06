@@ -1,11 +1,33 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="CustomBody" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:paddingEnd" tools:targetApi="jelly_bean_mr1">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingStart" tools:targetApi="jelly_bean_mr1">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="ActionBarThemeOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 
 </resources>

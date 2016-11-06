@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">Indoor Bouldering Paris</string>
+    <string name="app_name">Inbop</string>
+
+    <string name="place_dark_overlay">Calque sombre</string>
+    <string name="place_picture">Image du lieu</string>
+
+    <string name="list_try_again">Réessayer</string>
+    <string name="list_error_loading">Désolé, une erreur est survenue.</string>
+
+    <string name="detail_image_desc">Image du lieu</string>
+    <string name="detail_address_label">Adresse</string>
+    <string name="detail_hours">Semaine de %1$s à %2$s - Weekend de %3$s à %4$s</string>
+    <string name="detail_price_adult">Adulte : </string>
+    <string name="detail_price_student">Etudiant : </string>
+    <string name="detail_price_child">Enfant : </string>
+    <string name="detail_facebook_unknown">Inconnu</string>
+    <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
+    <string name="detail_title_useful">Informations</string>
+    <string name="detail_title_itinerary">Accès</string>
 </resources>
