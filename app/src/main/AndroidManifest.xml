@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="me.cpele.indoorboulderingparis">
+    package="me.cpele.inbop">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".CustomApp"
+        android:name="me.cpele.inbop.CustomApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +23,7 @@
             android:value="AIzaSyBc89yCe-QlHL5cd9u7jU5GcedpSAhMVYQ" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name="me.cpele.inbop.SplashActivity"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
@@ -33,16 +33,16 @@
 
         </activity>
 
-        <activity android:name=".list.ListActivity" />
+        <activity android:name="me.cpele.inbop.list.ListActivity" />
 
         <activity
-            android:name=".detail.DetailActivity"
-            android:parentActivityName=".list.ListActivity"
+            android:name="me.cpele.inbop.detail.DetailActivity"
+            android:parentActivityName="me.cpele.inbop.list.ListActivity"
             tools:ignore="UnusedAttribute">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".list.ListActivity" />
+                android:value="me.cpele.inbop.list.ListActivity" />
         </activity>
 
     </application>

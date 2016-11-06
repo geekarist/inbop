@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.detail.fragment;
+package me.cpele.inbop.detail.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import org.parceler.Parcels;
 
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.Place;
 
 public abstract class DetailFragment extends Fragment {
 

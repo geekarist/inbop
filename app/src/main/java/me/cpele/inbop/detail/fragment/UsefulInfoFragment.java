@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.detail.fragment;
+package me.cpele.inbop.detail.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,11 +24,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.indoorboulderingparis.BuildConfig;
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
-import me.cpele.indoorboulderingparis.apiclient.model.PlaceHours;
-import me.cpele.indoorboulderingparis.apiclient.model.PlacePrice;
+import me.cpele.inbop.BuildConfig;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.PlaceHours;
+import me.cpele.inbop.apiclient.model.PlacePrice;
 
 public class UsefulInfoFragment extends DetailFragment {
 

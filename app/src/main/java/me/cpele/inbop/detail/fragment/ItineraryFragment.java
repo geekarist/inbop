@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.detail.fragment;
+package me.cpele.inbop.detail.fragment;
 
 import android.app.FragmentManager;
 import android.content.Context;
@@ -21,8 +21,8 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.model.Place;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.model.Place;
 
 public class ItineraryFragment extends DetailFragment implements OnMapReadyCallback {
 

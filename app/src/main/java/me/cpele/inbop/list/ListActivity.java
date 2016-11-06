@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.list;
+package me.cpele.inbop.list;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +11,10 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.indoorboulderingparis.CustomApp;
-import me.cpele.indoorboulderingparis.R;
-import me.cpele.indoorboulderingparis.apiclient.PlacesService;
-import me.cpele.indoorboulderingparis.apiclient.model.PlaceList;
+import me.cpele.inbop.CustomApp;
+import me.cpele.inbop.R;
+import me.cpele.inbop.apiclient.PlacesService;
+import me.cpele.inbop.apiclient.model.PlaceList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

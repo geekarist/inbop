@@ -1,4 +1,4 @@
-package me.cpele.indoorboulderingparis.detail;
+package me.cpele.inbop.detail;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.cpele.indoorboulderingparis.detail.fragment.DetailFragment;
+import me.cpele.inbop.detail.fragment.DetailFragment;
 
 class DetailPagerAdapter extends FragmentPagerAdapter {
 
