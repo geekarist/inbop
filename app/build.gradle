@@ -24,6 +24,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
