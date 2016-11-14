@@ -17,4 +17,5 @@
     <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
     <string name="detail_title_useful">Informations</string>
     <string name="detail_title_itinerary">Accès</string>
+    <string name="detail_star">Ajout en favori</string>
 </resources>

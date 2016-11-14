@@ -10,7 +10,9 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -55,6 +57,15 @@ public class DetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean creation = super.onCreateOptionsMenu(menu);
+        menu.add(Menu.NONE, R.string.detail_star, Menu.NONE, R.string.detail_star);
+        return creation;
+    }
+
+
+
     public static Intent newIntent(Context context, Place place) {
 
         Intent intent = new Intent(context, DetailActivity.class);
@@ -68,8 +79,11 @@ public class DetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            case R.string.detail_star:
+                Toast.makeText(this, "TODO: Implement starring", Toast.LENGTH_SHORT).show();
                 return true;
         }
 
