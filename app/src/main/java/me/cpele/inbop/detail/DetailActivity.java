@@ -18,6 +18,7 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.ItineraryFragment;
@@ -33,6 +34,8 @@ public class DetailActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.detail_tl)
     TabLayout tabLayout;
+
+    private AppPreferences preferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        preferences = CustomApp.getInstance().getPreferences();
     }
 
     @Override
@@ -84,6 +89,8 @@ public class DetailActivity extends AppCompatActivity {
 
             case R.string.detail_star:
                 Toast.makeText(this, "TODO: Implement starring", Toast.LENGTH_SHORT).show();
+                String uuid = "TODO";
+                preferences.toggleStar(uuid);
                 return true;
         }
 
