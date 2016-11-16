@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
@@ -44,8 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
-        Place place = Parcels.unwrap(extra);
+        Place place = getPlace();
 
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
@@ -62,14 +62,18 @@ public class DetailActivity extends AppCompatActivity {
         preferences = CustomApp.getInstance().getPreferences();
     }
 
+    @NonNull
+    private Place getPlace() {
+        Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
+        return Parcels.unwrap(extra);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean creation = super.onCreateOptionsMenu(menu);
         menu.add(Menu.NONE, R.string.detail_star, Menu.NONE, R.string.detail_star);
         return creation;
     }
-
-
 
     public static Intent newIntent(Context context, Place place) {
 
@@ -88,8 +92,8 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
 
             case R.string.detail_star:
-                Toast.makeText(this, "TODO: Implement starring", Toast.LENGTH_SHORT).show();
-                String uuid = "TODO";
+                String uuid = getPlace().getId();
+                Toast.makeText(this, "Starring " + uuid, Toast.LENGTH_SHORT).show();
                 preferences.toggleStar(uuid);
                 return true;
         }
