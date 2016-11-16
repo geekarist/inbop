@@ -18,6 +18,7 @@ public class CustomApp extends MultiDexApplication {
 
     private PlacesService placesService;
     private AppPreferences preferences;
+    private Gson gson;
 
     @Override
     public void onCreate() {
@@ -27,7 +28,7 @@ public class CustomApp extends MultiDexApplication {
             instance = this;
         }
 
-        Gson gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
                 .create();
 
@@ -42,7 +43,7 @@ public class CustomApp extends MultiDexApplication {
             StrictMode.enableDefaults();
         }
 
-        preferences = new AppPreferences();
+        preferences = new AppPreferences(this, gson);
     }
 
     public static CustomApp getInstance() {
