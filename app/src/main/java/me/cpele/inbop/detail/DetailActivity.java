@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -70,9 +71,9 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean creation = super.onCreateOptionsMenu(menu);
-        menu.add(Menu.NONE, R.string.detail_star, Menu.NONE, R.string.detail_star);
-        return creation;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_detail_options, menu);
+        return true;
     }
 
     public static Intent newIntent(Context context, Place place) {
@@ -91,10 +92,12 @@ public class DetailActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
 
-            case R.string.detail_star:
+            case R.id.detail_star:
                 String uuid = getPlace().getId();
                 Toast.makeText(this, "Starring " + uuid, Toast.LENGTH_SHORT).show();
                 preferences.toggleStar(uuid);
+                int starLabel = preferences.isStarred(uuid) ? R.string.detail_unstar : R.string.detail_star;
+                item.setTitle(starLabel);
                 return true;
         }
 

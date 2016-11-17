@@ -2,6 +2,7 @@ package me.cpele.inbop.detail;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,10 +37,15 @@ public class AppPreferences {
         sharedPreferences.edit().putString(NAME_STARS, starsJson).apply();
     }
 
-    private Map<String, Boolean> loadStars() {
+    private @NonNull Map<String, Boolean> loadStars() {
         String starsJson = sharedPreferences.getString(NAME_STARS, "{}");
         Type type = new TypeToken<Map<String, Boolean>>() {
         }.getType();
         return gson.fromJson(starsJson, type);
+    }
+
+    public boolean isStarred(@NonNull String id) {
+        Map<String, Boolean> stars = loadStars();
+        return stars.get(id);
     }
 }
