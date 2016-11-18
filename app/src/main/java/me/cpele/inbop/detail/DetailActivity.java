@@ -73,6 +73,8 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_detail_options, menu);
+        MenuItem starItem = menu.findItem(R.id.detail_star);
+        updateStarLabel(starItem);
         return true;
     }
 
@@ -93,14 +95,38 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
 
             case R.id.detail_star:
-                String uuid = getPlace().getId();
-                Toast.makeText(this, "Starring " + uuid, Toast.LENGTH_SHORT).show();
-                preferences.toggleStar(uuid);
-                int starLabel = preferences.isStarred(uuid) ? R.string.detail_unstar : R.string.detail_star;
-                item.setTitle(starLabel);
+
+                preferences.toggleStar(getPlace().getId());
+                indicateStarringChange();
+                updateStarLabel(item);
+
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void indicateStarringChange() {
+
+        String id = getPlace().getId();
+
+        int indicationId;
+        if (preferences.isStarred(id)) indicationId = R.string.detail_star_indication;
+        else indicationId = R.string.detail_unstar_indication;
+
+        String indication = getString(indicationId, getPlace().getName());
+
+        Toast.makeText(this, indication, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateStarLabel(MenuItem item) {
+
+        String id = getPlace().getId();
+
+        int starLabel;
+        if (preferences.isStarred(id)) starLabel = R.string.detail_unstar;
+        else starLabel = R.string.detail_star;
+
+        item.setTitle(starLabel);
     }
 }

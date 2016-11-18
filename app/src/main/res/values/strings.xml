@@ -17,6 +17,8 @@
     <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
     <string name="detail_title_useful">Informations</string>
     <string name="detail_title_itinerary">Accès</string>
-    <string name="detail_star">Ajout en favori</string>
+    <string name="detail_star">Ajouter en favori</string>
     <string name="detail_unstar">Retirer des favoris</string>
+    <string name="detail_star_indication">Ajout du favori : %1$s</string>
+    <string name="detail_unstar_indication">Retrait du favori : %1$s</string>
 </resources>
