@@ -46,7 +46,6 @@ public class AppPreferences {
 
     public boolean isStarred(@NonNull String id) {
         Map<String, Boolean> stars = loadStars();
-        if (stars != null) return stars.get(id);
-        return false;
+        return Boolean.TRUE.equals(stars.get(id));
     }
 }
