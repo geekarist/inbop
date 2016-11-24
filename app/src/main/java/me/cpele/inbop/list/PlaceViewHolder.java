@@ -52,6 +52,10 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
                 .centerCrop()
                 .into(imageView);
 
+        updateFavoriteImage(place);
+    }
+
+    private void updateFavoriteImage(Place place) {
         if (preferences.isStarred(place.getId())) {
             favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
         } else {
@@ -60,10 +64,15 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     }
 
     @OnClick(R.id.place_cv)
-    void onClick() {
-
+    void onClickPlace() {
         Context context = itemView.getContext();
         Intent intent = DetailActivity.newIntent(context, place);
         context.startActivity(intent);
+    }
+
+    @OnClick(R.id.place_iv_favorite)
+    void onClickFavorite() {
+        preferences.toggleStar(place.getId());
+        updateFavoriteImage(place);
     }
 }
