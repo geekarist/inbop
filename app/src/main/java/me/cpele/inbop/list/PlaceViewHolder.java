@@ -13,13 +13,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.BuildConfig;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
-
-    private Place place;
 
     @BindView(R.id.place_tv_name)
     TextView nameTextView;
@@ -27,10 +27,16 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     TextView cityTextView;
     @BindView(R.id.place_iv_picture)
     ImageView imageView;
+    @BindView(R.id.place_iv_favorite)
+    ImageView favoriteView;
+
+    private Place place;
+    private final AppPreferences preferences;
 
     PlaceViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        preferences = CustomApp.getInstance().getPreferences();
     }
 
     void bind(Place place) {
@@ -45,6 +51,12 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
                 .load(url)
                 .centerCrop()
                 .into(imageView);
+
+        if (preferences.isStarred(place.getId())) {
+            favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
+        } else {
+            favoriteView.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+        }
     }
 
     @OnClick(R.id.place_cv)
