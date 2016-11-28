@@ -74,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_detail_options, menu);
         MenuItem starItem = menu.findItem(R.id.detail_star);
-        updateStarLabel(starItem);
+        updateStarMenuItem(starItem);
         return true;
     }
 
@@ -98,7 +98,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 preferences.toggleStar(getPlace().getId());
                 indicateStarringChange();
-                updateStarLabel(item);
+                updateStarMenuItem(item);
 
                 return true;
         }
@@ -119,14 +119,22 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, indication, Toast.LENGTH_SHORT).show();
     }
 
-    private void updateStarLabel(MenuItem item) {
+    private void updateStarMenuItem(MenuItem item) {
 
         String id = getPlace().getId();
 
         int starLabel;
-        if (preferences.isStarred(id)) starLabel = R.string.detail_unstar;
-        else starLabel = R.string.detail_star;
+        int starIcon;
+
+        if (preferences.isStarred(id)) {
+            starLabel = R.string.detail_unstar;
+            starIcon = R.drawable.ic_favorite_white_24dp;
+        } else {
+            starLabel = R.string.detail_star;
+            starIcon = R.drawable.ic_favorite_border_white_24dp;
+        }
 
         item.setTitle(starLabel);
+        item.setIcon(starIcon);
     }
 }
