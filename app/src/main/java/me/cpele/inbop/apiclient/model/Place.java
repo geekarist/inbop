@@ -5,6 +5,7 @@ import org.parceler.Parcel;
 @Parcel
 public class Place {
 
+    String id;
     String name;
     String city;
     String imgUrl;
@@ -17,6 +18,14 @@ public class Place {
     String email;
 
     Place() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -110,7 +119,8 @@ public class Place {
     @Override
     public String toString() {
         return "Place{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", position=" + position +

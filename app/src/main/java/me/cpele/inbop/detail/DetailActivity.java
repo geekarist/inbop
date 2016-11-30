@@ -4,18 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.ItineraryFragment;
@@ -32,6 +37,8 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.detail_tl)
     TabLayout tabLayout;
 
+    private AppPreferences preferences;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
-        Place place = Parcels.unwrap(extra);
+        Place place = getPlace();
 
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
@@ -53,6 +59,23 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        preferences = CustomApp.getInstance().getPreferences();
+    }
+
+    @NonNull
+    private Place getPlace() {
+        Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
+        return Parcels.unwrap(extra);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_detail_options, menu);
+        MenuItem starItem = menu.findItem(R.id.detail_star);
+        updateStarMenuItem(starItem);
+        return true;
     }
 
     public static Intent newIntent(Context context, Place place) {
@@ -68,11 +91,50 @@ public class DetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            case R.id.detail_star:
+
+                preferences.toggleStar(getPlace().getId());
+                indicateStarringChange();
+                updateStarMenuItem(item);
+
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void indicateStarringChange() {
+
+        String id = getPlace().getId();
+
+        int indicationId;
+        if (preferences.isStarred(id)) indicationId = R.string.detail_star_indication;
+        else indicationId = R.string.detail_unstar_indication;
+
+        String indication = getString(indicationId, getPlace().getName());
+
+        Toast.makeText(this, indication, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateStarMenuItem(MenuItem item) {
+
+        String id = getPlace().getId();
+
+        int starLabel;
+        int starIcon;
+
+        if (preferences.isStarred(id)) {
+            starLabel = R.string.detail_unstar;
+            starIcon = R.drawable.ic_favorite_white_24dp;
+        } else {
+            starLabel = R.string.detail_star;
+            starIcon = R.drawable.ic_favorite_border_white_24dp;
+        }
+
+        item.setTitle(starLabel);
+        item.setIcon(starIcon);
     }
 }

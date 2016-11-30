@@ -29,10 +29,18 @@ android {
     }
 
     productFlavors {
+
         development {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
             applicationId "me.cpele.inbop.dev"
         }
+
+        offlineEmulation {
+            buildConfigField('String', 'PLACES_API_BASE_URL', '"http://10.0.2.2:8000"')
+            buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
+            applicationId "me.cpele.inbop.offline"
+        }
+
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
             buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/6efa6c19efd466f0a7fd2e84397f07c12ca4d9d9/places.json"')

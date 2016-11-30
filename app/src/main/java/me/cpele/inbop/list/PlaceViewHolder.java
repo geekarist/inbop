@@ -13,13 +13,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.BuildConfig;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
-
-    private Place place;
 
     @BindView(R.id.place_tv_name)
     TextView nameTextView;
@@ -27,10 +27,16 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     TextView cityTextView;
     @BindView(R.id.place_iv_picture)
     ImageView imageView;
+    @BindView(R.id.place_iv_favorite)
+    ImageView favoriteView;
+
+    private Place place;
+    private final AppPreferences preferences;
 
     PlaceViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        preferences = CustomApp.getInstance().getPreferences();
     }
 
     void bind(Place place) {
@@ -40,18 +46,33 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(place.getName());
         cityTextView.setText(place.getCity());
 
-        String url = BuildConfig.PLACES_API_BASE_URL + place.getImgUrl();
+        String url = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
         Glide.with(itemView.getContext())
                 .load(url)
                 .centerCrop()
                 .into(imageView);
+
+        updateFavoriteImage(place);
+    }
+
+    private void updateFavoriteImage(Place place) {
+        if (preferences.isStarred(place.getId())) {
+            favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
+        } else {
+            favoriteView.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+        }
     }
 
     @OnClick(R.id.place_cv)
-    void onClick() {
-
+    void onClickPlace() {
         Context context = itemView.getContext();
         Intent intent = DetailActivity.newIntent(context, place);
         context.startActivity(intent);
+    }
+
+    @OnClick(R.id.place_iv_favorite)
+    void onClickFavorite() {
+        preferences.toggleStar(place.getId());
+        updateFavoriteImage(place);
     }
 }
