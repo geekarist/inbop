@@ -46,7 +46,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(place.getName());
         cityTextView.setText(place.getCity());
 
-        String url = BuildConfig.PLACES_API_BASE_URL + place.getImgUrl();
+        String url = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
         Glide.with(itemView.getContext())
                 .load(url)
                 .centerCrop()

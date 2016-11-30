@@ -69,7 +69,8 @@ public class UsefulInfoFragment extends DetailFragment {
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
         if (place.getImgUrl() != null) {
-            Glide.with(this).load(BuildConfig.PLACES_API_BASE_URL + place.getImgUrl()).centerCrop().into(imageView);
+            String imgUrl = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
+            Glide.with(this).load(imgUrl).centerCrop().into(imageView);
             imageView.setVisibility(View.VISIBLE);
         }
 
