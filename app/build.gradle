@@ -43,7 +43,7 @@ android {
 
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
-            buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/6efa6c19efd466f0a7fd2e84397f07c12ca4d9d9/places.json"')
+            buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/450a18a89157ef0ea765385d13e22e78c8867b93/places.json"')
             applicationId "me.cpele.inbop.prod"
         }
     }
