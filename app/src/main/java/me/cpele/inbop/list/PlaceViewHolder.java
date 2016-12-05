@@ -13,10 +13,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.BuildConfig;
-import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
@@ -31,12 +29,12 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     ImageView favoriteView;
 
     private Place place;
-    private final AppPreferences preferences;
+    private final StarringListener starringListener;
 
-    PlaceViewHolder(View itemView) {
+    PlaceViewHolder(View itemView, StarringListener starringListener) {
         super(itemView);
+        this.starringListener = starringListener;
         ButterKnife.bind(this, itemView);
-        preferences = CustomApp.getInstance().getPreferences();
     }
 
     void bind(Place place) {
@@ -56,7 +54,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void updateFavoriteImage(Place place) {
-        if (preferences.isStarred(place.getId())) {
+        if (starringListener.isStarred(place.getId())) {
             favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
         } else {
             favoriteView.setImageResource(R.drawable.ic_favorite_border_white_24dp);
@@ -72,7 +70,14 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.place_iv_favorite)
     void onClickFavorite() {
-        preferences.toggleStar(place.getId());
+        starringListener.toggleStar(place.getId());
         updateFavoriteImage(place);
+    }
+
+    public interface StarringListener {
+
+        void toggleStar(String id);
+
+        boolean isStarred(String id);
     }
 }
