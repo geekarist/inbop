@@ -53,15 +53,30 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> implements Place
     }
 
     @Override
-    public void toggleStar(String id) {
+    public void toggleStar(@NonNull String id) {
 
         preferences.toggleStar(id);
+        int positionBefore = getPosition(id);
         Collections.sort(this.places, new PlaceComparator());
-        notifyDataSetChanged();
+        int positionAfter = getPosition(id);
+        notifyItemMoved(positionBefore, positionAfter);
+    }
+
+    private int getPosition(@NonNull String searchId) {
+
+        for (int i = 0; i < places.size(); i++) {
+            Place place = places.get(i);
+            String otherId = place.getId();
+            if (searchId.equals(otherId)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override
-    public boolean isStarred(String id) {
+    public boolean isStarred(@NonNull String id) {
         return preferences.isStarred(id);
     }
 
