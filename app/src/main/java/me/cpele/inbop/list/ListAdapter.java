@@ -80,6 +80,10 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> implements Place
         return preferences.isStarred(id);
     }
 
+    public void clear() {
+        places.clear();
+    }
+
     private class PlaceComparator implements Comparator<Place> {
         @Override
         public int compare(@NonNull Place p1, @NonNull Place p2) {
