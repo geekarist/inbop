@@ -7,6 +7,7 @@ Make climbing easier using an Android application.
 - List places near Paris
 - Display useful info 
 - Show a map
+- Star a place
 
 ## Planned
 
@@ -22,3 +23,4 @@ Make climbing easier using an Android application.
   - Eiffel tower in icon
 - Technical
   - Use Java 8 language features: https://developer.android.com/guide/platform/j8-jack.html
+  - Upgrade play services
