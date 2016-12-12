@@ -19,17 +19,21 @@ import me.cpele.inbop.detail.DetailActivity;
 
 class PlaceViewHolder extends RecyclerView.ViewHolder {
 
-    private Place place;
-
     @BindView(R.id.place_tv_name)
     TextView nameTextView;
     @BindView(R.id.place_tv_city)
     TextView cityTextView;
     @BindView(R.id.place_iv_picture)
     ImageView imageView;
+    @BindView(R.id.place_iv_favorite)
+    ImageView favoriteView;
 
-    PlaceViewHolder(View itemView) {
+    private Place place;
+    private final StarringListener starringListener;
+
+    PlaceViewHolder(View itemView, StarringListener starringListener) {
         super(itemView);
+        this.starringListener = starringListener;
         ButterKnife.bind(this, itemView);
     }
 
@@ -40,18 +44,40 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(place.getName());
         cityTextView.setText(place.getCity());
 
-        String url = BuildConfig.PLACES_API_BASE_URL + place.getImgUrl();
+        String url = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
         Glide.with(itemView.getContext())
                 .load(url)
                 .centerCrop()
                 .into(imageView);
+
+        updateFavoriteImage(place);
+    }
+
+    private void updateFavoriteImage(Place place) {
+        if (starringListener.isStarred(place.getId())) {
+            favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
+        } else {
+            favoriteView.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+        }
     }
 
     @OnClick(R.id.place_cv)
-    void onClick() {
-
+    void onClickPlace() {
         Context context = itemView.getContext();
         Intent intent = DetailActivity.newIntent(context, place);
         context.startActivity(intent);
+    }
+
+    @OnClick(R.id.place_iv_favorite)
+    void onClickFavorite() {
+        starringListener.toggleStar(place.getId());
+        updateFavoriteImage(place);
+    }
+
+    public interface StarringListener {
+
+        void toggleStar(String id);
+
+        boolean isStarred(String id);
     }
 }

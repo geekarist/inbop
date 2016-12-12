@@ -5,9 +5,9 @@
     android:id="@+id/place_cv"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginTop="7dp"
     android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp">
+    android:layout_marginRight="7dp"
+    android:layout_marginTop="7dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/place_rl"
@@ -50,6 +50,17 @@
             android:layout_marginStart="10dp"
             android:textColor="@android:color/white"
             tools:text="City of the place" />
+
+        <ImageView
+            android:id="@+id/place_iv_favorite"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/place_favorite"
+            android:src="@drawable/ic_favorite_border_white_24dp" />
 
     </RelativeLayout>
 

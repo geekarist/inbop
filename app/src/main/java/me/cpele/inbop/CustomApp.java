@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import me.cpele.inbop.apiclient.PlacesService;
+import me.cpele.inbop.detail.AppPreferences;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,6 +17,8 @@ public class CustomApp extends MultiDexApplication {
     private static CustomApp instance;
 
     private PlacesService placesService;
+    private AppPreferences preferences;
+    private Gson gson;
 
     @Override
     public void onCreate() {
@@ -25,7 +28,7 @@ public class CustomApp extends MultiDexApplication {
             instance = this;
         }
 
-        Gson gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
                 .create();
 
@@ -39,6 +42,8 @@ public class CustomApp extends MultiDexApplication {
         if (BuildConfig.DEBUG) {
             StrictMode.enableDefaults();
         }
+
+        preferences = new AppPreferences(this, gson);
     }
 
     public static CustomApp getInstance() {
@@ -47,5 +52,9 @@ public class CustomApp extends MultiDexApplication {
 
     public PlacesService getPlacesService() {
         return placesService;
+    }
+
+    public AppPreferences getPreferences() {
+        return preferences;
     }
 }
