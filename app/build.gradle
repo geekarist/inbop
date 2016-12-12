@@ -12,8 +12,8 @@ android {
         applicationId "me.cpele.inbop"
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "0.0.1"
-        versionCode 1
+        versionName "0.0.2"
+        versionCode 5
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr"
 
@@ -43,7 +43,7 @@ android {
 
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
-            buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/6efa6c19efd466f0a7fd2e84397f07c12ca4d9d9/places.json"')
+            buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/450a18a89157ef0ea765385d13e22e78c8867b93/places.json"')
             applicationId "me.cpele.inbop.prod"
         }
     }

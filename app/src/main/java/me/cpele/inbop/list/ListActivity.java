@@ -43,11 +43,16 @@ public class ListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        reload();
-
         adapter = new ListAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        reload();
     }
 
     @OnClick(R.id.list_bt_reload)
@@ -67,6 +72,7 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
+                adapter.clear();
                 adapter.addAll(response.body().getPlaces());
                 loadingLayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
