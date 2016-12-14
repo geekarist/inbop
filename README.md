@@ -18,9 +18,12 @@ Make climbing easier using an Android application.
   - Map
   - List places in order of proximity
 - Follow progress
+    - Data input
+    - Visualization
 - UI
   - Pretty splash screen
-  - Eiffel tower in icon
 - Technical
   - Use Java 8 language features: https://developer.android.com/guide/platform/j8-jack.html
   - Upgrade play services
+  - Improve architecture (MVP)
+  - Offline mode
