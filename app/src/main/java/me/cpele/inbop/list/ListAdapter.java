@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import me.cpele.inbop.CustomApp;
@@ -48,7 +47,7 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> implements Place
         this.places.addAll(places);
         // TODO: Make Place implement comparable to sort by name
 
-        Collections.sort(this.places, new PlaceComparator());
+        sortPlaces();
         notifyDataSetChanged();
     }
 
@@ -57,7 +56,7 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> implements Place
 
         preferences.toggleStar(id);
         int positionBefore = getPosition(id);
-        Collections.sort(this.places, new PlaceComparator());
+        sortPlaces();
         int positionAfter = getPosition(id);
         notifyItemMoved(positionBefore, positionAfter);
     }
@@ -84,14 +83,15 @@ class ListAdapter extends RecyclerView.Adapter<PlaceViewHolder> implements Place
         places.clear();
     }
 
-    private class PlaceComparator implements Comparator<Place> {
-        @Override
-        public int compare(@NonNull Place p1, @NonNull Place p2) {
+    private void sortPlaces() {
+
+        Collections.sort(this.places, (p1, p2) -> {
+
             boolean star1 = preferences.isStarred(p1.getId());
             boolean star2 = preferences.isStarred(p2.getId());
             if (star1 == star2) return 0;
             if (star1) return -1;
             return 1;
-        }
+        });
     }
 }
