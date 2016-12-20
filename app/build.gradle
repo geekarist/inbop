@@ -4,7 +4,7 @@ apply plugin: 'android-apt'
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
@@ -54,7 +54,7 @@ android {
     }
 }
 
-def supportVersion = '25.0.0'
+def supportVersion = '25.1.0'
 
 dependencies {
 
@@ -69,21 +69,21 @@ dependencies {
     compile "com.android.support:multidex:1.0.1"
 
     //noinspection GradleDependency
-    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.android.gms:play-services:10.0.1'
     //noinspection GradleDependency
-    compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
-    compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    compile 'org.parceler:parceler-api:1.1.5'
-    apt 'org.parceler:parceler:1.1.5'
+    compile 'org.parceler:parceler-api:1.1.6'
+    apt 'org.parceler:parceler:1.1.6'
 
     testCompile 'junit:junit:4.12'
 
