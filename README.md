@@ -43,3 +43,5 @@ Build times:
 - Without Jack:
 
         git checkout develop && ./gradlew clean assembleDevelopmentDebug
+        [...]
+        Total time: 1 mins 21.446 secs
