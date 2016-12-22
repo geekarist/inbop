@@ -8,18 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.inbop.CustomApp;
+import me.cpele.inbop.Consumer;
+import me.cpele.inbop.Injection;
 import me.cpele.inbop.R;
-import me.cpele.inbop.apiclient.PlacesService;
-import me.cpele.inbop.apiclient.model.PlaceList;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import me.cpele.inbop.apiclient.model.Place;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ListContract.View {
 
     private static final String TAG = ListActivity.class.getSimpleName();
 
@@ -34,6 +33,8 @@ public class ListActivity extends AppCompatActivity {
     @BindView(R.id.list_tb)
     Toolbar toolbar;
 
+    private ListContract.Presenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,15 @@ public class ListActivity extends AppCompatActivity {
         adapter = new ListAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mPresenter = Injection.ListModule.providePresenter();
+        mPresenter.attach(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.detach();
+        super.onDestroy();
     }
 
     @Override
@@ -66,27 +76,29 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.INVISIBLE);
 
-        PlacesService placesService = CustomApp.getInstance().getPlacesService();
+        mPresenter.loadPlaces(
 
-        placesService.findAll().enqueue(new Callback<PlaceList>() {
+                new Consumer<List<Place>>() {
 
-            @Override
-            public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
-                adapter.clear();
-                adapter.addAll(response.body().getPlaces());
-                loadingLayout.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                errorLoadingLayout.setVisibility(View.GONE);
-            }
+                    public void apply(List<Place> result) {
 
-            @Override
-            public void onFailure(Call<PlaceList> call, Throwable t) {
-                Log.e(TAG, "Error loading places", t);
-                loadingLayout.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.GONE);
-                errorLoadingLayout.setVisibility(View.VISIBLE);
-            }
-        });
+                        adapter.clear();
+                        adapter.addAll(result);
+                        loadingLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        errorLoadingLayout.setVisibility(View.GONE);
+                    }
+
+                }, new Consumer<Throwable>() {
+
+                    public void apply(Throwable t) {
+
+                        Log.e(TAG, "Error loading places", t);
+                        loadingLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.GONE);
+                        errorLoadingLayout.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
 }
