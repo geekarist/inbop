@@ -1,11 +1,7 @@
 package me.cpele.inbop.list;
 
-import java.util.List;
-
-import me.cpele.inbop.Consumer;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.apiclient.PlacesService;
-import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +22,9 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
-    public void loadPlaces(final Consumer<List<Place>> onSuccess, final Consumer<Throwable> onError) {
+    public void onLoadPlaces() {
+
+        assert mView != null;
 
         PlacesService placesService = CustomApp.getInstance().getPlacesService();
 
@@ -34,12 +32,12 @@ public class ListPresenter implements ListContract.Presenter {
 
             @Override
             public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
-                onSuccess.apply(response.body().getPlaces());
+                if (mView != null) mView.onPlacesLoaded(response.body().getPlaces());
             }
 
             @Override
             public void onFailure(Call<PlaceList> call, Throwable t) {
-                onError.apply(t);
+                if (mView != null) mView.onPlacesLoadingFail(t);
             }
         });
     }

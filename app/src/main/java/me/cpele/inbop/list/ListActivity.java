@@ -13,7 +13,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.inbop.Consumer;
 import me.cpele.inbop.Injection;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
@@ -76,29 +75,23 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         recyclerView.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.INVISIBLE);
 
-        mPresenter.loadPlaces(
-
-                new Consumer<List<Place>>() {
-
-                    public void apply(List<Place> result) {
-
-                        adapter.clear();
-                        adapter.addAll(result);
-                        loadingLayout.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        errorLoadingLayout.setVisibility(View.GONE);
-                    }
-
-                }, new Consumer<Throwable>() {
-
-                    public void apply(Throwable t) {
-
-                        Log.e(TAG, "Error loading places", t);
-                        loadingLayout.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.GONE);
-                        errorLoadingLayout.setVisibility(View.VISIBLE);
-                    }
-                });
+        mPresenter.onLoadPlaces();
     }
 
+    @Override
+    public void onPlacesLoaded(List<Place> places) {
+        adapter.clear();
+        adapter.addAll(places);
+        loadingLayout.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        errorLoadingLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPlacesLoadingFail(Throwable t) {
+        Log.w(TAG, "Error loading places", t);
+        loadingLayout.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        errorLoadingLayout.setVisibility(View.VISIBLE);
+    }
 }

@@ -2,7 +2,6 @@ package me.cpele.inbop.list;
 
 import java.util.List;
 
-import me.cpele.inbop.Consumer;
 import me.cpele.inbop.apiclient.model.Place;
 
 public class ListContract {
@@ -13,6 +12,9 @@ public class ListContract {
 
     interface View {
 
+        void onPlacesLoaded(List<Place> places);
+
+        void onPlacesLoadingFail(Throwable t);
     }
 
     public interface Presenter {
@@ -21,6 +23,6 @@ public class ListContract {
 
         void detach();
 
-        void loadPlaces(Consumer<List<Place>> onSuccess, Consumer<Throwable> onError);
+        void onLoadPlaces();
     }
 }
