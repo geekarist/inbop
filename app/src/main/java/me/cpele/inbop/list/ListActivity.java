@@ -13,7 +13,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.inbop.Injection;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 
@@ -33,6 +32,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     Toolbar toolbar;
 
     private ListContract.Presenter mPresenter;
+    private ListContract.Model mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,16 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mPresenter = Injection.ListModule.providePresenter();
-        mPresenter.attach(this);
+        mPresenter = ListInjection.providePresenter();
+        mModel = ListInjection.provideModel();
+        mPresenter.attach(this, mModel);
+        mModel.attach(mPresenter);
     }
 
     @Override
     protected void onDestroy() {
         mPresenter.detach();
+        mModel.detach();
         super.onDestroy();
     }
 
