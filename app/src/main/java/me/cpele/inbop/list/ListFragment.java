@@ -1,6 +1,7 @@
 package me.cpele.inbop.list;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,8 +30,10 @@ public class ListFragment extends Fragment implements ListContract.View {
     @BindView(R.id.list_ll_error_loading)
     View errorLoadingLayout;
 
+    @Nullable
     private ListContract.Presenter mPresenter;
-    private ListAdapter mAdapter;
+    @NonNull
+    private ListAdapter mAdapter = new ListAdapter();
 
     @Nullable
     @Override
@@ -44,7 +47,6 @@ public class ListFragment extends Fragment implements ListContract.View {
 
         ButterKnife.bind(this, view);
 
-        mAdapter = new ListAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -77,7 +79,7 @@ public class ListFragment extends Fragment implements ListContract.View {
         recyclerView.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.INVISIBLE);
 
-        mPresenter.onLoadPlaces();
+        if (mPresenter != null) mPresenter.onLoadPlaces();
     }
 
     @Override

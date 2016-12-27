@@ -1,12 +1,16 @@
 package me.cpele.inbop.list;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import me.cpele.inbop.apiclient.model.Place;
 
 public class ListPresenter implements ListContract.Presenter {
 
+    @Nullable
     private ListContract.View mView;
+    @Nullable
     private ListContract.Model mModel;
 
     @Override
@@ -23,7 +27,7 @@ public class ListPresenter implements ListContract.Presenter {
 
     @Override
     public void onLoadPlaces() {
-        mModel.onLoadPlaces();
+        if (mModel != null) mModel.onLoadPlaces();
     }
 
     @Override

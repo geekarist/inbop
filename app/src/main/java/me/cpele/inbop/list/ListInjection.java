@@ -1,5 +1,7 @@
 package me.cpele.inbop.list;
 
+import me.cpele.inbop.CustomApp;
+
 public class ListInjection {
 
     public static ListContract.Presenter providePresenter() {
@@ -7,6 +9,6 @@ public class ListInjection {
     }
 
     public static ListContract.Model provideModel() {
-        return new ListModel();
+        return new ListModel(CustomApp.getInstance().getPlacesService());
     }
 }
