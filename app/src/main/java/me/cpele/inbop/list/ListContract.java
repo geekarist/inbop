@@ -17,6 +17,10 @@ public class ListContract {
 
     interface View {
 
+        void attach(Presenter mPresenter);
+
+        void detach();
+
         void onPlacesLoaded(List<Place> places);
 
         void onPlacesLoadingFail(Throwable t);
