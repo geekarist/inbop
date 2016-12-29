@@ -1,4 +1,4 @@
-package me.cpele.inbop.detail.fragment;
+package me.cpele.inbop.detail.fragment.itinerary;
 
 import android.app.FragmentManager;
 import android.content.Context;
@@ -23,19 +23,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.fragment.DetailFragment;
 
-public class ItineraryFragment extends DetailFragment implements OnMapReadyCallback {
+public class ItineraryFragment
+        extends DetailFragment
+        implements OnMapReadyCallback, ItineraryContract.View {
 
     private static final String ARG_PLACE = "ARG_PLACE";
 
     @BindView(R.id.itinerary_tv_address)
     TextView addressTextView;
 
-    private MapFragment mapFragment;
-
     private Place place;
 
-    public static DetailFragment newInstance(Context context, Place place) {
+    public static ItineraryFragment newInstance(Context context, Place place) {
 
         ItineraryFragment fragment = new ItineraryFragment();
         fragment.setup(context, place);
@@ -55,7 +56,7 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
 
         FragmentActivity activity = getActivity();
         FragmentManager fragmentManager = activity.getFragmentManager();
-        mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
+        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
 
         if (hasValidPosition(place)) {
             mapFragment.getMapAsync(this);
@@ -85,5 +86,15 @@ public class ItineraryFragment extends DetailFragment implements OnMapReadyCallb
         LatLng placePosition = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(placePosition));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
+    }
+
+
+    public void attach(ItineraryContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void detach() {
+
     }
 }

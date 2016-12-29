@@ -23,8 +23,11 @@ import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.detail.fragment.ItineraryFragment;
 import me.cpele.inbop.detail.fragment.UsefulInfoFragment;
+import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
+import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
+import me.cpele.inbop.detail.fragment.itinerary.ItineraryModel;
+import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -54,13 +57,30 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(place.getName());
 
         DetailPagerAdapter detailPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager());
-        detailPagerAdapter.add(UsefulInfoFragment.newInstance(this, place));
-        detailPagerAdapter.add(ItineraryFragment.newInstance(this, place));
+        setupUsefulInfo(place, detailPagerAdapter);
+        setupItinerary(place, detailPagerAdapter);
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
 
         preferences = CustomApp.getInstance().getPreferences();
+    }
+
+    private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
+        detailPagerAdapter.add(UsefulInfoFragment.newInstance(this, place));
+    }
+
+    private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
+
+        ItineraryFragment itineraryFragment = ItineraryFragment.newInstance(this, place);
+        ItineraryContract.Presenter itineraryPresenter = new ItineraryPresenter();
+        ItineraryContract.Model itineraryModel = new ItineraryModel();
+
+        itineraryFragment.attach(itineraryPresenter);
+        itineraryPresenter.attach(itineraryFragment, itineraryModel);
+        itineraryModel.attach(itineraryPresenter);
+
+        detailPagerAdapter.add(itineraryFragment);
     }
 
     @NonNull
