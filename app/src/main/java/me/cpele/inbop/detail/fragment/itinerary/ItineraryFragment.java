@@ -32,9 +32,12 @@ public class ItineraryFragment
     private static final String ARG_PLACE = "ARG_PLACE";
 
     @BindView(R.id.itinerary_tv_address)
-    TextView addressTextView;
+    TextView mAddressTextViewddressTextView;
 
-    private Place place;
+    private Place mPlace;
+    private ItineraryContract.Presenter mPresenter;
+    private MapFragment mMapFragment;
+    private FragmentManager mFragmentManager;
 
     public static ItineraryFragment newInstance(Context context, Place place) {
 
@@ -50,27 +53,27 @@ public class ItineraryFragment
         View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
-        place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        mPlace = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
-        addressTextView.setText(place.getPosition().getAddress());
+        mAddressTextViewddressTextView.setText(mPlace.getPosition().getAddress());
 
         FragmentActivity activity = getActivity();
-        FragmentManager fragmentManager = activity.getFragmentManager();
-        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
+        mFragmentManager = activity.getFragmentManager();
+        mMapFragment = (MapFragment) mFragmentManager.findFragmentById(R.id.itinerary_mf);
 
-        if (hasValidPosition(place)) {
-            mapFragment.getMapAsync(this);
-        } else {
-            fragmentManager.beginTransaction().hide(mapFragment).commit();
-        }
+        mPresenter.onCheckPosition(mPlace);
 
         return view;
     }
 
-    private boolean hasValidPosition(Place place) {
-        return place.getPosition() != null
-                && place.getPosition().getLat() != null
-                && place.getPosition().getLon() != null;
+    @Override
+    public void onHideMap() {
+        mFragmentManager.beginTransaction().hide(mMapFragment).commit();
+    }
+
+    @Override
+    public void onGetMap() {
+        mMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -81,8 +84,8 @@ public class ItineraryFragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        double lat = place.getPosition().getLat();
-        double lon = place.getPosition().getLon();
+        double lat = mPlace.getPosition().getLat();
+        double lon = mPlace.getPosition().getLon();
         LatLng placePosition = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(placePosition));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
@@ -90,11 +93,11 @@ public class ItineraryFragment
 
 
     public void attach(ItineraryContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 
     @Override
     public void detach() {
-
+        mPresenter = null;
     }
 }

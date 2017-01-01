@@ -26,7 +26,6 @@ import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.UsefulInfoFragment;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
-import me.cpele.inbop.detail.fragment.itinerary.ItineraryModel;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 
 public class DetailActivity extends AppCompatActivity {
@@ -41,6 +40,8 @@ public class DetailActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     private AppPreferences preferences;
+    private ItineraryFragment mItineraryFragment;
+    private ItineraryContract.Presenter mItineraryPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,21 +67,30 @@ public class DetailActivity extends AppCompatActivity {
         preferences = CustomApp.getInstance().getPreferences();
     }
 
+    @Override
+    protected void onDestroy() {
+        tearDownItinerary();
+        super.onDestroy();
+    }
+
+    private void tearDownItinerary() {
+        mItineraryFragment.detach();
+        mItineraryPresenter.detach();
+    }
+
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
         detailPagerAdapter.add(UsefulInfoFragment.newInstance(this, place));
     }
 
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
 
-        ItineraryFragment itineraryFragment = ItineraryFragment.newInstance(this, place);
-        ItineraryContract.Presenter itineraryPresenter = new ItineraryPresenter();
-        ItineraryContract.Model itineraryModel = new ItineraryModel();
+        mItineraryFragment = ItineraryFragment.newInstance(this, place);
+        mItineraryPresenter = new ItineraryPresenter();
 
-        itineraryFragment.attach(itineraryPresenter);
-        itineraryPresenter.attach(itineraryFragment, itineraryModel);
-        itineraryModel.attach(itineraryPresenter);
+        mItineraryFragment.attach(mItineraryPresenter);
+        mItineraryPresenter.attach(mItineraryFragment);
 
-        detailPagerAdapter.add(itineraryFragment);
+        detailPagerAdapter.add(mItineraryFragment);
     }
 
     @NonNull
