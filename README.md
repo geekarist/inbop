@@ -26,7 +26,7 @@ Make climbing easier using an Android application.
   - Pretty splash screen
 
 - Technical
-  - Use Dagger
+  - **Use Dagger**
   - Upgrade play services
   - Improve architecture (MVP)
   - Offline mode
