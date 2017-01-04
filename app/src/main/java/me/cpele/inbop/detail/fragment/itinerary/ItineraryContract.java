@@ -6,18 +6,18 @@ public interface ItineraryContract {
 
     interface Presenter {
 
-        void attach(View view);
+        void onBind(View view);
 
-        void detach();
+        void onUnbind();
 
         void onCheckPosition(Place place);
     }
 
     interface View {
 
-        void attach(Presenter presenter);
+        void onBind(Presenter presenter);
 
-        void detach();
+        void onUnbind();
 
         void onGetMap();
 

@@ -7,12 +7,12 @@ public class ItineraryPresenter implements ItineraryContract.Presenter {
     private ItineraryContract.View mView;
 
     @Override
-    public void attach(ItineraryContract.View view) {
+    public void onBind(ItineraryContract.View view) {
         mView = view;
     }
 
     @Override
-    public void detach() {
+    public void onUnbind() {
         mView = null;
     }
 

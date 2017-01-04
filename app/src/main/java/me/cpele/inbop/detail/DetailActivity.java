@@ -74,8 +74,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void tearDownItinerary() {
-        mItineraryFragment.detach();
-        mItineraryPresenter.detach();
+        mItineraryFragment.onUnbind();
+        mItineraryPresenter.onUnbind();
     }
 
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
@@ -87,8 +87,8 @@ public class DetailActivity extends AppCompatActivity {
         mItineraryFragment = ItineraryFragment.newInstance(this, place);
         mItineraryPresenter = new ItineraryPresenter();
 
-        mItineraryFragment.attach(mItineraryPresenter);
-        mItineraryPresenter.attach(mItineraryFragment);
+        mItineraryFragment.onBind(mItineraryPresenter);
+        mItineraryPresenter.onBind(mItineraryFragment);
 
         detailPagerAdapter.add(mItineraryFragment);
     }

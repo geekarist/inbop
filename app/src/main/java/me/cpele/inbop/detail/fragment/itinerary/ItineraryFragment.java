@@ -91,13 +91,13 @@ public class ItineraryFragment
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
     }
 
-
-    public void attach(ItineraryContract.Presenter presenter) {
+    @Override
+    public void onBind(ItineraryContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void detach() {
+    public void onUnbind() {
         mPresenter = null;
     }
 }
