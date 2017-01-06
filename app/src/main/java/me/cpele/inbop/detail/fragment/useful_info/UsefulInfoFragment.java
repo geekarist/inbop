@@ -1,4 +1,4 @@
-package me.cpele.inbop.detail.fragment;
+package me.cpele.inbop.detail.fragment.useful_info;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,8 +29,9 @@ import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlacePrice;
+import me.cpele.inbop.detail.fragment.DetailFragment;
 
-public class UsefulInfoFragment extends DetailFragment {
+public class UsefulInfoFragment extends DetailFragment implements UsefulInfoContract.View {
 
     private static final String ARG_PLACE = "ARG_PLACE";
     private String TAG = getClass().getSimpleName();
@@ -51,8 +52,9 @@ public class UsefulInfoFragment extends DetailFragment {
     TextView emailTextView;
 
     private Place place;
+    private UsefulInfoContract.Presenter mPresenter;
 
-    public static DetailFragment newInstance(Context context, Place place) {
+    public static UsefulInfoFragment newInstance(Context context, Place place) {
 
         UsefulInfoFragment fragment = new UsefulInfoFragment();
         fragment.setup(context, place);
@@ -171,5 +173,15 @@ public class UsefulInfoFragment extends DetailFragment {
     @Override
     public String getTitle() {
         return getContext().getString(R.string.detail_title_useful);
+    }
+
+    @Override
+    public void onBind(UsefulInfoContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onUnbind() {
+        mPresenter = null;
     }
 }

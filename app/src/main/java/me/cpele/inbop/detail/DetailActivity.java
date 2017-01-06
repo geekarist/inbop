@@ -23,10 +23,12 @@ import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.detail.fragment.UsefulInfoFragment;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
+import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoContract;
+import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
+import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoPresenter;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -40,8 +42,12 @@ public class DetailActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     private AppPreferences preferences;
+
     private ItineraryFragment mItineraryFragment;
     private ItineraryContract.Presenter mItineraryPresenter;
+
+    private UsefulInfoFragment mUsefulInfoFragment;
+    private UsefulInfoContract.Presenter mUsefulInfoPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,16 +76,8 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         tearDownItinerary();
+        tearDownUsefulInfo();
         super.onDestroy();
-    }
-
-    private void tearDownItinerary() {
-        mItineraryFragment.onUnbind();
-        mItineraryPresenter.onUnbind();
-    }
-
-    private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
-        detailPagerAdapter.add(UsefulInfoFragment.newInstance(this, place));
     }
 
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
@@ -91,6 +89,27 @@ public class DetailActivity extends AppCompatActivity {
         mItineraryPresenter.onBind(mItineraryFragment);
 
         detailPagerAdapter.add(mItineraryFragment);
+    }
+
+    private void tearDownItinerary() {
+        mItineraryFragment.onUnbind();
+        mItineraryPresenter.onUnbind();
+    }
+
+    private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
+
+        mUsefulInfoFragment = UsefulInfoFragment.newInstance(this, place);
+        mUsefulInfoPresenter = new UsefulInfoPresenter();
+
+        mUsefulInfoFragment.onBind(mUsefulInfoPresenter);
+        mUsefulInfoPresenter.onBind(mUsefulInfoFragment);
+
+        detailPagerAdapter.add(mUsefulInfoFragment);
+    }
+
+    private void tearDownUsefulInfo() {
+        mUsefulInfoFragment.onUnbind();
+        mUsefulInfoPresenter.onUnbind();
     }
 
     @NonNull
