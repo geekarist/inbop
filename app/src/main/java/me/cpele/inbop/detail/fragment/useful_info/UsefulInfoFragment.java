@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +17,11 @@ import com.bumptech.glide.Glide;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.inbop.BuildConfig;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.apiclient.model.PlaceHours;
-import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.DetailFragment;
 
 public class UsefulInfoFragment extends DetailFragment implements UsefulInfoContract.View {
@@ -70,45 +63,56 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
-        if (place.getImgUrl() != null) {
-            String imgUrl = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
-            Glide.with(this).load(imgUrl).centerCrop().into(imageView);
-            imageView.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getHours() != null) {
-            String hours = toHoursString(place.getHours());
-            hoursTextView.setText(hours);
-            hoursTextView.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getPrice() != null) {
-            pricesTextView.setText(toPricesString(place.getPrice()));
-            pricesTextView.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getDescription() != null) {
-            specificityTextView.setText(place.getDescription());
-            specificityTextView.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getUrl() != null) {
-            urlTextView.setText(place.getUrl());
-            urlTextView.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getFacebook() != null) {
-            String fbPage = extractPageName(place.getFacebook());
-            facebookButton.setText(fbPage);
-            facebookButton.setVisibility(View.VISIBLE);
-        }
-
-        if (place.getEmail() != null) {
-            emailTextView.setText(place.getEmail());
-            emailTextView.setVisibility(View.VISIBLE);
-        }
+        mPresenter.loadPlace(place);
 
         return view;
+    }
+
+    @Override
+    public void displayEmail(String email) {
+        emailTextView.setText(email);
+        emailTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public String buildMessage(int msgId, Object... args) {
+        return getString(msgId, args);
+    }
+
+    @Override
+    public void displayFacebook(String fbPage) {
+        facebookButton.setText(fbPage);
+        facebookButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayUrl(String url) {
+        urlTextView.setText(url);
+        urlTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayDescription(String description) {
+        specificityTextView.setText(description);
+        specificityTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayPrices(CharSequence prices) {
+        pricesTextView.setText(prices);
+        pricesTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayHours(String hours) {
+        hoursTextView.setText(hours);
+        hoursTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayImage(String imgUrl) {
+        Glide.with(this).load(imgUrl).centerCrop().into(imageView);
+        imageView.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.useful_bt_facebook)
@@ -125,49 +129,6 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
         } else {
             Log.i(TAG, "No facebook url is defined for place");
         }
-    }
-
-    private String extractPageName(String facebookUrl) {
-
-        if (facebookUrl != null) {
-            return facebookUrl;
-        }
-        return getString(R.string.detail_facebook_unknown);
-    }
-
-    private CharSequence toPricesString(PlacePrice price) {
-
-        List<String> result = new ArrayList<>();
-
-        String adult = price.getAdult();
-        String student = price.getStudent();
-        String child = price.getChild();
-
-        if (!TextUtils.isEmpty(adult)) {
-            result.add(getString(R.string.detail_price_adult) + adult);
-        }
-
-        if (!TextUtils.isEmpty(student)) {
-            result.add(getString(R.string.detail_price_student) + student);
-        }
-
-        if (!TextUtils.isEmpty(child)) {
-            result.add(getString(R.string.detail_price_child) + child);
-        }
-
-        return TextUtils.join(" - ", result);
-    }
-
-    private String toHoursString(PlaceHours hours) {
-
-        String weekdaysOpening = hours.getWeekdays().getOpening();
-        String weekdaysClosing = hours.getWeekdays().getClosing();
-        String weekendOpening = hours.getWeekend().getOpening();
-        String weekendClosing = hours.getWeekend().getClosing();
-
-        return getString(R.string.detail_hours,
-                weekdaysOpening, weekdaysClosing,
-                weekendOpening, weekendClosing);
     }
 
     @Override
