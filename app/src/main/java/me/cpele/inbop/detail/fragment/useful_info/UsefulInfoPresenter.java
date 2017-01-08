@@ -1,5 +1,6 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -15,6 +16,19 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
 
     private UsefulInfoContract.View mView;
 
+    @Override
+    public void openFacebookForPlace(Place place) {
+
+        if (place.getFacebook() != null) {
+            String url = mView.buildString(R.string.detail_facebook_url, place.getFacebook());
+            Uri uri = Uri.parse(url);
+            mView.startFacebookForUri(uri);
+        } else {
+            mView.informNoFacebookForUri();
+        }
+    }
+
+    @Override
     public void loadPlace(Place place) {
 
         if (place.getImgUrl() != null) {
@@ -68,7 +82,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         if (facebookUrl != null) {
             return facebookUrl;
         }
-        return mView.buildMessage(R.string.detail_facebook_unknown);
+        return mView.buildString(R.string.detail_facebook_unknown);
     }
 
     private CharSequence toPricesString(PlacePrice price) {
@@ -80,15 +94,15 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         String child = price.getChild();
 
         if (!TextUtils.isEmpty(adult)) {
-            result.add(mView.buildMessage(R.string.detail_price_adult) + adult);
+            result.add(mView.buildString(R.string.detail_price_adult) + adult);
         }
 
         if (!TextUtils.isEmpty(student)) {
-            result.add(mView.buildMessage(R.string.detail_price_student) + student);
+            result.add(mView.buildString(R.string.detail_price_student) + student);
         }
 
         if (!TextUtils.isEmpty(child)) {
-            result.add(mView.buildMessage(R.string.detail_price_child) + child);
+            result.add(mView.buildString(R.string.detail_price_child) + child);
         }
 
         return TextUtils.join(" - ", result);
@@ -101,7 +115,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         String weekendOpening = hours.getWeekend().getOpening();
         String weekendClosing = hours.getWeekend().getClosing();
 
-        return mView.buildMessage(R.string.detail_hours,
+        return mView.buildString(R.string.detail_hours,
                 weekdaysOpening, weekdaysClosing,
                 weekendOpening, weekendClosing);
     }

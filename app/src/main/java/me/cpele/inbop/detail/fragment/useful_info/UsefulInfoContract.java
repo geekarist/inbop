@@ -1,5 +1,7 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
+import android.net.Uri;
+
 import me.cpele.inbop.apiclient.model.Place;
 
 public interface UsefulInfoContract {
@@ -9,6 +11,8 @@ public interface UsefulInfoContract {
         void onBind(View view);
 
         void onUnbind();
+
+        void openFacebookForPlace(Place place);
 
         void loadPlace(Place place);
     }
@@ -33,6 +37,10 @@ public interface UsefulInfoContract {
 
         void displayEmail(String email);
 
-        String buildMessage(int msgId, Object... args);
+        String buildString(int msgId, Object... args);
+
+        void startFacebookForUri(Uri uri);
+
+        void informNoFacebookForUri();
     }
 }

@@ -68,6 +68,29 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
         return view;
     }
 
+    @OnClick(R.id.useful_bt_facebook)
+    void onClickFacebook() {
+        Log.i(TAG, "Clicked on facebook: " + place);
+        mPresenter.openFacebookForPlace(place);
+    }
+
+    @Override
+    public String getTitle() {
+        return getContext().getString(R.string.detail_title_useful);
+    }
+
+    // region Presentation
+
+    @Override
+    public void onBind(UsefulInfoContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onUnbind() {
+        mPresenter = null;
+    }
+
     @Override
     public void displayEmail(String email) {
         emailTextView.setText(email);
@@ -75,7 +98,7 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     }
 
     @Override
-    public String buildMessage(int msgId, Object... args) {
+    public String buildString(int msgId, Object... args) {
         return getString(msgId, args);
     }
 
@@ -115,34 +138,17 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
         imageView.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.useful_bt_facebook)
-    void onClickFacebook() {
-
-        Log.i(TAG, "Clicked on facebook: " + place);
-
-        if (place.getFacebook() != null) {
-            String url = getString(R.string.detail_facebook_url, place.getFacebook());
-            Uri uri = Uri.parse(url);
-            Log.d(TAG, String.valueOf(uri));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        } else {
-            Log.i(TAG, "No facebook url is defined for place");
-        }
+    @Override
+    public void informNoFacebookForUri() {
+        Log.i(TAG, "No facebook url is defined for place");
     }
 
     @Override
-    public String getTitle() {
-        return getContext().getString(R.string.detail_title_useful);
+    public void startFacebookForUri(Uri uri) {
+        Log.d(TAG, String.valueOf(uri));
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
-    @Override
-    public void onBind(UsefulInfoContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void onUnbind() {
-        mPresenter = null;
-    }
+    // endregion
 }
