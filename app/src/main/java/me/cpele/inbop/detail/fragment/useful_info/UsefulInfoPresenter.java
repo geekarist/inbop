@@ -105,7 +105,21 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
             result.add(mView.buildString(R.string.detail_price_child) + child);
         }
 
-        return TextUtils.join(" - ", result);
+        return join(" - ", result);
+    }
+
+    private static String join(CharSequence delimiter, Iterable tokens) {
+        StringBuilder sb = new StringBuilder();
+        boolean firstTime = true;
+        for (Object token: tokens) {
+            if (firstTime) {
+                firstTime = false;
+            } else {
+                sb.append(delimiter);
+            }
+            sb.append(token);
+        }
+        return sb.toString();
     }
 
     private String toHoursString(PlaceHours hours) {
