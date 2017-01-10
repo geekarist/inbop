@@ -69,8 +69,6 @@ dependencies {
     compile "com.android.support:multidex:1.0.1"
 
     //noinspection GradleDependency
-    compile 'com.google.android.gms:play-services:10.0.1'
-    //noinspection GradleDependency
     compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -86,6 +84,7 @@ dependencies {
     apt 'org.parceler:parceler:1.1.6'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.5.5'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
