@@ -1,6 +1,7 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
     private UsefulInfoContract.View mView;
 
     @Override
-    public void openFacebookForPlace(Place place) {
+    public void openFacebookForPlace(@NonNull Place place) {
 
         if (place.getFacebook() != null) {
             String url = mView.buildString(R.string.detail_facebook_url, place.getFacebook());

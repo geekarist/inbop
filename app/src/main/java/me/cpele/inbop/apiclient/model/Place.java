@@ -17,7 +17,7 @@ public class Place {
     String facebook;
     String email;
 
-    Place() {
+    public Place() {
     }
 
     public String getId() {
@@ -96,8 +96,9 @@ public class Place {
         return facebook;
     }
 
-    public void setFacebook(String facebook) {
+    public Place setFacebook(String facebook) {
         this.facebook = facebook;
+        return this;
     }
 
     public void setAddress(String address) {
