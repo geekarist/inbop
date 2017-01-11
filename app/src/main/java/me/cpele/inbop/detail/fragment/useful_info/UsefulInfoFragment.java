@@ -139,7 +139,7 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     }
 
     @Override
-    public void informNoFacebookForUri() {
+    public void informNoFacebookForPlace() {
         Log.i(TAG, "No facebook url is defined for place");
     }
 

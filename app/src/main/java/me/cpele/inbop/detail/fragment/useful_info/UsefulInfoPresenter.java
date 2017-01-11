@@ -23,7 +23,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
             String url = mView.buildString(R.string.detail_facebook_url, place.getFacebook());
             mView.startFacebookForUrl(url);
         } else {
-            mView.informNoFacebookForUri();
+            mView.informNoFacebookForPlace();
         }
     }
 

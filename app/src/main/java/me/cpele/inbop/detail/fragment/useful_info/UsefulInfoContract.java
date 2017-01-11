@@ -41,6 +41,6 @@ public interface UsefulInfoContract {
 
         void startFacebookForUrl(String url);
 
-        void informNoFacebookForUri();
+        void informNoFacebookForPlace();
     }
 }
