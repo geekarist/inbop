@@ -8,7 +8,7 @@ public class PlaceHoursByDays {
     String opening;
     String closing;
 
-    PlaceHoursByDays() {
+    public PlaceHoursByDays() {
     }
 
     public String getOpening() {

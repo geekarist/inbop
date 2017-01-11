@@ -9,12 +9,16 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.PlaceHours;
+import me.cpele.inbop.apiclient.model.PlaceHoursByDays;
+import me.cpele.inbop.apiclient.model.PlacePrice;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UsefulInfoPresenterTest {
@@ -57,5 +61,38 @@ public class UsefulInfoPresenterTest {
         mPresenter.openFacebookForPlace(mPlace);
 
         verify(mView).informNoFacebookForPlace();
+    }
+
+    @Test
+    public void shouldDisplayPlace() {
+
+        mPlace.setDescription("desc")
+                .setEmail("email")
+                .setFacebook("facebook")
+                .setHours(new PlaceHours().setWeekdays(new PlaceHoursByDays()))
+                .setImgUrl("img-url")
+                .setPrice(new PlacePrice()
+                        .setAdult("adult")
+                        .setChild("child")
+                        .setStudent("student"))
+                .setUrl("web-url");
+
+        mPresenter.loadPlace(mPlace);
+
+        verify(mView).displayDescription("desc");
+        verify(mView).displayEmail("email");
+        verify(mView).displayFacebook("facebook");
+        verify(mView).displayHours("hours");
+        verify(mView).displayImage("img-url");
+        verify(mView).displayPrices("prices");
+        verify(mView).displayUrl("web-url");
+    }
+
+    @Test
+    public void shouldNotDisplayEmptyPlace() {
+
+        mPresenter.loadPlace(mPlace);
+
+        verifyZeroInteractions(mView);
     }
 }

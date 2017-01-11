@@ -48,8 +48,9 @@ public class Place {
         return imgUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
+    public Place setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+        return this;
     }
 
     public PlacePosition getPosition() {
@@ -64,24 +65,27 @@ public class Place {
         return hours;
     }
 
-    public void setHours(PlaceHours hours) {
+    public Place setHours(PlaceHours hours) {
         this.hours = hours;
+        return this;
     }
 
     public PlacePrice getPrice() {
         return price;
     }
 
-    public void setPrice(PlacePrice price) {
+    public Place setPrice(PlacePrice price) {
         this.price = price;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Place setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getUrl() {
@@ -113,8 +117,9 @@ public class Place {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Place setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     @Override
