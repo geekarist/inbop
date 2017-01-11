@@ -29,7 +29,7 @@ public class UsefulInfoPresenterTest {
     private UsefulInfoContract.View mView;
 
     @Before
-    void setUp() {
+    public void setUp() {
         mPresenter = new UsefulInfoPresenter();
         mView = Mockito.mock(UsefulInfoContract.View.class);
         mPresenter.onBind(mView);
@@ -37,7 +37,7 @@ public class UsefulInfoPresenterTest {
     }
 
     @After
-    void tearDown() {
+    public void tearDown() {
         mPresenter.onUnbind();
     }
 
