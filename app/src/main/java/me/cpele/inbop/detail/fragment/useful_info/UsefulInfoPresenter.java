@@ -1,6 +1,5 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -22,8 +21,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
 
         if (place.getFacebook() != null) {
             String url = mView.buildString(R.string.detail_facebook_url, place.getFacebook());
-            Uri uri = Uri.parse(url);
-            mView.startFacebookForUri(uri);
+            mView.startFacebookForUrl(url);
         } else {
             mView.informNoFacebookForUri();
         }

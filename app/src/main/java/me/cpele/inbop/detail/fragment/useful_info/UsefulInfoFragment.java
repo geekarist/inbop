@@ -144,7 +144,8 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     }
 
     @Override
-    public void startFacebookForUri(Uri uri) {
+    public void startFacebookForUrl(String url) {
+        Uri uri = Uri.parse(url);
         Log.d(TAG, String.valueOf(uri));
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
