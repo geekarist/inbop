@@ -19,6 +19,8 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
     @Override
     public void openFacebookForPlace(@NonNull Place place) {
 
+        if (mView == null) return;
+
         if (place.getFacebook() != null) {
             String url = mView.buildString(R.string.detail_facebook_url, place.getFacebook());
             mView.startFacebookForUrl(url);
@@ -29,6 +31,8 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
 
     @Override
     public void loadPlace(Place place) {
+
+        if (mView == null) return;
 
         if (place.getImgUrl() != null) {
             String imgUrl = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
