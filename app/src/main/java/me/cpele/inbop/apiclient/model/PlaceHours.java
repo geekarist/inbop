@@ -23,4 +23,9 @@ public class PlaceHours {
     public PlaceHoursByDays getWeekend() {
         return weekend;
     }
+
+    public PlaceHours setWeekend(PlaceHoursByDays weekend) {
+        this.weekend = weekend;
+        return this;
+    }
 }

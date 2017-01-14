@@ -1,7 +1,7 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,19 +92,31 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         String student = price.getStudent();
         String child = price.getChild();
 
-        if (!TextUtils.isEmpty(adult)) {
-            result.add(mView.buildString(R.string.detail_price_adult) + adult);
+        if (!isEmpty(adult)) {
+            result.add(mView.buildString(R.string.detail_price_adult, adult));
         }
 
-        if (!TextUtils.isEmpty(student)) {
-            result.add(mView.buildString(R.string.detail_price_student) + student);
+        if (!isEmpty(student)) {
+            result.add(mView.buildString(R.string.detail_price_student, student));
         }
 
-        if (!TextUtils.isEmpty(child)) {
-            result.add(mView.buildString(R.string.detail_price_child) + child);
+        if (!isEmpty(child)) {
+            result.add(mView.buildString(R.string.detail_price_child, child));
         }
 
         return join(" - ", result);
+    }
+
+    /**
+     * Returns true if the string is null or 0-length.
+     * @param str the string to be examined
+     * @return true if str is null or zero length
+     */
+    public static boolean isEmpty(@Nullable CharSequence str) {
+        if (str == null || str.length() == 0)
+            return true;
+        else
+            return false;
     }
 
     private static String join(CharSequence delimiter, Iterable tokens) {

@@ -15,11 +15,17 @@ public class PlaceHoursByDays {
         return opening;
     }
 
-    public void setOpening(String opening) {
+    public PlaceHoursByDays setOpening(String opening) {
         this.opening = opening;
+        return this;
     }
 
     public String getClosing() {
         return closing;
+    }
+
+    public PlaceHoursByDays setClosing(String closing) {
+        this.closing = closing;
+        return this;
     }
 }

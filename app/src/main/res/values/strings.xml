@@ -11,9 +11,9 @@
     <string name="detail_image_desc">Image du lieu</string>
     <string name="detail_address_label">Adresse</string>
     <string name="detail_hours">Semaine de %1$s à %2$s - Weekend de %3$s à %4$s</string>
-    <string name="detail_price_adult">Adulte : </string>
-    <string name="detail_price_student">Etudiant : </string>
-    <string name="detail_price_child">Enfant : </string>
+    <string name="detail_price_adult">Adulte : %1$s</string>
+    <string name="detail_price_student">Etudiant : %1$s</string>
+    <string name="detail_price_child">Enfant : %1$s</string>
     <string name="detail_facebook_unknown">Inconnu</string>
     <string name="detail_facebook_url">https://www.facebook.com/n/?%1$s</string>
     <string name="detail_title_useful">Informations</string>
