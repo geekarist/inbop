@@ -1,5 +1,6 @@
 package me.cpele.inbop.detail.fragment.itinerary;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -23,6 +24,11 @@ public class ItineraryPresenterTest {
         mPlace = new Place();
         mView = Mockito.mock(ItineraryContract.View.class);
         mPresenter.onBind(mView);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mPresenter.onUnbind();
     }
 
     @Test
