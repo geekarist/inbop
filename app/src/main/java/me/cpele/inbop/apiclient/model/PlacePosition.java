@@ -44,15 +44,17 @@ public class PlacePosition {
         return lon;
     }
 
-    public void setLon(Double lon) {
+    public PlacePosition setLon(Double lon) {
         this.lon = lon;
+        return this;
     }
 
     public Double getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
+    public PlacePosition setLat(Double lat) {
         this.lat = lat;
+        return this;
     }
 }
