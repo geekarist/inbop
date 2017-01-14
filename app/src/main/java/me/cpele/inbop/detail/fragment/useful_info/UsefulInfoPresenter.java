@@ -1,13 +1,13 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.cpele.inbop.BuildConfig;
 import me.cpele.inbop.R;
+import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlacePrice;
@@ -92,45 +92,19 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         String student = price.getStudent();
         String child = price.getChild();
 
-        if (!isEmpty(adult)) {
+        if (!TextualUtils.isEmpty(adult)) {
             result.add(mView.buildString(R.string.detail_price_adult, adult));
         }
 
-        if (!isEmpty(student)) {
+        if (!TextualUtils.isEmpty(student)) {
             result.add(mView.buildString(R.string.detail_price_student, student));
         }
 
-        if (!isEmpty(child)) {
+        if (!TextualUtils.isEmpty(child)) {
             result.add(mView.buildString(R.string.detail_price_child, child));
         }
 
-        return join(" - ", result);
-    }
-
-    /**
-     * Returns true if the string is null or 0-length.
-     * @param str the string to be examined
-     * @return true if str is null or zero length
-     */
-    public static boolean isEmpty(@Nullable CharSequence str) {
-        if (str == null || str.length() == 0)
-            return true;
-        else
-            return false;
-    }
-
-    private static String join(CharSequence delimiter, Iterable tokens) {
-        StringBuilder sb = new StringBuilder();
-        boolean firstTime = true;
-        for (Object token: tokens) {
-            if (firstTime) {
-                firstTime = false;
-            } else {
-                sb.append(delimiter);
-            }
-            sb.append(token);
-        }
-        return sb.toString();
+        return TextualUtils.join(" - ", result);
     }
 
     private String toHoursString(PlaceHours hours) {
