@@ -24,8 +24,9 @@ public class Place {
         return id;
     }
 
-    public void setId(String id) {
+    public Place setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
