@@ -1,3 +1,7 @@
+plugins {
+    id 'com.github.ben-manes.versions' version '0.14.0'
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'jacoco-everywhere'
@@ -63,7 +67,7 @@ android {
     }
 }
 
-def supportVersion = '25.1.0'
+def supportVersion = '25.1.1'
 
 dependencies {
 
@@ -86,16 +90,16 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.code.gson:gson:2.8.0'
 
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    apt 'com.jakewharton:butterknife-compiler:8.5.1'
 
     compile 'org.parceler:parceler-api:1.1.6'
     apt 'org.parceler:parceler:1.1.6'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.5.5'
+    testCompile 'org.mockito:mockito-core:2.7.5'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
