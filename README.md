@@ -17,6 +17,7 @@ Make climbing easier using an Android application.
   - Directions
   - Map
   - List places in order of proximity
+  - Get information from Facebook API
 
 - Follow progress
     - Data input
@@ -26,7 +27,7 @@ Make climbing easier using an Android application.
   - Pretty splash screen
 
 - Technical
-  - **Use Dagger**
+  - Use Dagger
   - Upgrade play services
   - Extract star controlling logic from `ListActivity`
   - Setup `dependencyUpdates`
