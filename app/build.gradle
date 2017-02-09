@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'jacoco-everywhere'
 
 //noinspection GroovyMissingReturnStatement
 android {
@@ -21,26 +22,34 @@ android {
     }
 
     buildTypes {
+
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            testCoverageEnabled = true
+        }
     }
 
     productFlavors {
 
+        // Standard development environment connected to remote dev backend
         development {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
             applicationId "me.cpele.inbop.dev"
         }
 
+        // Specific development environment running in an emulator and connected to local backend
         offlineEmulation {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"http://10.0.2.2:8000"')
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.offline"
         }
 
+        // Production environment connected to remote prod backend
         production {
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
             buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/450a18a89157ef0ea765385d13e22e78c8867b93/places.json"')
@@ -69,8 +78,6 @@ dependencies {
     compile "com.android.support:multidex:1.0.1"
 
     //noinspection GradleDependency
-    compile 'com.google.android.gms:play-services:10.0.1'
-    //noinspection GradleDependency
     compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -86,18 +93,28 @@ dependencies {
     apt 'org.parceler:parceler:1.1.6'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.5.5'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
 
+// Task to disable animations on the device using a shell command
 task disableAnimations(type: Exec, dependsOn: 'installDevelopmentDebug') {
     commandLine "adb shell settings put global window_animation_scale 0".split(" ")
 }
 
+// Make any connected* task depend on disableAnimations
 tasks.whenTaskAdded { task ->
     if (System.getenv()['CI'] && task.name.startsWith('connected')) {
         task.dependsOn disableAnimations
     }
+}
+
+// Skip tests for offlineEmulation variant
+gradle.taskGraph.useFilter { task ->
+    def taskName = task.name.toLowerCase()
+    def skipTask = taskName.contains('test') && taskName.contains('offlineemulation')
+    return !skipTask
 }

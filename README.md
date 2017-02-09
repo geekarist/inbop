@@ -28,7 +28,10 @@ Make climbing easier using an Android application.
 - Technical
   - **Use Dagger**
   - Upgrade play services
-  - Improve architecture (MVP)
+  - Extract star controlling logic from `ListActivity`
+  - Setup `dependencyUpdates`
+  - Run unit tests in pre push hook
+  - Run UI tests in pre merge hook
   - Offline mode
   - Use Java 8 language features: https://developer.android.com/guide/platform/j8-jack.html
 

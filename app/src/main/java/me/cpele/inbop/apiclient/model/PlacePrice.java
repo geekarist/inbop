@@ -9,7 +9,7 @@ public class PlacePrice {
     String student;
     String child;
 
-    PlacePrice() {
+    public PlacePrice() {
     }
 
     public String getAdult() {
@@ -22,5 +22,20 @@ public class PlacePrice {
 
     public String getChild() {
         return child;
+    }
+
+    public PlacePrice setAdult(String adult) {
+        this.adult = adult;
+        return this;
+    }
+
+    public PlacePrice setChild(String child) {
+        this.child = child;
+        return this;
+    }
+
+    public PlacePrice setStudent(String student) {
+        this.student = student;
+        return this;
     }
 }
