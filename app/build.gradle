@@ -6,6 +6,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'jacoco-everywhere'
 
+def loadProps(path) {
+    // TODO
+}
+
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 25
@@ -13,6 +17,10 @@ android {
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
+
+        def fbProps = loadProps('../private/facebook.properties')
+        buildConfigField('String', 'FACEBOOK_APP_ID', fbProps.app_id)
+        buildConfigField('String', 'FACEBOOK_SECRET_KEY', fbProps.secret_key)
 
         applicationId "me.cpele.inbop"
         minSdkVersion 15
