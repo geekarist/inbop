@@ -6,8 +6,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'jacoco-everywhere'
 
-def loadProps(path) {
-    // TODO
+static def loadProps(path) {
+    def props = new Properties()
+    props.load(new FileInputStream(path))
+    return props;
 }
 
 //noinspection GroovyMissingReturnStatement
@@ -18,9 +20,9 @@ android {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
 
-        def fbProps = loadProps('../private/facebook.properties')
-        buildConfigField('String', 'FACEBOOK_APP_ID', fbProps.app_id)
-        buildConfigField('String', 'FACEBOOK_SECRET_KEY', fbProps.secret_key)
+        def fbProps = loadProps('private/facebook.properties')
+        buildConfigField('String', 'FACEBOOK_APP_ID', fbProps.get("app_id"))
+        buildConfigField('String', 'FACEBOOK_SECRET_KEY', fbProps.get("secret_key"))
 
         applicationId "me.cpele.inbop"
         minSdkVersion 15
