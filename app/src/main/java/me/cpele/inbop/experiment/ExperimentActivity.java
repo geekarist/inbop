@@ -3,6 +3,8 @@ package me.cpele.inbop.experiment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import butterknife.OnClick;
@@ -21,5 +23,14 @@ public class ExperimentActivity extends AppCompatActivity {
     void onClickGetFromGraph() {
 
         Toast.makeText(this, "Yo", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void addMenuItem(Menu menu) {
+
+        menu.add("Experimentations");
+    }
+
+    public static void checkItemThenAct(MenuItem item) {
+        // TODO
     }
 }
