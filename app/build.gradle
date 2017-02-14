@@ -21,8 +21,8 @@ android {
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
 
         def fbProps = loadProps('private/facebook.properties')
-        buildConfigField('String', 'FACEBOOK_APP_ID', fbProps.get("app_id"))
-        buildConfigField('String', 'FACEBOOK_SECRET_KEY', fbProps.get("secret_key"))
+        buildConfigField('String', 'FACEBOOK_APP_ID', "\"${fbProps.get('app_id')}\"")
+        buildConfigField('String', 'FACEBOOK_SECRET_KEY', "\"${fbProps.get('app_id')}\"")
 
         applicationId "me.cpele.inbop"
         minSdkVersion 15
