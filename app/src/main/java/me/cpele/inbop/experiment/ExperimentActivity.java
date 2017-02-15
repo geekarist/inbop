@@ -12,6 +12,9 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.R;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class ExperimentActivity extends AppCompatActivity {
 
@@ -27,7 +30,10 @@ public class ExperimentActivity extends AppCompatActivity {
     @OnClick(R.id.experiment_bt_get_from_graph)
     void onClickGetFromGraph() {
 
-        Toast.makeText(this, "Yo", Toast.LENGTH_SHORT).show();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://graph.facebook.com").build();
+        GraphApiService graphApiService = retrofit.create(GraphApiService.class);
+        GraphApiNode node = graphApiService.get("me");
+        Toast.makeText(this, String.valueOf(node), Toast.LENGTH_LONG).show();
     }
 
     public static void addMenuItemTo(Menu menu) {
@@ -46,5 +52,25 @@ public class ExperimentActivity extends AppCompatActivity {
 
     private static Intent newIntent(Context context) {
         return new Intent(context, ExperimentActivity.class);
+    }
+
+    private interface GraphApiService {
+
+        @GET("/v2.8/{nodeId}?fields=name")
+        GraphApiNode get(@Path("nodeId") String nodeId);
+    }
+
+    private static class GraphApiNode {
+
+        String id;
+        String name;
+
+        @Override
+        public String toString() {
+            return "GraphApiNode{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 }
