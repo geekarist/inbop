@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="me.cpele.inbop">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="me.cpele.inbop">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="me.cpele.inbop.CustomApp"
@@ -16,24 +16,24 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBc89yCe-QlHL5cd9u7jU5GcedpSAhMVYQ" />
+            android:value="AIzaSyBc89yCe-QlHL5cd9u7jU5GcedpSAhMVYQ"/>
 
         <activity
             android:name="me.cpele.inbop.SplashActivity"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
         </activity>
 
-        <activity android:name="me.cpele.inbop.list.ListActivity" />
+        <activity android:name="me.cpele.inbop.list.ListActivity"/>
 
         <activity
             android:name="me.cpele.inbop.detail.DetailActivity"
@@ -42,8 +42,10 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.cpele.inbop.list.ListActivity" />
+                android:value="me.cpele.inbop.list.ListActivity"/>
         </activity>
+
+        <activity android:name=".experiment.ExperimentActivity"/>
 
     </application>
 

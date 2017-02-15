@@ -49,20 +49,20 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         if (BuildConfig.DEBUG) {
-            ExperimentActivity.addMenuItem(menu);
+            ExperimentActivity.addMenuItemTo(menu);
         }
 
-        return super.onPrepareOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (BuildConfig.DEBUG) {
-            ExperimentActivity.checkItemThenAct(item);
+            ExperimentActivity.startEventually(item, this);
         }
 
         return super.onOptionsItemSelected(item);
