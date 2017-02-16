@@ -13,6 +13,8 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.R;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,10 +39,16 @@ public class ExperimentActivity extends AppCompatActivity {
     @OnClick(R.id.experiment_bt_get_from_graph)
     void onClickGetFromGraph() {
 
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT))
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://graph.facebook.com")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
                 .build();
+
         GraphApiService graphApiService = retrofit.create(GraphApiService.class);
 
         final String nodeId = "me";
