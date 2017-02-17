@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.cpele.inbop.BuildConfig;
 import me.cpele.inbop.R;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,6 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import static java.lang.String.format;
 
@@ -60,8 +62,9 @@ public class ExperimentActivity extends AppCompatActivity {
 
         GraphApiService graphApiService = retrofit.create(GraphApiService.class);
 
-        final String nodeId = "me";
-        graphApiService.get(nodeId).enqueue(new Callback<GraphApiNode>() {
+        final String nodeId = "antrebloc94";
+        String accessToken = BuildConfig.FACEBOOK_APP_ID + "|" + BuildConfig.FACEBOOK_SECRET_KEY;
+        graphApiService.get(nodeId, accessToken).enqueue(new Callback<GraphApiNode>() {
 
             @Override
             public void onResponse(Call<GraphApiNode> call, Response<GraphApiNode> response) {
@@ -99,7 +102,7 @@ public class ExperimentActivity extends AppCompatActivity {
     private interface GraphApiService {
 
         @GET("/v2.8/{nodeId}?fields=name")
-        Call<GraphApiNode> get(@Path("nodeId") String nodeId);
+        Call<GraphApiNode> get(@Path("nodeId") String nodeId, @Query("access_token") String accessToken);
     }
 
     private static class GraphApiNode {

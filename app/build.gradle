@@ -22,7 +22,7 @@ android {
 
         def fbProps = loadProps('private/facebook.properties')
         buildConfigField('String', 'FACEBOOK_APP_ID', "\"${fbProps.get('app_id')}\"")
-        buildConfigField('String', 'FACEBOOK_SECRET_KEY', "\"${fbProps.get('app_id')}\"")
+        buildConfigField('String', 'FACEBOOK_SECRET_KEY', "\"${fbProps.get('secret_key')}\"")
 
         applicationId "me.cpele.inbop"
         minSdkVersion 15
