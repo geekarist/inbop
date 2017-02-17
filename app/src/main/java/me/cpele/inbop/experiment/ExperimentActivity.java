@@ -39,8 +39,17 @@ public class ExperimentActivity extends AppCompatActivity {
     @OnClick(R.id.experiment_bt_get_from_graph)
     void onClickGetFromGraph() {
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.d(ExperimentActivity.this.getClass().getSimpleName(), message);
+            }
+        });
+
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addInterceptor(new HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT))
+                .addInterceptor(interceptor)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
