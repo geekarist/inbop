@@ -1,9 +1,11 @@
 package me.cpele.inbop.list;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,7 +50,20 @@ public class ListFragment extends Fragment implements ListContract.View {
         ButterKnife.bind(this, view);
 
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        LinearLayoutManager layoutManager;
+
+        switch (getResources().getConfiguration().orientation) {
+
+            case Configuration.ORIENTATION_LANDSCAPE:
+                layoutManager = new GridLayoutManager(getContext(), 2);
+                break;
+
+            default:
+                layoutManager = new LinearLayoutManager(getContext());
+        }
+
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
