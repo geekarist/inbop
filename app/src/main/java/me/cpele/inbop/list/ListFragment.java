@@ -1,10 +1,12 @@
 package me.cpele.inbop.list;
 
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +59,7 @@ public class ListFragment extends Fragment implements ListContract.View {
 
             case Configuration.ORIENTATION_LANDSCAPE:
                 layoutManager = new GridLayoutManager(getContext(), 2);
+                recyclerView.addItemDecoration(new ColumnSpacingDecoration());
                 break;
 
             default:
@@ -112,5 +115,23 @@ public class ListFragment extends Fragment implements ListContract.View {
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    private class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+            CardView cardView = (CardView) view;
+
+            int colIdx = parent.getChildLayoutPosition(view) % 2;
+
+            if (colIdx == 1) {
+                GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
+                cardParams.setMargins(0, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
+            }
+
+            super.getItemOffsets(outRect, view, parent, state);
+        }
     }
 }
