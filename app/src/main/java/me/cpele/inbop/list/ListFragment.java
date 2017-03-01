@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -124,11 +125,18 @@ public class ListFragment extends Fragment implements ListContract.View {
 
             CardView cardView = (CardView) view;
 
-            int colIdx = parent.getChildLayoutPosition(view) % 2;
+            int position = parent.getChildAdapterPosition(view);
+            int colIdx = position % 2;
+            TextView text = (TextView) cardView.findViewById(R.id.place_tv_name);
+            String name = String.valueOf(text.getText());
+            Log.d(ListFragment.this.getClass().getSimpleName(), name);
 
+            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
             if (colIdx == 1) {
-                GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
                 cardParams.setMargins(0, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
+            } else {
+                int margin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
+                cardParams.setMargins(margin, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
             }
 
             super.getItemOffsets(outRect, view, parent, state);

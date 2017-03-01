@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/place_cv"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp"
-    android:layout_marginTop="7dp">
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:id="@+id/place_cv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:layout_marginLeft="@dimen/place_cv_margin"
+                                    android:layout_marginRight="@dimen/place_cv_margin"
+                                    android:layout_marginTop="@dimen/place_cv_margin">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/place_rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                    android:id="@+id/place_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/place_iv_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/place_picture" />
+            android:contentDescription="@string/place_picture"/>
 
         <ImageView
             android:id="@+id/place_iv_overlay"
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:alpha=".3"
             android:background="@android:color/black"
-            android:contentDescription="@string/place_dark_overlay" />
+            android:contentDescription="@string/place_dark_overlay"/>
 
         <TextView
             android:id="@+id/place_tv_name"
@@ -37,7 +37,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:textColor="@android:color/white"
-            tools:text="Name of the place" />
+            tools:text="Name of the place"/>
 
         <TextView
             android:id="@+id/place_tv_city"
@@ -49,18 +49,19 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:textColor="@android:color/white"
-            tools:text="City of the place" />
+            tools:ignore="RelativeOverlap"
+            tools:text="City of the place"/>
 
         <ImageView
             android:id="@+id/place_iv_favorite"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
             android:contentDescription="@string/place_favorite"
-            android:src="@drawable/ic_favorite_border_white_24dp" />
+            android:src="@drawable/ic_favorite_border_white_24dp"/>
 
     </RelativeLayout>
 
