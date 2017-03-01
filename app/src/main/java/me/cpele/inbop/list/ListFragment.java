@@ -125,21 +125,35 @@ public class ListFragment extends Fragment implements ListContract.View {
 
             CardView cardView = (CardView) view;
 
-            int position = parent.getChildAdapterPosition(view);
+            int leftMargin = computeLeftMargin(cardView, parent);
+
+            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
+            cardParams.setMargins(leftMargin, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
+
+            super.getItemOffsets(outRect, view, parent, state);
+        }
+
+        /**
+         * Compute the left margin a view should have in a parent.
+         *
+         * @param cardView the view
+         * @param parent   the parent view
+         * @return the left margin: some configured value if the view is in the left column, or else 0.
+         */
+        private int computeLeftMargin(CardView cardView, RecyclerView parent) {
+            int position = parent.getChildAdapterPosition(cardView);
             int colIdx = position % 2;
             TextView text = (TextView) cardView.findViewById(R.id.place_tv_name);
             String name = String.valueOf(text.getText());
             Log.d(ListFragment.this.getClass().getSimpleName(), name);
 
-            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
+            int leftMargin;
             if (colIdx == 1) {
-                cardParams.setMargins(0, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
+                leftMargin = 0;
             } else {
-                int margin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
-                cardParams.setMargins(margin, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
+                leftMargin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
             }
-
-            super.getItemOffsets(outRect, view, parent, state);
+            return leftMargin;
         }
     }
 }
