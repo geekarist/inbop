@@ -125,35 +125,27 @@ public class ListFragment extends Fragment implements ListContract.View {
 
             CardView cardView = (CardView) view;
 
-            int leftMargin = computeLeftMargin(cardView, parent);
-
-            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
-            cardParams.setMargins(leftMargin, cardParams.topMargin, cardParams.rightMargin, cardParams.bottomMargin);
-
-            super.getItemOffsets(outRect, view, parent, state);
-        }
-
-        /**
-         * Compute the left margin a view should have in a parent.
-         *
-         * @param cardView the view
-         * @param parent   the parent view
-         * @return the left margin: some configured value if the view is in the left column, or else 0.
-         */
-        private int computeLeftMargin(CardView cardView, RecyclerView parent) {
             int position = parent.getChildAdapterPosition(cardView);
             int colIdx = position % 2;
             TextView text = (TextView) cardView.findViewById(R.id.place_tv_name);
             String name = String.valueOf(text.getText());
             Log.d(ListFragment.this.getClass().getSimpleName(), name);
 
+            int totalMargin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
             int leftMargin;
+            int rightMargin;
+            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
             if (colIdx == 1) {
-                leftMargin = 0;
+                leftMargin = totalMargin / 2;
+                rightMargin = cardParams.rightMargin;
             } else {
-                leftMargin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
+                leftMargin = cardParams.leftMargin;
+                rightMargin = totalMargin - totalMargin / 2;
             }
-            return leftMargin;
+
+            cardParams.setMargins(leftMargin, cardParams.topMargin, rightMargin, cardParams.bottomMargin);
+
+            super.getItemOffsets(outRect, view, parent, state);
         }
     }
 }
