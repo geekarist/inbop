@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -123,29 +121,11 @@ public class ListFragment extends Fragment implements ListContract.View {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
-            CardView cardView = (CardView) view;
-
-            int position = parent.getChildAdapterPosition(cardView);
-            int colIdx = position % 2;
-            TextView text = (TextView) cardView.findViewById(R.id.place_tv_name);
-            String name = String.valueOf(text.getText());
-            Log.d(ListFragment.this.getClass().getSimpleName(), name);
-
-            int totalMargin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
-            int leftMargin;
-            int rightMargin;
-            GridLayoutManager.LayoutParams cardParams = (GridLayoutManager.LayoutParams) cardView.getLayoutParams();
-            if (colIdx == 1) {
-                leftMargin = totalMargin / 2;
-                rightMargin = cardParams.rightMargin;
-            } else {
-                leftMargin = cardParams.leftMargin;
-                rightMargin = totalMargin - totalMargin / 2;
-            }
-
-            cardParams.setMargins(leftMargin, cardParams.topMargin, rightMargin, cardParams.bottomMargin);
-
             super.getItemOffsets(outRect, view, parent, state);
+
+            int margin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
+
+            outRect.set(margin / 2, margin / 2, margin / 2, margin / 2);
         }
     }
 }
