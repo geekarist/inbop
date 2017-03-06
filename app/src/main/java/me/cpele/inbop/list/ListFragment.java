@@ -51,6 +51,7 @@ public class ListFragment extends Fragment implements ListContract.View {
         ButterKnife.bind(this, view);
 
         recyclerView.setAdapter(mAdapter);
+        recyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
         LinearLayoutManager layoutManager;
 
@@ -58,11 +59,11 @@ public class ListFragment extends Fragment implements ListContract.View {
 
             case Configuration.ORIENTATION_LANDSCAPE:
                 layoutManager = new GridLayoutManager(getContext(), 2);
-                recyclerView.addItemDecoration(new ColumnSpacingDecoration());
                 break;
 
             default:
                 layoutManager = new LinearLayoutManager(getContext());
+                break;
         }
 
         recyclerView.setLayoutManager(layoutManager);
