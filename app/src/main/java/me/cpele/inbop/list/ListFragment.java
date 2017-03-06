@@ -53,18 +53,7 @@ public class ListFragment extends Fragment implements ListContract.View {
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        LinearLayoutManager layoutManager;
-
-        switch (getResources().getConfiguration().orientation) {
-
-            case Configuration.ORIENTATION_LANDSCAPE:
-                layoutManager = new GridLayoutManager(getContext(), 2);
-                break;
-
-            default:
-                layoutManager = new LinearLayoutManager(getContext());
-                break;
-        }
+        LinearLayoutManager layoutManager = createLayoutManager();
 
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -91,15 +80,6 @@ public class ListFragment extends Fragment implements ListContract.View {
         reload();
     }
 
-    private void reload() {
-
-        loadingLayout.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-        errorLoadingLayout.setVisibility(View.INVISIBLE);
-
-        if (mPresenter != null) mPresenter.onLoadPlaces();
-    }
-
     @Override
     public void onPlacesLoaded(List<Place> places) {
         mAdapter.clear();
@@ -115,6 +95,28 @@ public class ListFragment extends Fragment implements ListContract.View {
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @NonNull
+    private LinearLayoutManager createLayoutManager() {
+        LinearLayoutManager layoutManager;
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager = new GridLayoutManager(getContext(), 2);
+        } else {
+            layoutManager = new LinearLayoutManager(getContext());
+        }
+        return layoutManager;
+    }
+
+    private void reload() {
+
+        loadingLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        errorLoadingLayout.setVisibility(View.INVISIBLE);
+
+        if (mPresenter != null) mPresenter.onLoadPlaces();
     }
 
     private class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
