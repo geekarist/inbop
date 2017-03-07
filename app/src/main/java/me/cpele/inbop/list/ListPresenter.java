@@ -39,4 +39,13 @@ public class ListPresenter implements ListContract.Presenter {
     public void onPlacesLoadFailure(Throwable t) {
         if (mView != null) mView.onPlacesLoadingFail(t);
     }
+
+    @Override
+    public void onCheckOrientation(boolean landscape) {
+        if (landscape) {
+            if (mView != null) mView.onSetupForLandscape();
+        } else {
+            if (mView != null) mView.onSetupForPortrait();
+        }
+    }
 }

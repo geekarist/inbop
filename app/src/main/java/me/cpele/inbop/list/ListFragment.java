@@ -37,6 +37,7 @@ public class ListFragment extends Fragment implements ListContract.View {
     private ListContract.Presenter mPresenter;
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
+    private LinearLayoutManager mLayoutManager;
 
     @Nullable
     @Override
@@ -53,9 +54,9 @@ public class ListFragment extends Fragment implements ListContract.View {
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        LinearLayoutManager layoutManager = createLayoutManager();
+        createLayoutManager();
 
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
@@ -97,17 +98,21 @@ public class ListFragment extends Fragment implements ListContract.View {
         errorLoadingLayout.setVisibility(View.VISIBLE);
     }
 
-    @NonNull
-    private LinearLayoutManager createLayoutManager() {
-        LinearLayoutManager layoutManager;
+    private void createLayoutManager() {
 
         int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            layoutManager = new GridLayoutManager(getContext(), 2);
-        } else {
-            layoutManager = new LinearLayoutManager(getContext());
-        }
-        return layoutManager;
+        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
+    }
+
+    @Override
+    public void onSetupForPortrait() {
+        mLayoutManager = new LinearLayoutManager(getContext());
+    }
+
+    @Override
+    public void onSetupForLandscape() {
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
     }
 
     private void reload() {
