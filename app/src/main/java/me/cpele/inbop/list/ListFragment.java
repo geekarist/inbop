@@ -59,7 +59,7 @@ public class ListFragment extends Fragment implements ListContract.View {
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        createLayoutManager();
+        setupOrientation();
 
         recyclerView.setLayoutManager(mLayoutManager);
     }
@@ -103,13 +103,6 @@ public class ListFragment extends Fragment implements ListContract.View {
         errorLoadingLayout.setVisibility(View.VISIBLE);
     }
 
-    private void createLayoutManager() {
-
-        int orientation = getResources().getConfiguration().orientation;
-        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
-    }
-
     @Override
     public void onSetupForPortrait() {
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -118,6 +111,13 @@ public class ListFragment extends Fragment implements ListContract.View {
     @Override
     public void onSetupForLandscape() {
         mLayoutManager = new GridLayoutManager(getContext(), 2);
+    }
+
+    private void setupOrientation() {
+
+        int orientation = getResources().getConfiguration().orientation;
+        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
     }
 
     private void reload() {
