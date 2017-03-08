@@ -129,14 +129,14 @@ public class ListFragment extends Fragment implements ListContract.View {
         if (mPresenter != null) mPresenter.onLoadPlaces();
     }
 
-    private class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
+    private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
             super.getItemOffsets(outRect, view, parent, state);
 
-            int margin = getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
+            int margin = view.getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
 
             outRect.set(margin / 2, margin / 2, margin / 2, margin / 2);
         }
