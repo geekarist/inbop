@@ -50,6 +50,11 @@ public class ListFragment extends Fragment implements ListContract.View {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new ColumnSpacingDecoration());
