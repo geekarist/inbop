@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -82,13 +83,20 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
 
-        mItineraryFragment = ItineraryFragment.newInstance(this, place);
+        mItineraryFragment = findOrCreateItineraryFragment(place);
         mItineraryPresenter = new ItineraryPresenter();
 
         mItineraryFragment.onBind(mItineraryPresenter);
         mItineraryPresenter.onBind(mItineraryFragment);
 
         detailPagerAdapter.add(mItineraryFragment);
+    }
+
+    private ItineraryFragment findOrCreateItineraryFragment(Place place) {
+
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        ItineraryFragment existing = null;
+        return existing != null ? existing : ItineraryFragment.newInstance(this, place);
     }
 
     private void tearDownItinerary() {
@@ -98,13 +106,20 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
 
-        mUsefulInfoFragment = UsefulInfoFragment.newInstance(this, place);
+        mUsefulInfoFragment = findOrCreateUsefulInfoFragment(place);
         mUsefulInfoPresenter = new UsefulInfoPresenter();
 
         mUsefulInfoFragment.onBind(mUsefulInfoPresenter);
         mUsefulInfoPresenter.onBind(mUsefulInfoFragment);
 
         detailPagerAdapter.add(mUsefulInfoFragment);
+    }
+
+    private UsefulInfoFragment findOrCreateUsefulInfoFragment(Place place) {
+
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        UsefulInfoFragment existing = null;
+        return existing != null ? existing : UsefulInfoFragment.newInstance(this, place);
     }
 
     private void tearDownUsefulInfo() {
