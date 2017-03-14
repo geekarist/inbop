@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +39,7 @@ import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoPresenter;
 public class DetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_PLACE = "EXTRA_PLACE";
+    public static final String KEY_FRAGMENT_TAGS = "fragmentTags";
 
     @BindView(R.id.detail_tb)
     Toolbar toolbar;
@@ -52,6 +59,8 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        restoreFragments(savedInstanceState);
 
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
@@ -73,6 +82,7 @@ public class DetailActivity extends AppCompatActivity {
         preferences = CustomApp.getInstance().getPreferences();
     }
 
+
     @Override
     protected void onDestroy() {
         tearDownItinerary();
@@ -80,15 +90,54 @@ public class DetailActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private void restoreFragments(@Nullable Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+
+            ArrayList<String> fragmentTags = savedInstanceState.getStringArrayList(KEY_FRAGMENT_TAGS);
+
+            if (fragmentTags != null) {
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                for (String tag : fragmentTags) {
+                    Fragment fragment = fragmentManager.findFragmentByTag(tag);
+                    if (fragment instanceof UsefulInfoFragment) {
+                        mUsefulInfoFragment = (UsefulInfoFragment) fragment;
+                        mUsefulInfoFragment.setContext(this);
+                    } else if (fragment instanceof ItineraryFragment) {
+                        mItineraryFragment = (ItineraryFragment) fragment;
+                        mItineraryFragment.setContext(this);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        List<String> tagsList = Arrays.asList(mUsefulInfoFragment.getTag(), mItineraryFragment.getTag());
+        ArrayList<String> tagsArrayList = new ArrayList<>(tagsList);
+        outState.putStringArrayList(KEY_FRAGMENT_TAGS, tagsArrayList);
+
+        super.onSaveInstanceState(outState);
+    }
+
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
 
-        mItineraryFragment = ItineraryFragment.newInstance(this, place);
+        mItineraryFragment = findOrCreateItineraryFragment(place);
         mItineraryPresenter = new ItineraryPresenter();
 
         mItineraryFragment.onBind(mItineraryPresenter);
         mItineraryPresenter.onBind(mItineraryFragment);
 
         detailPagerAdapter.add(mItineraryFragment);
+    }
+
+    private ItineraryFragment findOrCreateItineraryFragment(Place place) {
+
+        return mItineraryFragment != null ? mItineraryFragment : ItineraryFragment.newInstance(this, place);
     }
 
     private void tearDownItinerary() {
@@ -98,13 +147,18 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
 
-        mUsefulInfoFragment = UsefulInfoFragment.newInstance(this, place);
+        mUsefulInfoFragment = findOrCreateUsefulInfoFragment(place);
         mUsefulInfoPresenter = new UsefulInfoPresenter();
 
         mUsefulInfoFragment.onBind(mUsefulInfoPresenter);
         mUsefulInfoPresenter.onBind(mUsefulInfoFragment);
 
         detailPagerAdapter.add(mUsefulInfoFragment);
+    }
+
+    private UsefulInfoFragment findOrCreateUsefulInfoFragment(Place place) {
+
+        return mUsefulInfoFragment != null ? mUsefulInfoFragment : UsefulInfoFragment.newInstance(this, place);
     }
 
     private void tearDownUsefulInfo() {

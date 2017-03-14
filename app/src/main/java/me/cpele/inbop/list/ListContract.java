@@ -24,6 +24,10 @@ public class ListContract {
         void onPlacesLoaded(List<Place> places);
 
         void onPlacesLoadingFail(Throwable t);
+
+        void onSetupForLandscape();
+
+        void onSetupForPortrait();
     }
 
     public interface Presenter {
@@ -37,5 +41,7 @@ public class ListContract {
         void onPlacesLoaded(List<Place> places);
 
         void onPlacesLoadFailure(Throwable t);
+
+        void onCheckOrientation(boolean landscape);
     }
 }

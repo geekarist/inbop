@@ -1,9 +1,12 @@
 package me.cpele.inbop.list;
 
+import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,6 +37,7 @@ public class ListFragment extends Fragment implements ListContract.View {
     private ListContract.Presenter mPresenter;
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
+    private LinearLayoutManager mLayoutManager;
 
     @Nullable
     @Override
@@ -46,9 +50,18 @@ public class ListFragment extends Fragment implements ListContract.View {
         super.onViewCreated(view, savedInstanceState);
 
         ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new ColumnSpacingDecoration());
+
+        setupOrientation();
+
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
@@ -73,15 +86,6 @@ public class ListFragment extends Fragment implements ListContract.View {
         reload();
     }
 
-    private void reload() {
-
-        loadingLayout.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-        errorLoadingLayout.setVisibility(View.INVISIBLE);
-
-        if (mPresenter != null) mPresenter.onLoadPlaces();
-    }
-
     @Override
     public void onPlacesLoaded(List<Place> places) {
         mAdapter.clear();
@@ -97,5 +101,44 @@ public class ListFragment extends Fragment implements ListContract.View {
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onSetupForPortrait() {
+        mLayoutManager = new LinearLayoutManager(getContext());
+    }
+
+    @Override
+    public void onSetupForLandscape() {
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
+    }
+
+    private void setupOrientation() {
+
+        int orientation = getResources().getConfiguration().orientation;
+        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
+    }
+
+    private void reload() {
+
+        loadingLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        errorLoadingLayout.setVisibility(View.INVISIBLE);
+
+        if (mPresenter != null) mPresenter.onLoadPlaces();
+    }
+
+    private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+            super.getItemOffsets(outRect, view, parent, state);
+
+            int margin = view.getContext().getResources().getDimensionPixelOffset(R.dimen.place_cv_margin);
+
+            outRect.set(margin / 2, margin / 2, margin / 2, margin / 2);
+        }
     }
 }
