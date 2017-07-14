@@ -48,16 +48,20 @@ android {
         }
     }
 
+    flavorDimensions 'api'
+
     productFlavors {
 
         // Standard development environment connected to remote dev backend
         development {
+            dimension 'api'
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://rawgit.com"')
             applicationId "me.cpele.inbop.dev"
         }
 
         // Specific development environment running in an emulator and connected to local backend
         offlineEmulation {
+            dimension 'api'
             buildConfigField('String', 'PLACES_API_BASE_URL', '"http://10.0.2.2:8000"')
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.offline"
@@ -65,6 +69,7 @@ android {
 
         // Production environment connected to remote prod backend
         production {
+            dimension 'api'
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://cdn.rawgit.com"')
             buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/450a18a89157ef0ea765385d13e22e78c8867b93/places.json"')
             applicationId "me.cpele.inbop.prod"
