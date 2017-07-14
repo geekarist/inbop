@@ -103,36 +103,40 @@ public class ExperimentActivity extends AppCompatActivity {
 
     private interface GraphApiService {
 
-        @GET("/v2.8/{nodeId}?fields=name")
+        @GET("/v2.8/{nodeId}?fields=name,hours,location,website,emails,cover,link,parking,phone,public_transit,single_line_address")
         Call<GraphApiNode> get(@Path("nodeId") String nodeId, @Query("access_token") String accessToken);
     }
 
     private static class GraphApiNode {
 
-        private String id;
-        private String name;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+        public String id;
+        public String name;
+        public Object hours;
+        public Object location;
+        public String website;
+        public Object emails;
+        public Object cover;
+        public String link;
+        public Object parking;
+        public String phone;
+        public String public_transit;
+        public String single_line_address;
 
         @Override
         public String toString() {
             return "GraphApiNode{" +
                     "id='" + id + '\'' +
                     ", name='" + name + '\'' +
+                    ", hours='" + hours + '\'' +
+                    ", location='" + location + '\'' +
+                    ", website='" + website + '\'' +
+                    ", emails='" + emails + '\'' +
+                    ", cover='" + cover + '\'' +
+                    ", link='" + link + '\'' +
+                    ", parking='" + parking + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", public_transit='" + public_transit + '\'' +
+                    ", single_line_address='" + single_line_address + '\'' +
                     '}';
         }
     }
