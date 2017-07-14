@@ -9,13 +9,13 @@ apply plugin: 'jacoco-everywhere'
 static def loadProps(path) {
     def props = new Properties()
     props.load(new FileInputStream(path))
-    return props;
+    return props
 }
 
 //noinspection GroovyMissingReturnStatement
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
@@ -26,13 +26,18 @@ android {
 
         applicationId "me.cpele.inbop"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionName "0.1.0"
         versionCode 7
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr"
 
         multiDexEnabled true
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
     buildTypes {
@@ -82,7 +87,7 @@ android {
     }
 }
 
-def supportVersion = '25.1.1'
+def supportVersion = '26.0.0-beta2'
 
 dependencies {
 
@@ -99,7 +104,7 @@ dependencies {
     //noinspection GradleDependency
     compile 'com.google.android.gms:play-services-maps:10.0.1'
 
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
