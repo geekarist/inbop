@@ -86,17 +86,25 @@ android {
     }
 }
 
-def supportVersion = '26.0.0-beta2'
+// Support version 26+ breaks the preview
+def supportVersion = '25.4.0'
 
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:${supportVersion}"
+    //noinspection GradleCompatible
     compile "com.android.support:recyclerview-v7:${supportVersion}"
+    //noinspection GradleCompatible
     compile "com.android.support:cardview-v7:${supportVersion}"
+    //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:${supportVersion}"
+    //noinspection GradleCompatible
     compile "com.android.support:design:${supportVersion}"
+
+    compile "com.android.support.constraint:constraint-layout:1.0.2"
 
     compile "com.android.support:multidex:1.0.1"
 
