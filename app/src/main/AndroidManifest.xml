@@ -45,7 +45,9 @@
                 android:value="me.cpele.inbop.list.ListActivity"/>
         </activity>
 
-        <activity android:name=".experiment.ExperimentActivity"/>
+        <activity
+            android:name=".experiment.ExperimentActivity"
+            android:exported="true"/>
 
     </application>
 
