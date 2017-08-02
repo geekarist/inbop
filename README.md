@@ -8,16 +8,19 @@ Make climbing easier using an Android application.
 - Display useful info 
 - Show a map
 - Star a place
+- Get information from Facebook API
+- Get information from Google API
 
 ## Planned
 
+- Display public transit instructions
+- Display image fetched from Google API
+- Nice img placeholder
+
 - Describe places
-  - Useful info
   - Pictures
   - Directions
-  - Map
   - List places in order of proximity
-  - Get information from Facebook API
 
 - Follow progress
     - Data input
