@@ -8,14 +8,18 @@ Make climbing easier using an Android application.
 - Display useful info 
 - Show a map
 - Star a place
-- Get information from Facebook API
-- Get information from Google API
 
 ## Planned
 
+### Next version
+
+- Get information from Facebook API
+- Get information from Google API
 - Display public transit instructions
 - Display image fetched from Google API
 - Nice img placeholder
+
+### Later
 
 - Describe places
   - Pictures
@@ -32,7 +36,6 @@ Make climbing easier using an Android application.
 - Technical
   - Use Dagger
   - Upgrade play services
-  - Extract star controlling logic from `ListActivity`
   - Setup `dependencyUpdates`
   - Run unit tests in pre push hook
   - Run UI tests in pre merge hook
