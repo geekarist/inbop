@@ -59,7 +59,7 @@ android {
         // Standard development environment connected to remote dev backend
         development {
             dimension 'api'
-            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://fathomless-atoll-69371.herokuapp.com"')
+            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://inbop-api.herokuapp.com"')
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.dev"
         }
@@ -75,7 +75,7 @@ android {
         // Production environment connected to remote prod backend
         production {
             dimension 'api'
-            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://fathomless-atoll-69371.herokuapp.com"')
+            buildConfigField('String', 'PLACES_API_BASE_URL', '"https://inbop-api.herokuapp.com"')
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.prod"
         }
