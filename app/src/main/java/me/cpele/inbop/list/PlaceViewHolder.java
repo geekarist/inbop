@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.cpele.inbop.BuildConfig;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.DetailActivity;
@@ -44,7 +43,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(place.getName());
         cityTextView.setText(place.getCity());
 
-        String url = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
+        String url = place.getImgUrl();
         Glide.with(itemView.getContext())
                 .load(url)
                 .centerCrop()

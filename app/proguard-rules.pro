@@ -26,6 +26,9 @@
 -keepattributes Signature
 -keepattributes Exceptions
 -keep class me.cpele.inbop.** { *; }
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.concurrent.GuardedBy
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

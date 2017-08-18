@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.cpele.inbop.BuildConfig;
 import me.cpele.inbop.R;
 import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
@@ -35,7 +34,7 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         if (mView == null) return;
 
         if (place.getImgUrl() != null) {
-            String imgUrl = BuildConfig.PLACES_API_BASE_URL + BuildConfig.PLACES_API_PATH + "/../" + place.getImgUrl();
+            String imgUrl = place.getImgUrl();
             mView.displayImage(imgUrl);
         }
 

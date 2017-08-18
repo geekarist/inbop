@@ -14,7 +14,6 @@ import me.cpele.inbop.apiclient.model.PlacePrice;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -87,7 +86,7 @@ public class UsefulInfoPresenterTest {
         verify(mView).displayEmail("email");
         verify(mView).displayFacebook("facebook");
         verify(mView).displayHours("hours");
-        verify(mView).displayImage(matches("^http.*inbop-api.*"));
+        verify(mView).displayImage("img-url");
         verify(mView).displayPrices("adult 3 € - student 2 € - child 1 €");
         verify(mView).displayUrl("web-url");
     }
