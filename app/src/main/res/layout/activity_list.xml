@@ -15,55 +15,10 @@
         android:theme="@style/ActionBarThemeOverlay"
         tools:targetApi="lollipop" />
 
-    <FrameLayout
+    <fragment
+        android:id="@+id/list_fr"
+        android:name="me.cpele.inbop.list.ListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/list_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="7dp"
-            android:visibility="invisible" />
-
-        <LinearLayout
-            android:id="@+id/list_ll_error_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/list_tv_error_loading"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:text="@string/list_error_loading" />
-
-            <Button
-                android:id="@+id/list_bt_reload"
-                style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/list_try_again"
-                tools:ignore="NewApi" />
-
-        </LinearLayout>
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/list_pb_loading"
-            style="@android:style/Widget.Material.Light.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            tools:targetApi="lollipop" />
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

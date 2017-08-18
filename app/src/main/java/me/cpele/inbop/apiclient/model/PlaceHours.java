@@ -8,18 +8,24 @@ public class PlaceHours {
     PlaceHoursByDays weekdays;
     PlaceHoursByDays weekend;
 
-    PlaceHours() {
+    public PlaceHours() {
     }
 
     public PlaceHoursByDays getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(PlaceHoursByDays weekdays) {
+    public PlaceHours setWeekdays(PlaceHoursByDays weekdays) {
         this.weekdays = weekdays;
+        return this;
     }
 
     public PlaceHoursByDays getWeekend() {
         return weekend;
+    }
+
+    public PlaceHours setWeekend(PlaceHoursByDays weekend) {
+        this.weekend = weekend;
+        return this;
     }
 }

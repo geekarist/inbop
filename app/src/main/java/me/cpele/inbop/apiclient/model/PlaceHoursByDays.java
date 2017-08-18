@@ -8,18 +8,24 @@ public class PlaceHoursByDays {
     String opening;
     String closing;
 
-    PlaceHoursByDays() {
+    public PlaceHoursByDays() {
     }
 
     public String getOpening() {
         return opening;
     }
 
-    public void setOpening(String opening) {
+    public PlaceHoursByDays setOpening(String opening) {
         this.opening = opening;
+        return this;
     }
 
     public String getClosing() {
         return closing;
+    }
+
+    public PlaceHoursByDays setClosing(String closing) {
+        this.closing = closing;
+        return this;
     }
 }
