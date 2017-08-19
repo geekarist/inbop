@@ -6,7 +6,8 @@ apply plugin: 'com.android.application'
 
 static def loadProps(path) {
     def props = new Properties()
-    if (new File(path).exists()) props.load(new FileInputStream(path))
+    def file = new File(path)
+    if (file.exists() && file.canRead()) props.load(new FileInputStream(path))
     return props
 }
 
