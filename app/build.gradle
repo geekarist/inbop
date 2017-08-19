@@ -10,6 +10,12 @@ static def loadProps(path) {
     return props
 }
 
+static def getPropertyOrEnv(properties, name) {
+    def prop = properties.get(name);
+    if (prop == null) prop = System.getenv(name);
+    return prop;
+}
+
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 26
@@ -56,10 +62,10 @@ android {
     signingConfigs {
         def signingProps = loadProps('private/keystore.properties')
         config {
-            keyAlias signingProps['keyAlias']
-            keyPassword signingProps['keyPassword']
-            storeFile file(signingProps['storeFile'])
-            storePassword signingProps['storePassword']
+            keyAlias getPropertyOrEnv(signingProps, 'SIGNING_KEY_ALIAS')
+            keyPassword getPropertyOrEnv(signingProps, 'SIGNING_KEY_PASSWORD')
+            storeFile file(getPropertyOrEnv(signingProps, 'SIGNING_STORE_FILE'))
+            storePassword getPropertyOrEnv(signingProps, 'SIGNING_STORE_PASSWORD')
         }
     }
 
