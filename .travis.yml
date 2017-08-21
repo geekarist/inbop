@@ -7,4 +7,5 @@ android:
     - tools
     - build-tools-26.0.0
     - android-26
-script: ./gradlew test
+script:
+  ./generate-signed-apk.sh
