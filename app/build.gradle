@@ -3,6 +3,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 
 static def loadProps(path) {
     def props = new Properties()
@@ -33,7 +34,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionName "0.2.0"
-        versionCode 8
+        versionCode 9
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr"
 
@@ -139,4 +140,10 @@ tasks.whenTaskAdded { task ->
     if (System.getenv()['CI'] && task.name.startsWith('connected')) {
         task.dependsOn disableAnimations
     }
+}
+
+play {
+    track = 'alpha'
+    serviceAccountEmail = 'service-account@api-7362252069941172292-436266.iam.gserviceaccount.com'
+    pk12File = file('../private/google-play-android-dev.p12')
 }
