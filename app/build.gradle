@@ -13,9 +13,9 @@ static def loadProps(path) {
 }
 
 static def getPropertyOrEnv(properties, name) {
-    def prop = properties.get(name);
-    if (prop == null) prop = System.getenv(name);
-    return prop;
+    def prop = properties.get(name)
+    if (prop == null) prop = System.getenv(name)
+    return prop
 }
 
 //noinspection GroovyMissingReturnStatement
@@ -145,5 +145,5 @@ tasks.whenTaskAdded { task ->
 play {
     track = 'alpha'
     serviceAccountEmail = 'service-account@api-7362252069941172292-436266.iam.gserviceaccount.com'
-    pk12File = file('../private/google-play-android-dev.p12')
+    pk12File = file('../secure/google-play-android-dev.p12')
 }
