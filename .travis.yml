@@ -9,7 +9,8 @@ android:
   - android-26
 before_install:
 - openssl aes-256-cbc -K $encrypted_255c9f433d16_key -iv $encrypted_255c9f433d16_iv
-  -in secure/google-play-android-dev.p12.enc -out secure/google-play-android-dev.p12 -d
+  -in ./secure/google-play-android-dev.p12.enc -out ./secure/google-play-android-dev.p12
+  -d
 - openssl aes-256-cbc -K $encrypted_255c9f433d16_key -iv $encrypted_255c9f433d16_iv
   -in secure/me-cpele-android-keystore.jks.enc -out secure/me-cpele-android-keystore.jks
   -d
