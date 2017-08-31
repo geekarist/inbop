@@ -12,3 +12,8 @@ before_install:
   -in ./secure/files.tar.enc -out ./secure/files.tar -d
 - tar xf ./secure/files.tar -C ./secure/
 script: "./generate-signed-apk.sh"
+branches:
+  only:
+  - master
+  - develop
+  - /^release-.*$/
