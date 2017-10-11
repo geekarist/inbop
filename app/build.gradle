@@ -21,7 +21,7 @@ static def getPropertyOrEnv(properties, name) {
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.2"
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
