@@ -1,0 +1,19 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools
+  - build-tools-26.0.2
+  - android-26
+before_install:
+- openssl aes-256-cbc -K $encrypted_255c9f433d16_key -iv $encrypted_255c9f433d16_iv
+  -in ./secure/files.tar.enc -out ./secure/files.tar -d
+- tar xf ./secure/files.tar -C ./secure/
+script: "./generate-signed-apk.sh"
+branches:
+  only:
+  - master
+  - develop
+  - /^release-.*$/

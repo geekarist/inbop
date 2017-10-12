@@ -3,17 +3,25 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 
 static def loadProps(path) {
     def props = new Properties()
-    props.load(new FileInputStream(path))
+    def file = new File(path)
+    if (file.exists() && file.canRead()) props.load(new FileInputStream(path))
     return props
+}
+
+static def getPropertyOrEnv(properties, name) {
+    def prop = properties.get(name)
+    if (prop == null) prop = System.getenv(name)
+    return prop
 }
 
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.2"
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
@@ -25,8 +33,8 @@ android {
         applicationId "me.cpele.inbop"
         minSdkVersion 15
         targetSdkVersion 26
-        versionName "0.2.0"
-        versionCode 8
+        versionName "0.3.0"
+        versionCode 13
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "fr"
 
@@ -53,8 +61,17 @@ android {
 
     flavorDimensions 'api'
 
-    productFlavors {
+    signingConfigs {
+        def signingProps = loadProps('private/keystore.properties')
+        config {
+            keyAlias getPropertyOrEnv(signingProps, 'SIGNING_KEY_ALIAS')
+            keyPassword getPropertyOrEnv(signingProps, 'SIGNING_KEY_PASSWORD')
+            storeFile file(getPropertyOrEnv(signingProps, 'SIGNING_STORE_FILE'))
+            storePassword getPropertyOrEnv(signingProps, 'SIGNING_STORE_PASSWORD')
+        }
+    }
 
+    productFlavors {
         // Standard development environment connected to remote dev backend
         development {
             dimension 'api'
@@ -62,7 +79,6 @@ android {
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.dev"
         }
-
         // Specific development environment running in an emulator and connected to local backend
         offlineEmulation {
             dimension 'api'
@@ -70,13 +86,13 @@ android {
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.offline"
         }
-
         // Production environment connected to remote prod backend
         production {
             dimension 'api'
             buildConfigField('String', 'PLACES_API_BASE_URL', '"https://inbop-api.cpele.me"')
             buildConfigField('String', 'PLACES_API_PATH', '"/places.json"')
             applicationId "me.cpele.inbop.prod"
+            signingConfig signingConfigs.config
         }
     }
 
@@ -86,40 +102,29 @@ android {
     }
 }
 
-def supportVersion = '26.0.1'
+def supportVersion = '26.1.0'
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:recyclerview-v7:${supportVersion}"
     implementation "com.android.support:cardview-v7:${supportVersion}"
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
-
-    implementation "com.android.support.constraint:constraint-layout:1.1.0-beta1"
-
-    implementation "com.android.support:multidex:1.0.2"
-
-    implementation 'com.google.android.gms:play-services-maps:11.2.0'
-
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta2'
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.google.android.gms:play-services-maps:11.4.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-
     implementation 'com.github.bumptech.glide:glide:3.8.0'
     implementation 'com.google.code.gson:gson:2.8.1'
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'org.parceler:parceler-api:1.1.9'
     annotationProcessor 'org.parceler:parceler:1.1.9'
-
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.8.47'
-
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -135,4 +140,10 @@ tasks.whenTaskAdded { task ->
     if (System.getenv()['CI'] && task.name.startsWith('connected')) {
         task.dependsOn disableAnimations
     }
+}
+
+play {
+    track = 'alpha'
+    serviceAccountEmail = 'service-account@api-7362252069941172292-436266.iam.gserviceaccount.com'
+    pk12File = file('../secure/google-play-android-dev.p12')
 }

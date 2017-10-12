@@ -8,4 +8,5 @@
 .idea/*
 .idea
 inbop-api
-private/*
+private/**
+**/*.jks
