@@ -3,14 +3,11 @@ package me.cpele.inbop.list;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cpele.inbop.BuildConfig;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
-import me.cpele.inbop.experiment.ExperimentActivity;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -31,8 +28,8 @@ public class ListActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        mPresenter = ListInjection.providePresenter();
-        mModel = ListInjection.provideModel();
+        mPresenter = new ListPresenter();
+        mModel = new ListModel(CustomApp.getInstance().getPlacesService());
         mView = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.list_fr);
 
         mView.attach(mPresenter);
@@ -46,25 +43,5 @@ public class ListActivity extends AppCompatActivity {
         mModel.detach();
         mView.detach();
         super.onDestroy();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        if (BuildConfig.DEBUG) {
-            ExperimentActivity.addMenuItemTo(menu);
-        }
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (BuildConfig.DEBUG) {
-            ExperimentActivity.startEventually(item, this);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
