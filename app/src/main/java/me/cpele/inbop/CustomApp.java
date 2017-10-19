@@ -1,6 +1,7 @@
 package me.cpele.inbop;
 
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.gson.FieldNamingPolicy;
@@ -9,26 +10,26 @@ import com.google.gson.GsonBuilder;
 
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.detail.AppPreferences;
+import me.cpele.inbop.list.ListModel;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomApp extends MultiDexApplication {
 
-    private static CustomApp instance;
+    private static CustomApp sInstance;
 
-    private PlacesService placesService;
-    private AppPreferences preferences;
-    private Gson gson;
+    private AppPreferences mPreferences;
+    private ListModel mListModel;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        if (instance == null) {
-            instance = this;
+        if (sInstance == null) {
+            sInstance = this;
         }
 
-        gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
                 .create();
 
@@ -37,24 +38,29 @@ public class CustomApp extends MultiDexApplication {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        placesService = retrofit.create(PlacesService.class);
+        PlacesService placesService = retrofit.create(PlacesService.class);
 
         if (BuildConfig.DEBUG) {
             StrictMode.enableDefaults();
         }
 
-        preferences = new AppPreferences(this, gson);
+        mPreferences = new AppPreferences(this, gson);
+
+        mListModel = new ListModel(placesService);
     }
 
+    @NonNull
     public static CustomApp getInstance() {
-        return instance;
+        return sInstance;
     }
 
-    public PlacesService getPlacesService() {
-        return placesService;
-    }
-
+    @NonNull
     public AppPreferences getPreferences() {
-        return preferences;
+        return mPreferences;
+    }
+
+    @NonNull
+    public ListModel getListModel() {
+        return mListModel;
     }
 }

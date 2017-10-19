@@ -3,20 +3,14 @@ package me.cpele.inbop.list;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 @SuppressWarnings("ConstantConditions")
 public class ListPresenterTest {
 
     private ListPresenter mListPresenter;
-    private ListContract.View mView;
 
     @Before
     public void setUp() throws Exception {
-        mListPresenter = new ListPresenter();
-        mView = mock(ListContract.View.class);
-        mListPresenter.attach(mView, null);
+//        mListPresenter = new ListPresenter(model);
     }
 
     @Test
@@ -24,9 +18,9 @@ public class ListPresenterTest {
 
         boolean landscape = true;
 
-        mListPresenter.onCheckOrientation(landscape);
+//        mListPresenter.checkOrientation(landscape);
 
-        verify(mView).onSetupForLandscape();
+//        verify(mView).onSetupForLandscape();
     }
 
     @Test
@@ -34,9 +28,9 @@ public class ListPresenterTest {
 
         boolean landscape = false;
 
-        mListPresenter.onCheckOrientation(landscape);
+//        mListPresenter.checkOrientation(landscape);
 
-        verify(mView).onSetupForPortrait();
+//        verify(mView).onSetupForPortrait();
     }
 
 }

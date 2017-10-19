@@ -1,6 +1,6 @@
 package me.cpele.inbop.list;
 
-import android.content.res.Configuration;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,11 +18,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 
-public class ListFragment extends Fragment implements ListContract.View {
+public class ListFragment extends Fragment {
 
     private static final String TAG = ListActivity.class.getSimpleName();
 
@@ -33,8 +33,6 @@ public class ListFragment extends Fragment implements ListContract.View {
     @BindView(R.id.list_ll_error_loading)
     View errorLoadingLayout;
 
-    @Nullable
-    private ListContract.Presenter mPresenter;
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
     private LinearLayoutManager mLayoutManager;
@@ -59,35 +57,31 @@ public class ListFragment extends Fragment implements ListContract.View {
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
+        ListModel model = CustomApp.getInstance().getListModel();
+        ListPresenterFactory factory = new ListPresenterFactory(model);
+        ListPresenter presenter = ViewModelProviders.of(this, factory).get(ListPresenter.class);
+
+        presenter.getData().observe(this, listResource -> {
+            if (listResource == null) {
+                fail(new NullPointerException("Resource should not be null"));
+            } else if (listResource.status == ListResource.Status.SUCCESS) {
+                load(listResource.places);
+            } else if (listResource.status == ListResource.Status.ERROR) {
+                fail(listResource.exception);
+            }
+        });
+
         setupOrientation();
 
         recyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
-    public void attach(ListContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void detach() {
-        mPresenter = null;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-
-        reload();
     }
 
-    @OnClick(R.id.list_bt_reload)
-    public void onClickReload() {
-        reload();
-    }
-
-    @Override
-    public void onPlacesLoaded(List<Place> places) {
+    public void load(List<Place> places) {
         mAdapter.clear();
         mAdapter.addAll(places);
         loadingLayout.setVisibility(View.GONE);
@@ -95,38 +89,28 @@ public class ListFragment extends Fragment implements ListContract.View {
         errorLoadingLayout.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onPlacesLoadingFail(Throwable t) {
+    public void fail(Throwable t) {
         Log.w(TAG, "Error loading places", t);
         loadingLayout.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void onSetupForPortrait() {
         mLayoutManager = new LinearLayoutManager(getContext());
     }
 
-    @Override
     public void onSetupForLandscape() {
         mLayoutManager = new GridLayoutManager(getContext(), 2);
     }
 
     private void setupOrientation() {
 
-        int orientation = getResources().getConfiguration().orientation;
-        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
-    }
+//        int orientation = getResources().getConfiguration().orientation;
+//        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
+//        mPresenter.checkOrientation(landscape);
 
-    private void reload() {
-
-        loadingLayout.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-        errorLoadingLayout.setVisibility(View.INVISIBLE);
-
-        if (mPresenter != null) mPresenter.onLoadPlaces();
+        onSetupForPortrait();
     }
 
     private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {

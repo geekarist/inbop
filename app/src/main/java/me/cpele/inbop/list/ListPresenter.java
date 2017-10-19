@@ -1,51 +1,33 @@
 package me.cpele.inbop.list;
 
-import android.support.annotation.Nullable;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
-import java.util.List;
+public class ListPresenter extends ViewModel {
 
-import me.cpele.inbop.apiclient.model.Place;
+    @NonNull
+    private ListModel mModel;
 
-public class ListPresenter implements ListContract.Presenter {
+    @NonNull
+    private MutableLiveData<ListResource> mData;
 
-    @Nullable
-    private ListContract.View mView;
-    @Nullable
-    private ListContract.Model mModel;
-
-    @Override
-    public void attach(ListContract.View view, ListContract.Model model) {
-        mView = view;
+    public ListPresenter(@NonNull ListModel model) {
         mModel = model;
+        mData = mModel.findAllPlaces();
     }
 
-    @Override
-    public void detach() {
-        mView = null;
-        mModel = null;
+    @NonNull
+    public MutableLiveData<ListResource> getData() {
+        return mData;
     }
 
-    @Override
-    public void onLoadPlaces() {
-        if (mModel != null) mModel.onLoadPlaces();
-    }
-
-    @Override
-    public void onPlacesLoaded(List<Place> places) {
-        if (mView != null) mView.onPlacesLoaded(places);
-    }
-
-    @Override
-    public void onPlacesLoadFailure(Throwable t) {
-        if (mView != null) mView.onPlacesLoadingFail(t);
-    }
-
-    @Override
-    public void onCheckOrientation(boolean landscape) {
-        if (landscape) {
-            if (mView != null) mView.onSetupForLandscape();
-        } else {
-            if (mView != null) mView.onSetupForPortrait();
-        }
-    }
+//    @Override
+//    public void checkOrientation(boolean landscape) {
+//        if (landscape) {
+//            mView.onSetupForLandscape();
+//        } else {
+//            mView.onSetupForPortrait();
+//        }
+//    }
 }
