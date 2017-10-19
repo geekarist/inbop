@@ -1,6 +1,7 @@
 package me.cpele.inbop.list;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -79,6 +80,8 @@ public class ListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        setupOrientation();
     }
 
     public void load(List<Place> places) {
@@ -96,21 +99,13 @@ public class ListFragment extends Fragment {
         errorLoadingLayout.setVisibility(View.VISIBLE);
     }
 
-    public void onSetupForPortrait() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-    }
-
-    public void onSetupForLandscape() {
-        mLayoutManager = new GridLayoutManager(getContext(), 2);
-    }
-
     private void setupOrientation() {
 
-//        int orientation = getResources().getConfiguration().orientation;
-//        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-//        mPresenter.checkOrientation(landscape);
+        int orientation = getResources().getConfiguration().orientation;
+        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        onSetupForPortrait();
+        if (landscape) mLayoutManager = new GridLayoutManager(getContext(), 2);
+        else mLayoutManager = new LinearLayoutManager(getContext());
     }
 
     private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
