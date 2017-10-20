@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings("ConstantConditions")
-public class ListPresenterTest {
+public class ListViewModelTest {
 
-    private ListPresenter mListPresenter;
+    private ListViewModel mListViewModel;
 
     @Before
     public void setUp() throws Exception {

@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
-public class ListPresenter extends ViewModel {
+public class ListViewModel extends ViewModel {
 
     @NonNull
     private ListModel mModel;
@@ -12,7 +12,7 @@ public class ListPresenter extends ViewModel {
     @NonNull
     private MutableLiveData<ListResource> mData;
 
-    public ListPresenter(@NonNull ListModel model) {
+    public ListViewModel(@NonNull ListModel model) {
         mModel = model;
         mData = mModel.findAllPlaces();
     }

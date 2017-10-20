@@ -60,7 +60,7 @@ public class ListFragment extends Fragment {
 
         ListModel model = CustomApp.getInstance().getListModel();
         ListPresenterFactory factory = new ListPresenterFactory(model);
-        ListPresenter presenter = ViewModelProviders.of(this, factory).get(ListPresenter.class);
+        ListViewModel presenter = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
         presenter.getData().observe(this, listResource -> {
             if (listResource == null) {

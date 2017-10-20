@@ -13,6 +13,6 @@ class ListPresenterFactory implements ViewModelProvider.Factory {
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        return modelClass.cast(new ListPresenter(mModel));
+        return modelClass.cast(new ListViewModel(mModel));
     }
 }
