@@ -1,15 +1,22 @@
 package me.cpele.inbop.list;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
 import me.cpele.inbop.apiclient.model.Place;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class ListResource {
 
+    @Nullable
     public final Throwable exception;
+    @Nullable
     public final List<Place> places;
+    @NonNull
     public final Status status;
 
     private ListResource(@NonNull Throwable exception) {
@@ -18,7 +25,7 @@ public class ListResource {
         status = Status.ERROR;
     }
 
-    private ListResource(List<Place> places) {
+    private ListResource(@NonNull List<Place> places) {
         this.places = places;
         exception = null;
         status = Status.SUCCESS;
@@ -43,6 +50,16 @@ public class ListResource {
     }
 
     public enum Status {
-        SUCCESS, LOADING, ERROR
+        SUCCESS(VISIBLE, GONE, GONE), LOADING(GONE, VISIBLE, GONE), ERROR(GONE, GONE, VISIBLE);
+
+        public final int placesVisibility;
+        public final int loadingVisibility;
+        public final int errorVisibility;
+
+        Status(int placesVisibility, int loadingVisibility, int errorVisibility) {
+            this.placesVisibility = placesVisibility;
+            this.loadingVisibility = loadingVisibility;
+            this.errorVisibility = errorVisibility;
+        }
     }
 }

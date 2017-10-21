@@ -20,12 +20,6 @@ import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static me.cpele.inbop.list.ListResource.Status.ERROR;
-import static me.cpele.inbop.list.ListResource.Status.LOADING;
-import static me.cpele.inbop.list.ListResource.Status.SUCCESS;
-
 public class ListFragment extends Fragment {
 
     private static final String TAG = ListActivity.class.getSimpleName();
@@ -69,9 +63,9 @@ public class ListFragment extends Fragment {
 
             assert resource != null;
 
-            mRecyclerView.setVisibility(resource.status == SUCCESS ? VISIBLE : GONE);
-            mLoadingLayout.setVisibility(resource.status == LOADING ? VISIBLE : GONE);
-            mErrorLoadingLayout.setVisibility(resource.status == ERROR ? VISIBLE : GONE);
+            mRecyclerView.setVisibility(resource.status.placesVisibility);
+            mLoadingLayout.setVisibility(resource.status.loadingVisibility);
+            mErrorLoadingLayout.setVisibility(resource.status.errorVisibility);
 
             if (resource.places != null) {
                 mAdapter.clear();
