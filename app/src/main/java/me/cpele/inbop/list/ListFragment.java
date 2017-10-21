@@ -1,14 +1,11 @@
 package me.cpele.inbop.list;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +30,6 @@ public class ListFragment extends Fragment {
 
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
-    private LinearLayoutManager mLayoutManager;
 
     @Nullable
     @Override
@@ -76,26 +72,13 @@ public class ListFragment extends Fragment {
                 Log.w(TAG, "Error loading places", resource.exception);
             }
         });
-
-        setupOrientation();
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        setupOrientation();
-    }
-
-    private void setupOrientation() {
-
-        int orientation = getResources().getConfiguration().orientation;
-        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-        if (landscape) mLayoutManager = new GridLayoutManager(getContext(), 2);
-        else mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(LayoutManagerFactory.create(getContext()));
     }
 
     private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {
