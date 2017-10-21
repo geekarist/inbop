@@ -12,16 +12,22 @@ public class ListResource {
     public final List<Place> places;
     public final Status status;
 
-    public ListResource(@NonNull Throwable exception) {
+    private ListResource(@NonNull Throwable exception) {
         this.exception = exception;
         places = null;
         status = Status.ERROR;
     }
 
-    public ListResource(List<Place> places) {
+    private ListResource(List<Place> places) {
         this.places = places;
         exception = null;
         status = Status.SUCCESS;
+    }
+
+    private ListResource() {
+        places = null;
+        exception = null;
+        status = Status.LOADING;
     }
 
     public static ListResource error(Throwable exception) {
@@ -32,7 +38,11 @@ public class ListResource {
         return new ListResource(places);
     }
 
+    public static ListResource loading() {
+        return new ListResource();
+    }
+
     public enum Status {
-        SUCCESS, ERROR
+        SUCCESS, LOADING, ERROR
     }
 }

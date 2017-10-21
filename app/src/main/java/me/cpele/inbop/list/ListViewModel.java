@@ -7,14 +7,10 @@ import android.support.annotation.NonNull;
 public class ListViewModel extends ViewModel {
 
     @NonNull
-    private ListModel mModel;
-
-    @NonNull
     private MutableLiveData<ListResource> mData;
 
     public ListViewModel(@NonNull ListModel model) {
-        mModel = model;
-        mData = mModel.findAllPlaces();
+        mData = model.findAllPlaces();
     }
 
     @NonNull

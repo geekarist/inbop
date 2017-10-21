@@ -22,6 +22,8 @@ public class ListModel {
 
         MutableLiveData<ListResource> data = new MutableLiveData<>();
 
+        data.postValue(ListResource.loading());
+
         mPlacesService.findAll().enqueue(new retrofit2.Callback<PlaceList>() {
 
             @Override

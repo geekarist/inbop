@@ -15,24 +15,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
-import me.cpele.inbop.apiclient.model.Place;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static me.cpele.inbop.list.ListResource.Status.ERROR;
+import static me.cpele.inbop.list.ListResource.Status.LOADING;
+import static me.cpele.inbop.list.ListResource.Status.SUCCESS;
 
 public class ListFragment extends Fragment {
 
     private static final String TAG = ListActivity.class.getSimpleName();
 
     @BindView(R.id.list_rv)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.list_pb_loading)
-    View loadingLayout;
+    View mLoadingLayout;
     @BindView(R.id.list_ll_error_loading)
-    View errorLoadingLayout;
+    View mErrorLoadingLayout;
 
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
@@ -55,26 +58,34 @@ public class ListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new ColumnSpacingDecoration());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
         ListModel model = CustomApp.getInstance().getListModel();
         ListPresenterFactory factory = new ListPresenterFactory(model);
-        ListViewModel presenter = ViewModelProviders.of(this, factory).get(ListViewModel.class);
+        ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
-        presenter.getData().observe(this, listResource -> {
-            if (listResource == null) {
-                fail(new NullPointerException("Resource should not be null"));
-            } else if (listResource.status == ListResource.Status.SUCCESS) {
-                load(listResource.places);
-            } else if (listResource.status == ListResource.Status.ERROR) {
-                fail(listResource.exception);
+        viewModel.getData().observe(this, resource -> {
+
+            assert resource != null;
+
+            mRecyclerView.setVisibility(resource.status == SUCCESS ? VISIBLE : GONE);
+            mLoadingLayout.setVisibility(resource.status == LOADING ? VISIBLE : GONE);
+            mErrorLoadingLayout.setVisibility(resource.status == ERROR ? VISIBLE : GONE);
+
+            if (resource.places != null) {
+                mAdapter.clear();
+                mAdapter.addAll(resource.places);
+            }
+
+            if (resource.exception != null) {
+                Log.w(TAG, "Error loading places", resource.exception);
             }
         });
 
         setupOrientation();
 
-        recyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
@@ -82,21 +93,6 @@ public class ListFragment extends Fragment {
         super.onStart();
 
         setupOrientation();
-    }
-
-    public void load(List<Place> places) {
-        mAdapter.clear();
-        mAdapter.addAll(places);
-        loadingLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        errorLoadingLayout.setVisibility(View.GONE);
-    }
-
-    public void fail(Throwable t) {
-        Log.w(TAG, "Error loading places", t);
-        loadingLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.GONE);
-        errorLoadingLayout.setVisibility(View.VISIBLE);
     }
 
     private void setupOrientation() {
