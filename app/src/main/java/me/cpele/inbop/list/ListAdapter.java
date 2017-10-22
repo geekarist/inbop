@@ -18,15 +18,13 @@ import me.cpele.inbop.detail.AppPreferences;
 
 class ListAdapter
         extends RecyclerView.Adapter<PlaceViewHolder>
-        implements PlaceViewHolder.StarringListener, StarController.View {
+        implements PlaceViewHolder.StarringListener {
 
-    private final StarController mStarController;
     private List<Place> mPlaces = new ArrayList<>();
     private final AppPreferences mPreferences;
 
     public ListAdapter() {
         mPreferences = CustomApp.getInstance().getPreferences();
-        mStarController = new StarController(this);
     }
 
     @Override
@@ -50,8 +48,6 @@ class ListAdapter
 
     void addAll(List<Place> places) {
         this.mPlaces.addAll(places);
-        // TODO: Make Place implement comparable to sort by name
-
         Collections.sort(this.mPlaces, new PlaceComparator());
         notifyDataSetChanged();
     }
@@ -66,13 +62,11 @@ class ListAdapter
         moveItem(positionBefore, positionAfter);
     }
 
-    @Override
-    public void starPlace(@NonNull String id) {
+    private void starPlace(@NonNull String id) {
         mPreferences.toggleStar(id);
     }
 
-    @Override
-    public void moveItem(int positionBefore, int positionAfter) {
+    private void moveItem(int positionBefore, int positionAfter) {
         notifyItemMoved(positionBefore, positionAfter);
     }
 
