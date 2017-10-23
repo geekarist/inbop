@@ -1,6 +1,7 @@
 package me.cpele.inbop.list;
 
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.AppPreferences;
+import me.cpele.inbop.utils.ObjectUtils;
 
 class ListAdapter
         extends RecyclerView.Adapter<PlaceViewHolder>
@@ -44,12 +46,6 @@ class ListAdapter
     @Override
     public int getItemCount() {
         return mPlaces.size();
-    }
-
-    void addAll(List<Place> places) {
-        this.mPlaces.addAll(places);
-        Collections.sort(this.mPlaces, new PlaceComparator());
-        notifyDataSetChanged();
     }
 
     @Override
@@ -88,8 +84,37 @@ class ListAdapter
         return mPreferences.isStarred(id);
     }
 
-    public void clear() {
-        mPlaces.clear();
+    public void refresh(@NonNull List<Place> newPlaces) {
+
+        Collections.sort(newPlaces, new PlaceComparator());
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return mPlaces.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newPlaces.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                String oldPlaceId = mPlaces.get(oldItemPosition).getId();
+                String newPlaceId = newPlaces.get(newItemPosition).getId();
+                return ObjectUtils.equals(oldPlaceId, newPlaceId);
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return ObjectUtils.equals(mPlaces.get(oldItemPosition), newPlaces.get(newItemPosition));
+            }
+        });
+
+        mPlaces = newPlaces;
+
+        diffResult.dispatchUpdatesTo(this);
     }
 
     private class PlaceComparator implements Comparator<Place> {

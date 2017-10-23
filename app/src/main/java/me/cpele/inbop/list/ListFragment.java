@@ -64,8 +64,7 @@ public class ListFragment extends Fragment {
             mErrorLoadingLayout.setVisibility(resource.status.errorVisibility);
 
             if (resource.places != null) {
-                mAdapter.clear();
-                mAdapter.addAll(resource.places);
+                mAdapter.refresh(resource.places);
             }
 
             if (resource.exception != null) {
