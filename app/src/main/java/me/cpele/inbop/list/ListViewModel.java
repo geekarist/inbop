@@ -10,7 +10,7 @@ public class ListViewModel extends ViewModel {
     private MutableLiveData<ListResource> mData;
 
     public ListViewModel(@NonNull ListModel model) {
-        mData = model.findAllPlaces();
+        mData = model.getAllPlaces();
     }
 
     @NonNull

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 
@@ -30,6 +31,12 @@ public class ListFragment extends Fragment {
 
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
+    private ListModel mModel;
+
+    @OnClick(R.id.list_bt_reload)
+    public void onClickReload() {
+        mModel.refresh();
+    }
 
     @Nullable
     @Override
@@ -51,8 +58,8 @@ public class ListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        ListModel model = CustomApp.getInstance().getListModel();
-        ListPresenterFactory factory = new ListPresenterFactory(model);
+        mModel = CustomApp.getInstance().getListModel();
+        ListPresenterFactory factory = new ListPresenterFactory(mModel);
         ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
         viewModel.getData().observe(this, resource -> {

@@ -12,17 +12,18 @@ public class ListModel {
 
     @NonNull
     private PlacesService mPlacesService;
+    @NonNull
+    private MutableLiveData<ListResource> mData;
 
     public ListModel(@NonNull PlacesService placesService) {
         mPlacesService = placesService;
+        mData = new MutableLiveData<>();
+        refresh();
     }
 
-    @NonNull
-    public MutableLiveData<ListResource> findAllPlaces() {
+    public void refresh() {
 
-        MutableLiveData<ListResource> data = new MutableLiveData<>();
-
-        data.postValue(ListResource.loading());
+        mData.postValue(ListResource.loading());
 
         mPlacesService.findAll().enqueue(new retrofit2.Callback<PlaceList>() {
 
@@ -36,17 +37,19 @@ public class ListModel {
                 } else {
                     resource = ListResource.success(body.getPlaces());
                 }
-                data.postValue(resource);
+                mData.postValue(resource);
             }
 
             @Override
             public void onFailure(@NonNull Call<PlaceList> call, @NonNull Throwable t) {
                 ListResource resource = ListResource.error(t);
-                data.postValue(resource);
+                mData.postValue(resource);
             }
         });
-
-        return data;
     }
 
+    @NonNull
+    public MutableLiveData<ListResource> getAllPlaces() {
+        return mData;
+    }
 }
