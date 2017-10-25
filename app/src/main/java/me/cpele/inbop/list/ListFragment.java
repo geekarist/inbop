@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class ListFragment extends Fragment {
     View mLoadingLayout;
     @BindView(R.id.list_ll_error_loading)
     View mErrorLoadingLayout;
+    @BindView(R.id.list_sw)
+    SwipeRefreshLayout mSwipeRefresh;
 
     @NonNull
     private ListAdapter mAdapter = new ListAdapter();
@@ -59,6 +62,9 @@ public class ListFragment extends Fragment {
         mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
         mModel = CustomApp.getInstance().getListModel();
+
+        mSwipeRefresh.setOnRefreshListener(() -> mModel.refresh());
+
         ListPresenterFactory factory = new ListPresenterFactory(mModel);
         ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
@@ -77,6 +83,8 @@ public class ListFragment extends Fragment {
             if (resource.exception != null) {
                 Log.w(TAG, "Error loading places", resource.exception);
             }
+
+            mSwipeRefresh.setRefreshing(false);
         });
     }
 
