@@ -53,7 +53,7 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void updateFavoriteImage(Place place) {
-        if (starringListener.isStarred(place.getId())) {
+        if (place.isStarred()) {
             favoriteView.setImageResource(R.drawable.ic_favorite_white_24dp);
         } else {
             favoriteView.setImageResource(R.drawable.ic_favorite_border_white_24dp);
@@ -70,13 +70,9 @@ class PlaceViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.place_iv_favorite)
     void onClickFavorite() {
         starringListener.toggleStar(place.getId());
-        updateFavoriteImage(place);
     }
 
     public interface StarringListener {
-
         void toggleStar(String id);
-
-        boolean isStarred(String id);
     }
 }

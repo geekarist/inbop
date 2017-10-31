@@ -12,21 +12,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.utils.ObjectUtils;
 
 class ListAdapter
         extends RecyclerView.Adapter<PlaceViewHolder>
         implements PlaceViewHolder.StarringListener {
 
-    private List<Place> mPlaces = new ArrayList<>();
-    private final AppPreferences mPreferences;
+    private final List<Place> mPlaces = new ArrayList<>();
+    private Listener mListener;
 
-    public ListAdapter() {
-        mPreferences = CustomApp.getInstance().getPreferences();
+    ListAdapter(Listener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -50,38 +48,7 @@ class ListAdapter
 
     @Override
     public void toggleStar(@NonNull String id) {
-
-        starPlace(id);
-        int positionBefore = getPosition(id);
-        Collections.sort(this.mPlaces, new PlaceComparator());
-        int positionAfter = getPosition(id);
-        moveItem(positionBefore, positionAfter);
-    }
-
-    private void starPlace(@NonNull String id) {
-        mPreferences.toggleStar(id);
-    }
-
-    private void moveItem(int positionBefore, int positionAfter) {
-        notifyItemMoved(positionBefore, positionAfter);
-    }
-
-    private int getPosition(@NonNull String searchId) {
-
-        for (int i = 0; i < mPlaces.size(); i++) {
-            Place place = mPlaces.get(i);
-            String otherId = place.getId();
-            if (searchId.equals(otherId)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    @Override
-    public boolean isStarred(@NonNull String id) {
-        return mPreferences.isStarred(id);
+        mListener.toggleStar(id);
     }
 
     public void refresh(@NonNull List<Place> newPlaces) {
@@ -112,7 +79,8 @@ class ListAdapter
             }
         });
 
-        mPlaces = newPlaces;
+        mPlaces.clear();
+        mPlaces.addAll(newPlaces);
 
         diffResult.dispatchUpdatesTo(this);
     }
@@ -120,11 +88,15 @@ class ListAdapter
     private class PlaceComparator implements Comparator<Place> {
         @Override
         public int compare(@NonNull Place p1, @NonNull Place p2) {
-            boolean star1 = mPreferences.isStarred(p1.getId());
-            boolean star2 = mPreferences.isStarred(p2.getId());
+            boolean star1 = p1.isStarred();
+            boolean star2 = p2.isStarred();
             if (star1 == star2) return 0;
             if (star1) return -1;
             return 1;
         }
+    }
+
+    interface Listener {
+        void toggleStar(String id);
     }
 }

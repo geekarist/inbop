@@ -46,7 +46,7 @@ public class CustomApp extends MultiDexApplication {
 
         mPreferences = new AppPreferences(this, gson);
 
-        mListModel = new ListModel(placesService);
+        mListModel = new ListModel(placesService, CustomApp.getInstance().getPreferences());
     }
 
     @NonNull

@@ -3,7 +3,6 @@ package me.cpele.inbop.list;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
+import me.cpele.inbop.utils.Asserting;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements ListAdapter.Listener {
 
     private static final String TAG = ListActivity.class.getSimpleName();
 
@@ -32,8 +32,7 @@ public class ListFragment extends Fragment {
     @BindView(R.id.list_sw)
     SwipeRefreshLayout mSwipeRefresh;
 
-    @NonNull
-    private ListAdapter mAdapter = new ListAdapter();
+    private ListAdapter mAdapter;
     private ListModel mModel;
 
     @OnClick(R.id.list_bt_reload)
@@ -58,6 +57,7 @@ public class ListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mAdapter = new ListAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
@@ -70,7 +70,7 @@ public class ListFragment extends Fragment {
 
         viewModel.getData().observe(this, resource -> {
 
-            assert resource != null;
+            resource = Asserting.notNull(resource);
 
             mRecyclerView.setVisibility(resource.status.placesVisibility);
             mLoadingLayout.setVisibility(resource.status.loadingVisibility);
@@ -93,6 +93,13 @@ public class ListFragment extends Fragment {
         super.onStart();
 
         mRecyclerView.setLayoutManager(LayoutManagerFactory.create(getContext()));
+    }
+
+    @Override
+    public void toggleStar(String id) {
+        ListPresenterFactory factory = new ListPresenterFactory(mModel);
+        ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
+        viewModel.toggleStar(id);
     }
 
     private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {

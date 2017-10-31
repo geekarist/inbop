@@ -15,7 +15,7 @@ public class ListResource {
     @Nullable
     public final Throwable exception;
     @Nullable
-    public final List<Place> places;
+    public List<Place> places;
     @NonNull
     public final Status status;
 

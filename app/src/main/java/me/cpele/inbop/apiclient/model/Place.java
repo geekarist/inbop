@@ -16,8 +16,30 @@ public class Place {
     String url;
     String facebook;
     String email;
+    boolean starred;
 
     public Place() {
+    }
+
+    public Place(Place place) {
+        this(place.id, place.name, place.city, place.imgUrl, place.position, place.hours,
+                place.price, place.description, place.url, place.facebook, place.email,
+                place.starred);
+    }
+
+    public Place(String id, String name, String city, String imgUrl, PlacePosition position, PlaceHours hours, PlacePrice price, String description, String url, String facebook, String email, boolean starred) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.imgUrl = imgUrl;
+        this.position = position;
+        this.hours = hours;
+        this.price = price;
+        this.description = description;
+        this.url = url;
+        this.facebook = facebook;
+        this.email = email;
+        this.starred = starred;
     }
 
     public String getId() {
@@ -123,6 +145,55 @@ public class Place {
         return this;
     }
 
+    public boolean isStarred() {
+        return starred;
+    }
+
+    public void setStarred(boolean starred) {
+        this.starred = starred;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Place place = (Place) o;
+
+        if (starred != place.starred) return false;
+        if (id != null ? !id.equals(place.id) : place.id != null) return false;
+        if (name != null ? !name.equals(place.name) : place.name != null) return false;
+        if (city != null ? !city.equals(place.city) : place.city != null) return false;
+        if (imgUrl != null ? !imgUrl.equals(place.imgUrl) : place.imgUrl != null) return false;
+        if (position != null ? !position.equals(place.position) : place.position != null)
+            return false;
+        if (hours != null ? !hours.equals(place.hours) : place.hours != null) return false;
+        if (price != null ? !price.equals(place.price) : place.price != null) return false;
+        if (description != null ? !description.equals(place.description) : place.description != null)
+            return false;
+        if (url != null ? !url.equals(place.url) : place.url != null) return false;
+        if (facebook != null ? !facebook.equals(place.facebook) : place.facebook != null)
+            return false;
+        return email != null ? email.equals(place.email) : place.email == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (hours != null ? hours.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (facebook != null ? facebook.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (starred ? 1 : 0);
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Place{" +
@@ -137,6 +208,7 @@ public class Place {
                 ", url='" + url + '\'' +
                 ", facebook='" + facebook + '\'' +
                 ", email='" + email + '\'' +
+                ", starred=" + starred +
                 '}';
     }
 }

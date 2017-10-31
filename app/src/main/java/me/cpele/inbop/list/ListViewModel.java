@@ -6,16 +6,22 @@ import android.support.annotation.NonNull;
 
 public class ListViewModel extends ViewModel {
 
+    private final ListModel mModel;
     @NonNull
     private MutableLiveData<ListResource> mData;
 
     public ListViewModel(@NonNull ListModel model) {
-        mData = model.getAllPlaces();
+        mModel = model;
+        mData = mModel.getAllPlaces();
     }
 
     @NonNull
     public MutableLiveData<ListResource> getData() {
         return mData;
+    }
+
+    public void toggleStar(String id) {
+        mModel.toggleStar(id);
     }
 
 //    @Override
