@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -90,7 +91,7 @@ class ListAdapter
         public int compare(@NonNull Place p1, @NonNull Place p2) {
             boolean star1 = p1.isStarred();
             boolean star2 = p2.isStarred();
-            if (star1 == star2) return 0;
+            if (star1 == star2) return Collator.getInstance().compare(p1.getName(), p2.getName());
             if (star1) return -1;
             return 1;
         }
