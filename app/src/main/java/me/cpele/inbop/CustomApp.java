@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import me.cpele.inbop.apiclient.PlacesService;
-import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.list.ListModel;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

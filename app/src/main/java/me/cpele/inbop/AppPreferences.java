@@ -1,4 +1,4 @@
-package me.cpele.inbop.detail;
+package me.cpele.inbop;
 
 import android.content.Context;
 import android.content.SharedPreferences;

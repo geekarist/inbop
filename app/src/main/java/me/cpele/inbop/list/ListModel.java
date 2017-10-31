@@ -7,10 +7,10 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.cpele.inbop.AppPreferences;
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceList;
-import me.cpele.inbop.detail.AppPreferences;
 import me.cpele.inbop.utils.Asserting;
 import retrofit2.Call;
 import retrofit2.Response;

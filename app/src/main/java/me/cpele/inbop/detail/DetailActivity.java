@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.cpele.inbop.AppPreferences;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
