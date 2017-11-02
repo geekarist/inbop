@@ -2,6 +2,7 @@ package me.cpele.inbop.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface PlacesDao {
     @Query("DELETE FROM Place")
     void removeAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(List<Place> places);
 
     @Query("SELECT * FROM Place WHERE Place.id = :id")

@@ -49,6 +49,7 @@ public class CustomApp extends MultiDexApplication {
 
         AppDatabase database = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
+                .allowMainThreadQueries()
                 .build();
         mPlacesRepository = new PlacesRepository(placesService, database.getPlacesDao());
     }

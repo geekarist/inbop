@@ -46,10 +46,9 @@ public class PlacesRepository {
                     resource = ListResource.error(exception);
                 } else {
                     List<Place> places = body.getPlaces();
+                    mDao.insert(places);
                     initStars(places);
                     resource = ListResource.success(places);
-                    mDao.removeAll();
-                    mDao.insert(places);
                 }
                 mData.postValue(resource);
             }
