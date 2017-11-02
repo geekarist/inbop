@@ -2,12 +2,13 @@ package me.cpele.inbop.apiclient.model;
 
 import org.parceler.Parcel;
 
+@SuppressWarnings({"SameParameterValue", "SimplifiableIfStatement"})
 @Parcel
 public class PlacePrice {
 
-    String adult;
-    String student;
-    String child;
+    public String adult;
+    public String student;
+    public String child;
 
     public PlacePrice() {
     }

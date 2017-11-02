@@ -2,14 +2,14 @@ package me.cpele.inbop.apiclient.model;
 
 import org.parceler.Parcel;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "SimplifiableIfStatement"})
 @Parcel
 public class PlacePosition {
 
     String address;
     String transport;
-    Double lon;
-    Double lat;
+    public Double lon;
+    public Double lat;
 
     public PlacePosition() {
     }

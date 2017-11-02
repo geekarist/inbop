@@ -33,11 +33,11 @@ public class ListFragment extends Fragment implements ListAdapter.Listener {
     SwipeRefreshLayout mSwipeRefresh;
 
     private ListAdapter mAdapter;
-    private ListModel mModel;
+    private PlacesRepository mRepository;
 
     @OnClick(R.id.list_bt_reload)
     public void onClickReload() {
-        mModel.refresh();
+        mRepository.refresh();
     }
 
     @Nullable
@@ -61,11 +61,11 @@ public class ListFragment extends Fragment implements ListAdapter.Listener {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        mModel = CustomApp.getInstance().getListModel();
+        mRepository = CustomApp.getInstance().getPlacesRepository();
 
-        mSwipeRefresh.setOnRefreshListener(() -> mModel.refresh());
+        mSwipeRefresh.setOnRefreshListener(() -> mRepository.refresh());
 
-        ListPresenterFactory factory = new ListPresenterFactory(mModel);
+        ListViewModelFactory factory = new ListViewModelFactory(mRepository);
         ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
         viewModel.getData().observe(this, resource -> {
@@ -97,7 +97,7 @@ public class ListFragment extends Fragment implements ListAdapter.Listener {
 
     @Override
     public void toggleStar(String id) {
-        ListPresenterFactory factory = new ListPresenterFactory(mModel);
+        ListViewModelFactory factory = new ListViewModelFactory(mRepository);
         ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
         viewModel.toggleStar(id);
     }

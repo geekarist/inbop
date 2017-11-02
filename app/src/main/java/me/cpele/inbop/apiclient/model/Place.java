@@ -1,33 +1,50 @@
 package me.cpele.inbop.apiclient.model;
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import org.parceler.Parcel;
 
+import java.util.UUID;
+
+@SuppressWarnings({"SameParameterValue", "ConstantConditions", "SimplifiableIfStatement"})
 @Parcel
+@Entity
 public class Place {
 
-    String id;
-    String name;
-    String city;
-    String imgUrl;
-    PlacePosition position;
-    PlaceHours hours;
-    PlacePrice price;
-    String description;
-    String url;
-    String facebook;
-    String email;
-    boolean starred;
+    @PrimaryKey
+    @NonNull
+    public String id;
+    public String name;
+    public String city;
+    public String imgUrl;
+    @Embedded
+    public PlacePosition position;
+    @Embedded
+    public PlaceHours hours;
+    @Embedded
+    public PlacePrice price;
+    public String description;
+    public String url;
+    public String facebook;
+    public String email;
+    public boolean starred;
 
     public Place() {
+        this.id = UUID.randomUUID().toString();
     }
 
+    @Ignore
     public Place(Place place) {
         this(place.id, place.name, place.city, place.imgUrl, place.position, place.hours,
                 place.price, place.description, place.url, place.facebook, place.email,
                 place.starred);
     }
 
-    public Place(String id, String name, String city, String imgUrl, PlacePosition position, PlaceHours hours, PlacePrice price, String description, String url, String facebook, String email, boolean starred) {
+    public Place(@NonNull String id, String name, String city, String imgUrl, PlacePosition position, PlaceHours hours, PlacePrice price, String description, String url, String facebook, String email, boolean starred) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -42,11 +59,12 @@ public class Place {
         this.starred = starred;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public Place setId(String id) {
+    public Place setId(@NonNull String id) {
         this.id = id;
         return this;
     }

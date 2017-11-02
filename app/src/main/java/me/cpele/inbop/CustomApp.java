@@ -1,5 +1,6 @@
 package me.cpele.inbop;
 
+import android.arch.persistence.room.Room;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
@@ -9,7 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import me.cpele.inbop.apiclient.PlacesService;
-import me.cpele.inbop.list.ListModel;
+import me.cpele.inbop.db.AppDatabase;
+import me.cpele.inbop.list.PlacesRepository;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,7 +20,7 @@ public class CustomApp extends MultiDexApplication {
     private static CustomApp sInstance;
 
     private AppPreferences mPreferences;
-    private ListModel mListModel;
+    private PlacesRepository mPlacesRepository;
 
     @Override
     public void onCreate() {
@@ -45,7 +47,10 @@ public class CustomApp extends MultiDexApplication {
 
         mPreferences = new AppPreferences(this, gson);
 
-        mListModel = new ListModel(placesService, CustomApp.getInstance().getPreferences());
+        AppDatabase database = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
+                .build();
+        mPlacesRepository = new PlacesRepository(placesService, database.getPlacesDao());
     }
 
     @NonNull
@@ -59,7 +64,7 @@ public class CustomApp extends MultiDexApplication {
     }
 
     @NonNull
-    public ListModel getListModel() {
-        return mListModel;
+    public PlacesRepository getPlacesRepository() {
+        return mPlacesRepository;
     }
 }

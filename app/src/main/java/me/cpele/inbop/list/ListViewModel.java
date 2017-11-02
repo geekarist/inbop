@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 
 public class ListViewModel extends ViewModel {
 
-    private final ListModel mModel;
+    private final PlacesRepository mModel;
     @NonNull
     private MutableLiveData<ListResource> mData;
 
-    public ListViewModel(@NonNull ListModel model) {
+    public ListViewModel(@NonNull PlacesRepository model) {
         mModel = model;
         mData = mModel.getAllPlaces();
     }

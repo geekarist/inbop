@@ -7,25 +7,26 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.cpele.inbop.AppPreferences;
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceList;
+import me.cpele.inbop.db.PlacesDao;
 import me.cpele.inbop.utils.Asserting;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class ListModel {
+public class PlacesRepository {
 
     @NonNull
     private PlacesService mPlacesService;
     @NonNull
     private MutableLiveData<ListResource> mData;
-    private AppPreferences mPreferences;
+    @NonNull
+    private PlacesDao mDao;
 
-    public ListModel(@NonNull PlacesService placesService, AppPreferences preferences) {
+    public PlacesRepository(@NonNull PlacesService placesService, @NonNull PlacesDao dao) {
         mPlacesService = placesService;
-        mPreferences = preferences;
+        mDao = dao;
         mData = new MutableLiveData<>();
         refresh();
     }
@@ -47,6 +48,8 @@ public class ListModel {
                     List<Place> places = body.getPlaces();
                     initStars(places);
                     resource = ListResource.success(places);
+                    mDao.removeAll();
+                    mDao.insert(places);
                 }
                 mData.postValue(resource);
             }
@@ -61,7 +64,7 @@ public class ListModel {
 
     private void initStars(List<Place> places) {
         for (Place place : places) {
-            boolean starred = mPreferences.isStarred(place.getId());
+            boolean starred = mDao.findPlaceById(place.getId()).isStarred();
             place.setStarred(starred);
         }
     }
@@ -77,7 +80,7 @@ public class ListModel {
         resource.places = Asserting.notNull(resource.places);
         List<Place> places = deepishCopy(resource.places);
 
-        mPreferences.toggleStar(id);
+        mDao.toggleStar(id);
         for (Place place : places) {
             if (id.equals(place.getId())) {
                 place.setStarred(!place.isStarred());
