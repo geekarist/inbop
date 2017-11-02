@@ -101,4 +101,8 @@ public class PlacesRepository {
 
         return result;
     }
+
+    public Place findPlaceById(String placeId) {
+        return mDao.findPlaceById(placeId);
+    }
 }

@@ -3,7 +3,6 @@ package me.cpele.inbop.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -18,15 +17,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.cpele.inbop.AppPreferences;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
@@ -36,6 +32,7 @@ import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoContract;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoPresenter;
+import me.cpele.inbop.list.PlacesRepository;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -49,13 +46,12 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.detail_tl)
     TabLayout tabLayout;
 
-    private AppPreferences preferences;
-
     private ItineraryFragment mItineraryFragment;
     private ItineraryContract.Presenter mItineraryPresenter;
 
     private UsefulInfoFragment mUsefulInfoFragment;
     private UsefulInfoContract.Presenter mUsefulInfoPresenter;
+    private PlacesRepository mRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +61,8 @@ public class DetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+
+        mRepository = CustomApp.getInstance().getPlacesRepository();
 
         Place place = getPlace();
 
@@ -79,8 +77,6 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
-        preferences = CustomApp.getInstance().getPreferences();
     }
 
 
@@ -169,8 +165,8 @@ public class DetailActivity extends AppCompatActivity {
 
     @NonNull
     private Place getPlace() {
-        Parcelable extra = getIntent().getParcelableExtra(EXTRA_PLACE);
-        return Parcels.unwrap(extra);
+        String placeId = getIntent().getStringExtra(EXTRA_PLACE);
+        return mRepository.findPlaceById(placeId);
     }
 
     @Override
@@ -185,7 +181,7 @@ public class DetailActivity extends AppCompatActivity {
     public static Intent newIntent(Context context, Place place) {
 
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(EXTRA_PLACE, Parcels.wrap(place));
+        intent.putExtra(EXTRA_PLACE, place.getId());
         return intent;
     }
 
@@ -200,7 +196,7 @@ public class DetailActivity extends AppCompatActivity {
 
             case R.id.detail_star:
 
-                preferences.toggleStar(getPlace().getId());
+                mRepository.toggleStar(getPlace().getId());
                 indicateStarringChange();
                 updateStarMenuItem(item);
 
@@ -212,10 +208,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void indicateStarringChange() {
 
-        String id = getPlace().getId();
+        Place place = getPlace();
 
         int indicationId;
-        if (preferences.isStarred(id)) indicationId = R.string.detail_star_indication;
+        if (place.isStarred()) indicationId = R.string.detail_star_indication;
         else indicationId = R.string.detail_unstar_indication;
 
         String indication = getString(indicationId, getPlace().getName());
@@ -225,12 +221,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateStarMenuItem(MenuItem item) {
 
-        String id = getPlace().getId();
-
         int starLabel;
         int starIcon;
 
-        if (preferences.isStarred(id)) {
+        if (getPlace().isStarred()) {
             starLabel = R.string.detail_unstar;
             starIcon = R.drawable.ic_favorite_white_24dp;
         } else {
