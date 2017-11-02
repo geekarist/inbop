@@ -19,7 +19,6 @@ public class CustomApp extends MultiDexApplication {
 
     private static CustomApp sInstance;
 
-    private AppPreferences mPreferences;
     private PlacesRepository mPlacesRepository;
 
     @Override
@@ -45,8 +44,6 @@ public class CustomApp extends MultiDexApplication {
             StrictMode.enableDefaults();
         }
 
-        mPreferences = new AppPreferences(this, gson);
-
         AppDatabase database = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                 .allowMainThreadQueries()
@@ -57,11 +54,6 @@ public class CustomApp extends MultiDexApplication {
     @NonNull
     public static CustomApp getInstance() {
         return sInstance;
-    }
-
-    @NonNull
-    public AppPreferences getPreferences() {
-        return mPreferences;
     }
 
     @NonNull
