@@ -30,7 +30,6 @@ import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
-import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoPresenter;
 import me.cpele.inbop.list.PlacesRepository;
 
 public class DetailActivity extends AppCompatActivity {
@@ -49,7 +48,6 @@ public class DetailActivity extends AppCompatActivity {
     private ItineraryContract.Presenter mItineraryPresenter;
 
     private UsefulInfoFragment mUsefulInfoFragment;
-    private UsefulInfoPresenter mUsefulInfoPresenter;
     private PlacesRepository mRepository;
 
     @Override
@@ -82,7 +80,6 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         tearDownItinerary();
-        tearDownUsefulInfo();
         super.onDestroy();
     }
 
@@ -144,22 +141,12 @@ public class DetailActivity extends AppCompatActivity {
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
 
         mUsefulInfoFragment = findOrCreateUsefulInfoFragment(place);
-        mUsefulInfoPresenter = new UsefulInfoPresenter();
-
-        mUsefulInfoFragment.onBind(mUsefulInfoPresenter);
-        mUsefulInfoPresenter.onBind(mUsefulInfoFragment);
-
         detailPagerAdapter.add(mUsefulInfoFragment);
     }
 
     private UsefulInfoFragment findOrCreateUsefulInfoFragment(Place place) {
 
         return mUsefulInfoFragment != null ? mUsefulInfoFragment : UsefulInfoFragment.newInstance(this, place);
-    }
-
-    private void tearDownUsefulInfo() {
-        mUsefulInfoFragment.onUnbind();
-        mUsefulInfoPresenter.onUnbind();
     }
 
     @NonNull

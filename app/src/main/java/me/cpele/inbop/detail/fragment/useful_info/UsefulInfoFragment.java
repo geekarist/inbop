@@ -17,11 +17,17 @@ import com.bumptech.glide.Glide;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.R;
+import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.PlaceHours;
+import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.DetailFragment;
 
 public class UsefulInfoFragment extends DetailFragment {
@@ -45,7 +51,6 @@ public class UsefulInfoFragment extends DetailFragment {
     TextView emailTextView;
 
     private Place place;
-    private UsefulInfoPresenter mPresenter;
 
     public static UsefulInfoFragment newInstance(Context context, Place place) {
 
@@ -62,29 +67,100 @@ public class UsefulInfoFragment extends DetailFragment {
 
         place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
 
-        mPresenter.loadPlace(place);
+        if (place.getImgUrl() != null) {
+            String imgUrl = place.getImgUrl();
+            displayImage(imgUrl);
+        }
+
+        if (place.getHours() != null) {
+            String hours = toHoursString(place.getHours());
+            displayHours(hours);
+        }
+
+        if (place.getPrice() != null) {
+            CharSequence prices = toPricesString(place.getPrice());
+            displayPrices(prices);
+        }
+
+        if (place.getDescription() != null) {
+            String description = place.getDescription();
+            displayDescription(description);
+        }
+
+        if (place.getUrl() != null) {
+            String url = place.getUrl();
+            displayUrl(url);
+        }
+
+        if (place.getFacebook() != null) {
+            String fbPage = extractPageName(place.getFacebook());
+            displayFacebook(fbPage);
+        }
+
+        if (place.getEmail() != null) {
+            String email = place.getEmail();
+            displayEmail(email);
+        }
 
         return view;
     }
 
+    private String extractPageName(String facebookUrl) {
+
+        if (facebookUrl != null) {
+            return facebookUrl;
+        }
+        return buildString(R.string.detail_facebook_unknown);
+    }
+
+    private CharSequence toPricesString(PlacePrice price) {
+
+        List<String> result = new ArrayList<>();
+
+        String adult = price.getAdult();
+        String student = price.getStudent();
+        String child = price.getChild();
+
+        if (!TextualUtils.isEmpty(adult)) {
+            result.add(buildString(R.string.detail_price_adult, adult));
+        }
+
+        if (!TextualUtils.isEmpty(student)) {
+            result.add(buildString(R.string.detail_price_student, student));
+        }
+
+        if (!TextualUtils.isEmpty(child)) {
+            result.add(buildString(R.string.detail_price_child, child));
+        }
+
+        return TextualUtils.join(" - ", result);
+    }
+
+    private String toHoursString(PlaceHours hours) {
+
+        String weekdaysOpening = hours.getWeekdays().getOpening();
+        String weekdaysClosing = hours.getWeekdays().getClosing();
+        String weekendOpening = hours.getWeekend().getOpening();
+        String weekendClosing = hours.getWeekend().getClosing();
+
+        return buildString(R.string.detail_hours,
+                weekdaysOpening, weekdaysClosing,
+                weekendOpening, weekendClosing);
+    }
     @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
         Log.i(TAG, "Clicked on facebook: " + place);
-        mPresenter.openFacebookForPlace(place);
+
+        if (place.getFacebook() != null) {
+            String url = buildString(R.string.detail_facebook_url, place.getFacebook());
+            startFacebookForUrl(url);
+        } else {
+            informNoFacebookForPlace();
+        }
     }
 
     public String getTitle() {
         return getContext().getString(R.string.detail_title_useful);
-    }
-
-    // region Presentation
-
-    public void onBind(UsefulInfoPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    public void onUnbind() {
-        mPresenter = null;
     }
 
     public void displayEmail(String email) {
@@ -136,6 +212,4 @@ public class UsefulInfoFragment extends DetailFragment {
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
-
-    // endregion
 }
