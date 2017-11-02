@@ -24,7 +24,7 @@ import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.DetailFragment;
 
-public class UsefulInfoFragment extends DetailFragment implements UsefulInfoContract.View {
+public class UsefulInfoFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
     private String TAG = getClass().getSimpleName();
@@ -45,7 +45,7 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     TextView emailTextView;
 
     private Place place;
-    private UsefulInfoContract.Presenter mPresenter;
+    private UsefulInfoPresenter mPresenter;
 
     public static UsefulInfoFragment newInstance(Context context, Place place) {
 
@@ -55,7 +55,6 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     }
 
     @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_detail_useful_info, container, false);
@@ -74,76 +73,63 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
         mPresenter.openFacebookForPlace(place);
     }
 
-    @Override
     public String getTitle() {
         return getContext().getString(R.string.detail_title_useful);
     }
 
     // region Presentation
 
-    @Override
-    public void onBind(UsefulInfoContract.Presenter presenter) {
+    public void onBind(UsefulInfoPresenter presenter) {
         mPresenter = presenter;
     }
 
-    @Override
     public void onUnbind() {
         mPresenter = null;
     }
 
-    @Override
     public void displayEmail(String email) {
         emailTextView.setText(email);
         emailTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public String buildString(int msgId, Object... args) {
         return getString(msgId, args);
     }
 
-    @Override
     public void displayFacebook(String fbPage) {
         facebookButton.setText(fbPage);
         facebookButton.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void displayUrl(String url) {
         urlTextView.setText(url);
         urlTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void displayDescription(String description) {
         specificityTextView.setText(description);
         specificityTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void displayPrices(CharSequence prices) {
         pricesTextView.setText(prices);
         pricesTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void displayHours(String hours) {
         hoursTextView.setText(hours);
         hoursTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void displayImage(String imgUrl) {
         Glide.with(this).load(imgUrl).centerCrop().into(imageView);
         imageView.setVisibility(View.VISIBLE);
     }
 
-    @Override
     public void informNoFacebookForPlace() {
         Log.i(TAG, "No facebook url is defined for place");
     }
 
-    @Override
     public void startFacebookForUrl(String url) {
         Uri uri = Uri.parse(url);
         Log.d(TAG, String.valueOf(uri));

@@ -29,7 +29,6 @@ import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
-import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoContract;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoPresenter;
 import me.cpele.inbop.list.PlacesRepository;
@@ -50,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
     private ItineraryContract.Presenter mItineraryPresenter;
 
     private UsefulInfoFragment mUsefulInfoFragment;
-    private UsefulInfoContract.Presenter mUsefulInfoPresenter;
+    private UsefulInfoPresenter mUsefulInfoPresenter;
     private PlacesRepository mRepository;
 
     @Override

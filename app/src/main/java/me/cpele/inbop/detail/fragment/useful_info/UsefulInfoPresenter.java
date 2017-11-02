@@ -11,11 +11,10 @@ import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlacePrice;
 
-public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
+public class UsefulInfoPresenter {
 
-    private UsefulInfoContract.View mView;
+    private UsefulInfoFragment mView;
 
-    @Override
     public void openFacebookForPlace(@NonNull Place place) {
 
         if (mView == null) return;
@@ -28,7 +27,6 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         }
     }
 
-    @Override
     public void loadPlace(Place place) {
 
         if (mView == null) return;
@@ -69,12 +67,10 @@ public class UsefulInfoPresenter implements UsefulInfoContract.Presenter {
         }
     }
 
-    @Override
-    public void onBind(UsefulInfoContract.View view) {
+    public void onBind(UsefulInfoFragment view) {
         mView = view;
     }
 
-    @Override
     public void onUnbind() {
         mView = null;
     }
