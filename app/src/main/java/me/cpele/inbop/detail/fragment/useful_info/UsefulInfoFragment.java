@@ -53,6 +53,7 @@ public class UsefulInfoFragment extends DetailFragment {
     Button facebookButton;
     @BindView(R.id.useful_tv_email)
     TextView emailTextView;
+    private DetailViewModel mDetailViewModel;
 
     public static UsefulInfoFragment newInstance(Context context, Place place) {
 
@@ -71,49 +72,54 @@ public class UsefulInfoFragment extends DetailFragment {
         String placeId = getArguments().getString(ARG_PLACE);
         DetailViewModel.Factory factory = new DetailViewModel.Factory(repository, placeId);
 
-        DetailViewModel detailViewModel =
-                ViewModelProviders
-                        .of(getActivity(), factory)
-                        .get(DetailViewModel.class);
+        mDetailViewModel = ViewModelProviders
+                .of(getActivity(), factory)
+                .get(DetailViewModel.class);
 
-        detailViewModel.getPlace().observe(getActivity(), place -> {
+        mDetailViewModel.getPlace().observe(getActivity(), place -> {
 
             place = notNull(place);
 
             if (place.getImgUrl() != null) {
-
                 String imgUrl = place.getImgUrl();
-                displayImage(imgUrl);
+                Glide.with(this).load(imgUrl).centerCrop().into(imageView);
+                imageView.setVisibility(View.VISIBLE);
             }
 
             if (place.getHours() != null) {
                 String hours = toHoursString(place.getHours());
-                displayHours(hours);
+                hoursTextView.setText(hours);
+                hoursTextView.setVisibility(View.VISIBLE);
             }
 
             if (place.getPrice() != null) {
                 CharSequence prices = toPricesString(place.getPrice());
-                displayPrices(prices);
+                pricesTextView.setText(prices);
+                pricesTextView.setVisibility(View.VISIBLE);
             }
 
             if (place.getDescription() != null) {
                 String description = place.getDescription();
-                displayDescription(description);
+                specificityTextView.setText(description);
+                specificityTextView.setVisibility(View.VISIBLE);
             }
 
             if (place.getUrl() != null) {
                 String url = place.getUrl();
-                displayUrl(url);
+                urlTextView.setText(url);
+                urlTextView.setVisibility(View.VISIBLE);
             }
 
             if (place.getFacebook() != null) {
                 String fbPage = extractPageName(place.getFacebook());
-                displayFacebook(fbPage);
+                facebookButton.setText(fbPage);
+                facebookButton.setVisibility(View.VISIBLE);
             }
 
             if (place.getEmail() != null) {
                 String email = place.getEmail();
-                displayEmail(email);
+                emailTextView.setText(email);
+                emailTextView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -125,7 +131,7 @@ public class UsefulInfoFragment extends DetailFragment {
         if (facebookUrl != null) {
             return facebookUrl;
         }
-        return buildString(R.string.detail_facebook_unknown);
+        return getString(R.string.detail_facebook_unknown, new Object[]{});
     }
 
     private CharSequence toPricesString(PlacePrice price) {
@@ -137,15 +143,15 @@ public class UsefulInfoFragment extends DetailFragment {
         String child = price.getChild();
 
         if (!TextualUtils.isEmpty(adult)) {
-            result.add(buildString(R.string.detail_price_adult, adult));
+            result.add(getString(R.string.detail_price_adult, adult));
         }
 
         if (!TextualUtils.isEmpty(student)) {
-            result.add(buildString(R.string.detail_price_student, student));
+            result.add(getString(R.string.detail_price_student, student));
         }
 
         if (!TextualUtils.isEmpty(child)) {
-            result.add(buildString(R.string.detail_price_child, child));
+            result.add(getString(R.string.detail_price_child, child));
         }
 
         return TextualUtils.join(" - ", result);
@@ -158,64 +164,19 @@ public class UsefulInfoFragment extends DetailFragment {
         String weekendOpening = hours.getWeekend().getOpening();
         String weekendClosing = hours.getWeekend().getClosing();
 
-        return buildString(R.string.detail_hours,
-                weekdaysOpening, weekdaysClosing,
-                weekendOpening, weekendClosing);
+        return getString(R.string.detail_hours, weekdaysOpening, weekdaysClosing, weekendOpening, weekendClosing);
     }
 
     @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
-//        Log.i(TAG, "Clicked on facebook: " + place);
-//
-//        if (place.getFacebook() != null) {
-//            String url = buildString(R.string.detail_facebook_url, place.getFacebook());
-//            startFacebookForUrl(url);
-//        } else {
-//            informNoFacebookForPlace();
-//        }
+        Place placeValue = notNull(mDetailViewModel.getPlace().getValue());
+        Log.i(TAG, "Clicked on facebook: " + placeValue);
+        String url = getString(R.string.detail_facebook_url, placeValue.getFacebook());
+        startFacebookForUrl(url);
     }
 
     public String getTitle() {
         return getContext().getString(R.string.detail_title_useful);
-    }
-
-    public void displayEmail(String email) {
-        emailTextView.setText(email);
-        emailTextView.setVisibility(View.VISIBLE);
-    }
-
-    public String buildString(int msgId, Object... args) {
-        return getString(msgId, args);
-    }
-
-    public void displayFacebook(String fbPage) {
-        facebookButton.setText(fbPage);
-        facebookButton.setVisibility(View.VISIBLE);
-    }
-
-    public void displayUrl(String url) {
-        urlTextView.setText(url);
-        urlTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void displayDescription(String description) {
-        specificityTextView.setText(description);
-        specificityTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void displayPrices(CharSequence prices) {
-        pricesTextView.setText(prices);
-        pricesTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void displayHours(String hours) {
-        hoursTextView.setText(hours);
-        hoursTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void displayImage(String imgUrl) {
-        Glide.with(this).load(imgUrl).centerCrop().into(imageView);
-        imageView.setVisibility(View.VISIBLE);
     }
 
     public void informNoFacebookForPlace() {

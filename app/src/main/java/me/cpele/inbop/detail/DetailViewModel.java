@@ -10,12 +10,15 @@ import me.cpele.inbop.list.PlacesRepository;
 
 public class DetailViewModel extends ViewModel {
 
+    private static final String TAG = DetailViewModel.class.getSimpleName();
+    @NonNull
     private LiveData<Place> mPlace;
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
         mPlace = repository.findPlaceById(placeId);
     }
 
+    @NonNull
     public LiveData<Place> getPlace() {
         return mPlace;
     }
