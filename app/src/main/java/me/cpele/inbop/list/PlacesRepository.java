@@ -1,5 +1,6 @@
 package me.cpele.inbop.list;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,7 +64,7 @@ public class PlacesRepository {
 
     private void initStars(List<Place> places) {
         for (Place place : places) {
-            boolean starred = mDao.findPlaceById(place.getId()).isStarred();
+            boolean starred = mDao.findPlaceByIdSync(place.getId()).isStarred();
             place.setStarred(starred);
         }
     }
@@ -102,7 +103,11 @@ public class PlacesRepository {
         return result;
     }
 
-    public Place findPlaceById(String placeId) {
+    public LiveData<Place> findPlaceById(String placeId) {
         return mDao.findPlaceById(placeId);
+    }
+
+    public Place findPlaceByIdSync(String placeId) {
+        return mDao.findPlaceByIdSync(placeId);
     }
 }

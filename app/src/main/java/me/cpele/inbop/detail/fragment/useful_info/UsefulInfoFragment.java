@@ -1,5 +1,6 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,20 +16,23 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlacePrice;
+import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
+import me.cpele.inbop.list.PlacesRepository;
+
+import static me.cpele.inbop.utils.Asserting.notNull;
 
 public class UsefulInfoFragment extends DetailFragment {
 
@@ -50,8 +54,6 @@ public class UsefulInfoFragment extends DetailFragment {
     @BindView(R.id.useful_tv_email)
     TextView emailTextView;
 
-    private Place place;
-
     public static UsefulInfoFragment newInstance(Context context, Place place) {
 
         UsefulInfoFragment fragment = new UsefulInfoFragment();
@@ -65,42 +67,55 @@ public class UsefulInfoFragment extends DetailFragment {
         View view = inflater.inflate(R.layout.fragment_detail_useful_info, container, false);
         ButterKnife.bind(this, view);
 
-        place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        PlacesRepository repository = CustomApp.getInstance().getPlacesRepository();
+        String placeId = getArguments().getString(ARG_PLACE);
+        DetailViewModel.Factory factory = new DetailViewModel.Factory(repository, placeId);
 
-        if (place.getImgUrl() != null) {
-            String imgUrl = place.getImgUrl();
-            displayImage(imgUrl);
-        }
+        DetailViewModel detailViewModel =
+                ViewModelProviders
+                        .of(getActivity(), factory)
+                        .get(DetailViewModel.class);
 
-        if (place.getHours() != null) {
-            String hours = toHoursString(place.getHours());
-            displayHours(hours);
-        }
+        detailViewModel.getPlace().observe(getActivity(), place -> {
 
-        if (place.getPrice() != null) {
-            CharSequence prices = toPricesString(place.getPrice());
-            displayPrices(prices);
-        }
+            place = notNull(place);
 
-        if (place.getDescription() != null) {
-            String description = place.getDescription();
-            displayDescription(description);
-        }
+            if (place.getImgUrl() != null) {
 
-        if (place.getUrl() != null) {
-            String url = place.getUrl();
-            displayUrl(url);
-        }
+                String imgUrl = place.getImgUrl();
+                displayImage(imgUrl);
+            }
 
-        if (place.getFacebook() != null) {
-            String fbPage = extractPageName(place.getFacebook());
-            displayFacebook(fbPage);
-        }
+            if (place.getHours() != null) {
+                String hours = toHoursString(place.getHours());
+                displayHours(hours);
+            }
 
-        if (place.getEmail() != null) {
-            String email = place.getEmail();
-            displayEmail(email);
-        }
+            if (place.getPrice() != null) {
+                CharSequence prices = toPricesString(place.getPrice());
+                displayPrices(prices);
+            }
+
+            if (place.getDescription() != null) {
+                String description = place.getDescription();
+                displayDescription(description);
+            }
+
+            if (place.getUrl() != null) {
+                String url = place.getUrl();
+                displayUrl(url);
+            }
+
+            if (place.getFacebook() != null) {
+                String fbPage = extractPageName(place.getFacebook());
+                displayFacebook(fbPage);
+            }
+
+            if (place.getEmail() != null) {
+                String email = place.getEmail();
+                displayEmail(email);
+            }
+        });
 
         return view;
     }
@@ -147,16 +162,17 @@ public class UsefulInfoFragment extends DetailFragment {
                 weekdaysOpening, weekdaysClosing,
                 weekendOpening, weekendClosing);
     }
+
     @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
-        Log.i(TAG, "Clicked on facebook: " + place);
-
-        if (place.getFacebook() != null) {
-            String url = buildString(R.string.detail_facebook_url, place.getFacebook());
-            startFacebookForUrl(url);
-        } else {
-            informNoFacebookForPlace();
-        }
+//        Log.i(TAG, "Clicked on facebook: " + place);
+//
+//        if (place.getFacebook() != null) {
+//            String url = buildString(R.string.detail_facebook_url, place.getFacebook());
+//            startFacebookForUrl(url);
+//        } else {
+//            informNoFacebookForPlace();
+//        }
     }
 
     public String getTitle() {

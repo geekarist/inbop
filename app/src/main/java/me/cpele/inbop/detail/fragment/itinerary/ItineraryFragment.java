@@ -17,10 +17,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.parceler.Parcels;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.DetailFragment;
@@ -28,8 +27,6 @@ import me.cpele.inbop.detail.fragment.DetailFragment;
 public class ItineraryFragment
         extends DetailFragment
         implements OnMapReadyCallback, ItineraryContract.View {
-
-    private static final String ARG_PLACE = "ARG_PLACE";
 
     @BindView(R.id.itinerary_tv_address)
     TextView mAddressTextViewddressTextView;
@@ -53,7 +50,8 @@ public class ItineraryFragment
         View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
-        mPlace = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        String placeId = getArguments().getString(ARG_PLACE);
+        mPlace = CustomApp.getInstance().getPlacesRepository().findPlaceByIdSync(placeId);
 
         mAddressTextViewddressTextView.setText(mPlace.getPosition().getAddress());
 

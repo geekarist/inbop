@@ -2,14 +2,14 @@ package me.cpele.inbop.detail.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-
-import org.parceler.Parcels;
 
 import me.cpele.inbop.apiclient.model.Place;
 
 public abstract class DetailFragment extends Fragment {
 
+    protected static final String ARG_PLACE = "ARG_PLACE";
     private Context context;
 
     public abstract String getTitle();
@@ -23,11 +23,11 @@ public abstract class DetailFragment extends Fragment {
         return context;
     }
 
-    public void setup(Context context, Place place) {
+    public void setup(Context context, @NonNull Place place) {
 
         setContext(context);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("ARG_PLACE", Parcels.wrap(place));
+        bundle.putString(ARG_PLACE, place.getId());
         setArguments(bundle);
     }
 }

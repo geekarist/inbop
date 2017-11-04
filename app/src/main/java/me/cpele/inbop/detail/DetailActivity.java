@@ -32,6 +32,8 @@ import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.list.PlacesRepository;
 
+import static me.cpele.inbop.utils.Asserting.notNull;
+
 public class DetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_PLACE = "EXTRA_PLACE";
@@ -152,7 +154,8 @@ public class DetailActivity extends AppCompatActivity {
     @NonNull
     private Place getPlace() {
         String placeId = getIntent().getStringExtra(EXTRA_PLACE);
-        return mRepository.findPlaceById(placeId);
+        Place placeById = notNull(mRepository.findPlaceByIdSync(placeId));
+        return notNull(placeById);
     }
 
     @Override

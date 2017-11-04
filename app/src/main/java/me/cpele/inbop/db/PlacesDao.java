@@ -1,5 +1,6 @@
 package me.cpele.inbop.db;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -19,7 +20,10 @@ public interface PlacesDao {
     void insert(List<Place> places);
 
     @Query("SELECT * FROM Place WHERE Place.id = :id")
-    Place findPlaceById(String id);
+    LiveData<Place> findPlaceById(String id);
+
+    @Query("SELECT * FROM Place WHERE Place.id = :id")
+    Place findPlaceByIdSync(String id);
 
     @Query("UPDATE Place SET starred = NOT(Place.starred) WHERE Place.id = :id")
     void toggleStar(String id);
