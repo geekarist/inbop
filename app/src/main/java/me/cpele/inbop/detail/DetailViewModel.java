@@ -33,7 +33,6 @@ public class DetailViewModel extends ViewModel {
     private MutableLiveData<String> mUrl = new MutableLiveData<>();
     private MutableLiveData<StringResource> mFacebook = new MutableLiveData<>();
     private MutableLiveData<String> mEmail = new MutableLiveData<>();
-    private MutableLiveData<StringResource> mFacebookLinkClicked = new MutableLiveData<>();
     private MutableLiveData<StringResource> mFacebookClickEvent = new MutableLiveData<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
@@ -130,7 +129,8 @@ public class DetailViewModel extends ViewModel {
     }
 
     public void triggerFacebookClickEvent() {
-        mFacebookLinkClicked.setValue(mFacebook.getValue());
+        notNull(mFacebook.getValue());
+        mFacebookClickEvent.setValue(mFacebook.getValue());
     }
 
     public LiveData<StringResource> getFacebookClickEvent() {
