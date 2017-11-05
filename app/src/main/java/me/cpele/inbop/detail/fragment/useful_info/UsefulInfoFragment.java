@@ -117,14 +117,21 @@ public class UsefulInfoFragment extends DetailFragment {
             emailTextView.setVisibility(View.VISIBLE);
         });
 
-        mDetailViewModel.getFacebookClickEvent().observe(getActivity(), placeValue -> {
-            Log.i(TAG, "Clicked on facebook: " + placeValue);
-            String url = getString(
-                    R.string.detail_facebook_url,
-                    Asserting.notNull(placeValue)
-                            .asString(getContext()));
-            startFacebookForUrl(url);
-        });
+        mDetailViewModel
+                .getFacebookClickEvent()
+                .observe(getActivity(),
+                        (@NonNull DetailViewModel.FacebookClickEvent event) -> {
+                            if (event.consumed) return;
+
+                            Log.i(TAG, "Clicked on facebook: " + event);
+                            String url = getString(
+                                    R.string.detail_facebook_url,
+                                    Asserting.notNull(event)
+                                            .stringResource
+                                            .asString(getContext()));
+                            startFacebookForUrl(url);
+                            mDetailViewModel.consumeFacebookClickEvent();
+                        });
 
         return view;
     }
