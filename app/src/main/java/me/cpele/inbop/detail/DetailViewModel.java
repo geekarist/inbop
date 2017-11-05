@@ -140,7 +140,6 @@ public class DetailViewModel extends ViewModel {
     public void consumeFacebookClickEvent() {
         FacebookClickEvent event = notNull(mFacebookClickEvent.getValue());
         event.consumed = true;
-        mFacebookClickEvent.setValue(event);
     }
 
     public static class Factory implements ViewModelProvider.Factory {
