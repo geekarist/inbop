@@ -33,7 +33,7 @@ public class DetailViewModel extends ViewModel {
     private MutableLiveData<String> mUrl = new MutableLiveData<>();
     private MutableLiveData<StringResource> mFacebook = new MutableLiveData<>();
     private MutableLiveData<String> mEmail = new MutableLiveData<>();
-    private MutableLiveData<FacebookClickEvent> mFacebookClickEvent = new MutableLiveData<>();
+    private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
         mPlace = repository.findPlaceById(placeId);
@@ -128,18 +128,13 @@ public class DetailViewModel extends ViewModel {
         return mEmail;
     }
 
-    public void triggerFacebookClickEvent() {
+    public void triggerFacebookClick() {
         notNull(mFacebook.getValue());
-        mFacebookClickEvent.setValue(new FacebookClickEvent(mFacebook.getValue()));
+        mFacebookClickEvent.setValue(mFacebook.getValue());
     }
 
-    public LiveData<FacebookClickEvent> getFacebookClickEvent() {
+    public LiveData<StringResource> getFacebookClickEvent() {
         return mFacebookClickEvent;
-    }
-
-    public void consumeFacebookClickEvent() {
-        FacebookClickEvent event = notNull(mFacebookClickEvent.getValue());
-        event.consumed = true;
     }
 
     public static class Factory implements ViewModelProvider.Factory {
@@ -156,15 +151,6 @@ public class DetailViewModel extends ViewModel {
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             return modelClass.cast(new DetailViewModel(mRepo, mPlaceId));
-        }
-    }
-
-    public static class FacebookClickEvent {
-        public final StringResource stringResource;
-        public boolean consumed = false;
-
-        public FacebookClickEvent(StringResource stringResource) {
-            this.stringResource = stringResource;
         }
     }
 }

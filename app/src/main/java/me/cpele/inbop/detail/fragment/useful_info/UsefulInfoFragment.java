@@ -30,7 +30,6 @@ import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
 import me.cpele.inbop.list.PlacesRepository;
-import me.cpele.inbop.utils.Asserting;
 
 public class UsefulInfoFragment extends DetailFragment {
 
@@ -117,28 +116,20 @@ public class UsefulInfoFragment extends DetailFragment {
             emailTextView.setVisibility(View.VISIBLE);
         });
 
-        mDetailViewModel
-                .getFacebookClickEvent()
-                .observe(getActivity(),
-                        (@NonNull DetailViewModel.FacebookClickEvent event) -> {
-                            if (event.consumed) return;
-
-                            Log.i(TAG, "Clicked on facebook: " + event);
-                            String url = getString(
-                                    R.string.detail_facebook_url,
-                                    Asserting.notNull(event)
-                                            .stringResource
-                                            .asString(getContext()));
-                            startFacebookForUrl(url);
-                            mDetailViewModel.consumeFacebookClickEvent();
-                        });
+        mDetailViewModel.getFacebookClickEvent().observe(getActivity(),
+                (@NonNull StringResource stringResource) -> {
+                    String url = getString(
+                            R.string.detail_facebook_url,
+                            stringResource.asString(getContext()));
+                    startFacebookForUrl(url);
+                });
 
         return view;
     }
 
     @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
-        mDetailViewModel.triggerFacebookClickEvent();
+        mDetailViewModel.triggerFacebookClick();
     }
 
     public String getTitle() {
