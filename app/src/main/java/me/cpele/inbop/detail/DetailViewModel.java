@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +136,11 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<StringResource> getFacebookClickEvent() {
         return mFacebookClickEvent;
+    }
+
+    @VisibleForTesting
+    void setup() {
+        mPlace.observeForever(this::onPlaceChanged);
     }
 
     public static class Factory implements ViewModelProvider.Factory {
