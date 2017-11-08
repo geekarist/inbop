@@ -46,7 +46,6 @@ public class DetailViewModelTest {
         given(mock.findPlaceById(anyString())).willReturn(mPlaceData);
         String placeId = "place-id";
         DetailViewModel detailViewModel = new DetailViewModel(mock, placeId);
-        detailViewModel.setup();
         mPlace = new Place();
         detailViewModel.getDescription().observeForever(value -> mActualDesc = value);
         detailViewModel.getImgUrl().observeForever(value -> mActualImgUrl = value);

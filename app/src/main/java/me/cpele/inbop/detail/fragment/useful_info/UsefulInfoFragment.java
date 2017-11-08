@@ -73,8 +73,6 @@ public class UsefulInfoFragment extends DetailFragment {
                 .of(getActivity(), factory)
                 .get(DetailViewModel.class);
 
-        mDetailViewModel.setup(getActivity());
-
         mDetailViewModel.getImgUrl().observe(getActivity(), url -> {
             Glide.with(this).load(url).centerCrop().into(imageView);
             imageView.setVisibility(View.VISIBLE);

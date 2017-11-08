@@ -1,12 +1,11 @@
 package me.cpele.inbop.detail;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,38 +20,50 @@ import me.cpele.inbop.list.PlacesRepository;
 
 import static me.cpele.inbop.utils.Asserting.notNull;
 
+// TODO arrange
 public class DetailViewModel extends ViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
 
     @NonNull
     private LiveData<Place> mPlace;
-    private MutableLiveData<String> mImgUrl = new MutableLiveData<>();
-    private MutableLiveData<StringResource> mHours = new MutableLiveData<>();
-    private MutableLiveData<List<StringResource>> mPrice = new MutableLiveData<>();
-    private MutableLiveData<String> mDescription = new MutableLiveData<>();
-    private MutableLiveData<String> mUrl = new MutableLiveData<>();
-    private MutableLiveData<StringResource> mFacebook = new MutableLiveData<>();
-    private MutableLiveData<String> mEmail = new MutableLiveData<>();
+    private MediatorLiveData<String> mImgUrl = new MediatorLiveData<>();
+    private MediatorLiveData<StringResource> mHours = new MediatorLiveData<>();
+    private MediatorLiveData<List<StringResource>> mPrice = new MediatorLiveData<>();
+    private MediatorLiveData<String> mDescription = new MediatorLiveData<>();
+    private MediatorLiveData<String> mUrl = new MediatorLiveData<>();
+    private MediatorLiveData<StringResource> mFacebook = new MediatorLiveData<>();
+    private MediatorLiveData<String> mEmail = new MediatorLiveData<>();
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
         mPlace = repository.findPlaceById(placeId);
-    }
 
-    public void setup(LifecycleOwner owner) {
-        mPlace.observe(owner, this::onPlaceChanged);
-    }
+        mImgUrl.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.imgUrl != null) mImgUrl.setValue(place.getImgUrl());
+        });
 
-    private void onPlaceChanged(Place place) {
-        place = notNull(place);
+        mHours.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.getHours() != null) mHours.setValue(toHoursString(place.getHours()));
+        });
 
-        if (place.getHours() != null) mHours.setValue(toHoursString(place.getHours()));
-        if (place.getImgUrl() != null) mImgUrl.setValue(place.getImgUrl());
-        if (place.getPrice() != null) mPrice.setValue(toPricesString(place.getPrice()));
-        if (place.getDescription() != null) mDescription.setValue(place.getDescription());
-        if (place.getUrl() != null) mUrl.setValue(place.getUrl());
-        if (place.getFacebook() != null) mFacebook.setValue(extractPageName(place.getFacebook()));
+        mPrice.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.getPrice() != null) mPrice.setValue(toPricesString(place.getPrice()));
+        });
+
+        mDescription.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.getDescription() != null) mDescription.setValue(place.getDescription());
+        });
+
+        mUrl.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.getUrl() != null) mUrl.setValue(place.getUrl());
+        });
+
+        mFacebook.addSource(mPlace, (@NonNull Place place) -> {
+            if (place.getFacebook() != null) {
+                mFacebook.setValue(extractPageName(place.getFacebook()));
+            }
+        });
     }
 
     private List<StringResource> toPricesString(PlacePrice price) {
@@ -136,11 +147,6 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<StringResource> getFacebookClickEvent() {
         return mFacebookClickEvent;
-    }
-
-    @VisibleForTesting
-    void setup() {
-        mPlace.observeForever(this::onPlaceChanged);
     }
 
     public static class Factory implements ViewModelProvider.Factory {
