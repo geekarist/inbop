@@ -9,20 +9,19 @@ import java.util.List;
 
 import me.cpele.inbop.TextualUtils;
 
-// TODO arrange
 public class StringResource {
 
     public static final int RES_ID_EMPTY = -1;
     private final int mResId;
     private final Object[] mArgs;
 
+    public StringResource(String value) {
+        this(RES_ID_EMPTY, value);
+    }
+
     public StringResource(int resId, Object... args) {
         mResId = resId;
         mArgs = args;
-    }
-
-    public StringResource(String value) {
-        this(RES_ID_EMPTY, value);
     }
 
     @NonNull
@@ -42,11 +41,10 @@ public class StringResource {
     }
 
     @Override
-    public String toString() {
-        return "StringResource{" +
-                "mResId=" + mResId +
-                ", mArgs=" + Arrays.toString(mArgs) +
-                '}';
+    public int hashCode() {
+        int result = mResId;
+        result = 31 * result + Arrays.hashCode(mArgs);
+        return result;
     }
 
     @Override
@@ -62,9 +60,10 @@ public class StringResource {
     }
 
     @Override
-    public int hashCode() {
-        int result = mResId;
-        result = 31 * result + Arrays.hashCode(mArgs);
-        return result;
+    public String toString() {
+        return "StringResource{" +
+                "mResId=" + mResId +
+                ", mArgs=" + Arrays.toString(mArgs) +
+                '}';
     }
 }
