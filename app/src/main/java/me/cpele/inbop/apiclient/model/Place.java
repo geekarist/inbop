@@ -133,8 +133,9 @@ public class Place {
         return url;
     }
 
-    public void setUrl(String url) {
+    public Place setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public String getFacebook() {
