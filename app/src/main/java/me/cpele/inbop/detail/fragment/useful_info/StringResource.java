@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class StringResource {
 
+    public static final int RES_ID_EMPTY = -1;
     private final int mResId;
     private final Object[] mArgs;
 
@@ -15,7 +16,7 @@ public class StringResource {
     }
 
     public StringResource(String value) {
-        this(-1, value);
+        this(RES_ID_EMPTY, value);
     }
 
     public String asString(Context context) {

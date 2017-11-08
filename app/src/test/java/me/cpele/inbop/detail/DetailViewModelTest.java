@@ -37,6 +37,8 @@ public class DetailViewModelTest {
     private StringResource mActualHours;
     private List<StringResource> mActualPrice;
     private String mActualDesc;
+    private StringResource mActualFacebook;
+    private Place mPlace;
 
     @Before
     public void setUp() throws Exception {
@@ -46,12 +48,13 @@ public class DetailViewModelTest {
         String placeId = "place-id";
         mDetailViewModel = new DetailViewModel(mock, placeId);
         mDetailViewModel.setup();
+        mPlace = new Place();
     }
 
     @Test
     public void should_set_place_value() {
 
-        Place place = new Place()
+        mPlace = new Place()
                 .setImgUrl("http://img-url")
                 .setHours(new PlaceHours()
                         .setWeekdays(new PlaceHoursByDays()
@@ -62,14 +65,16 @@ public class DetailViewModelTest {
                                 .setClosing("closing-we")))
                 .setPrice(new PlacePrice().setAdult("adult").setChild("child").setStudent("student"))
                 .setDescription("desc")
-                .setUrl("http://place-url.com");
+                .setUrl("http://place-url.com")
+                .setFacebook("facebook-id");
         mDetailViewModel.getImgUrl().observeForever(value -> mActualImgUrl = value);
         mDetailViewModel.getHours().observeForever(strRes -> mActualHours = strRes);
         mDetailViewModel.getPrice().observeForever(stringResources -> mActualPrice = stringResources);
         mDetailViewModel.getDescription().observeForever(desc -> mActualDesc = desc);
         mDetailViewModel.getUrl().observeForever(url -> mActualUrl = url);
+        mDetailViewModel.getFacebook().observeForever(value -> mActualFacebook = value);
 
-        mPlaceData.setValue(place);
+        mPlaceData.setValue(mPlace);
 
         assertThat(mActualImgUrl, equalTo("http://img-url"));
         assertThat(mActualHours, equalTo(
@@ -81,5 +86,7 @@ public class DetailViewModelTest {
                 new StringResource(R.string.detail_price_child, "child"))));
         assertThat(mActualDesc, equalTo("desc"));
         assertThat(mActualUrl, equalTo("http://place-url.com"));
+        assertThat(mActualFacebook, equalTo(
+                new StringResource(StringResource.RES_ID_EMPTY, "facebook-id")));
     }
 }
