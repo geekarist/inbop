@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
-import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
@@ -84,12 +82,7 @@ public class UsefulInfoFragment extends DetailFragment {
         });
 
         mDetailViewModel.getPrice().observe(getActivity(), (@NonNull List<StringResource> stringResourceList) -> {
-            List<String> strPrices = new ArrayList<>();
-            for (StringResource stringResource : stringResourceList) {
-                String priceStr = stringResource.asString(getContext());
-                strPrices.add(priceStr);
-            }
-            String joinedPrices = TextualUtils.join(" - ", strPrices);
+            String joinedPrices = StringResource.join(stringResourceList, getContext());
             pricesTextView.setText(joinedPrices);
             pricesTextView.setVisibility(View.VISIBLE);
         });
