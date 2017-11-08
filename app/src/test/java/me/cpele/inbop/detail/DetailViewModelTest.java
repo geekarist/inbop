@@ -31,7 +31,6 @@ public class DetailViewModelTest {
     public InstantTaskExecutorRule mTaskExecutorRule = new InstantTaskExecutorRule();
 
     private MutableLiveData<Place> mPlaceData;
-    private DetailViewModel mDetailViewModel;
     private String mActualUrl;
     private String mActualImgUrl;
     private StringResource mActualHours;
@@ -46,47 +45,87 @@ public class DetailViewModelTest {
         PlacesRepository mock = mock(PlacesRepository.class);
         given(mock.findPlaceById(anyString())).willReturn(mPlaceData);
         String placeId = "place-id";
-        mDetailViewModel = new DetailViewModel(mock, placeId);
-        mDetailViewModel.setup();
+        DetailViewModel detailViewModel = new DetailViewModel(mock, placeId);
+        detailViewModel.setup();
         mPlace = new Place();
+        detailViewModel.getDescription().observeForever(value -> mActualDesc = value);
+        detailViewModel.getImgUrl().observeForever(value -> mActualImgUrl = value);
+        detailViewModel.getUrl().observeForever(value -> mActualUrl = value);
+        detailViewModel.getHours().observeForever(strRes -> mActualHours = strRes);
+        detailViewModel.getPrice().observeForever(stringResources -> mActualPrice = stringResources);
+        detailViewModel.getUrl().observeForever(url -> mActualUrl = url);
+        detailViewModel.getFacebook().observeForever(value -> mActualFacebook = value);
     }
 
     @Test
-    public void should_set_place_value() {
+    public void should_set_place_facebook() {
 
-        mPlace = new Place()
-                .setImgUrl("http://img-url")
-                .setHours(new PlaceHours()
-                        .setWeekdays(new PlaceHoursByDays()
-                                .setOpening("opening")
-                                .setClosing("closing"))
-                        .setWeekend(new PlaceHoursByDays()
-                                .setOpening("opening-we")
-                                .setClosing("closing-we")))
-                .setPrice(new PlacePrice().setAdult("adult").setChild("child").setStudent("student"))
-                .setDescription("desc")
-                .setUrl("http://place-url.com")
-                .setFacebook("facebook-id");
-        mDetailViewModel.getImgUrl().observeForever(value -> mActualImgUrl = value);
-        mDetailViewModel.getHours().observeForever(strRes -> mActualHours = strRes);
-        mDetailViewModel.getPrice().observeForever(stringResources -> mActualPrice = stringResources);
-        mDetailViewModel.getDescription().observeForever(desc -> mActualDesc = desc);
-        mDetailViewModel.getUrl().observeForever(url -> mActualUrl = url);
-        mDetailViewModel.getFacebook().observeForever(value -> mActualFacebook = value);
+        mPlace.setFacebook("facebook-id");
 
         mPlaceData.setValue(mPlace);
 
-        assertThat(mActualImgUrl, equalTo("http://img-url"));
-        assertThat(mActualHours, equalTo(
-                new StringResource(R.string.detail_hours,
-                        "opening", "closing", "opening-we", "closing-we")));
+        assertThat(mActualFacebook, equalTo(
+                new StringResource(StringResource.RES_ID_EMPTY, "facebook-id")));
+    }
+
+    @Test
+    public void should_set_place_price() {
+
+        mPlace.setPrice(new PlacePrice().setAdult("adult").setChild("child").setStudent("student"));
+
+        mPlaceData.setValue(mPlace);
+
         assertThat(mActualPrice, equalTo(Arrays.asList(
                 new StringResource(R.string.detail_price_adult, "adult"),
                 new StringResource(R.string.detail_price_student, "student"),
                 new StringResource(R.string.detail_price_child, "child"))));
+    }
+
+    @Test
+    public void should_set_place_hours() {
+
+        mPlace.setHours(new PlaceHours()
+                .setWeekdays(new PlaceHoursByDays()
+                        .setOpening("opening")
+                        .setClosing("closing"))
+                .setWeekend(new PlaceHoursByDays()
+                        .setOpening("opening-we")
+                        .setClosing("closing-we")));
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualHours, equalTo(
+                new StringResource(R.string.detail_hours,
+                        "opening", "closing", "opening-we", "closing-we")));
+    }
+
+    @Test
+    public void should_set_place_img_url() {
+
+        mPlace.setImgUrl("http://img-url");
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualImgUrl, equalTo("http://img-url"));
+    }
+
+    @Test
+    public void should_set_place_desc() {
+
+        mPlace.setDescription("desc");
+
+        mPlaceData.setValue(mPlace);
+
         assertThat(mActualDesc, equalTo("desc"));
-        assertThat(mActualUrl, equalTo("http://place-url.com"));
-        assertThat(mActualFacebook, equalTo(
-                new StringResource(StringResource.RES_ID_EMPTY, "facebook-id")));
+    }
+
+    @Test
+    public void should_set_place_url() {
+
+        mPlace.setUrl("url");
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualUrl, equalTo("url"));
     }
 }
