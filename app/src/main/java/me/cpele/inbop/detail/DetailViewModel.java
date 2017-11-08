@@ -20,7 +20,6 @@ import me.cpele.inbop.list.PlacesRepository;
 
 import static me.cpele.inbop.utils.Asserting.notNull;
 
-// TODO arrange
 public class DetailViewModel extends ViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
@@ -66,6 +65,16 @@ public class DetailViewModel extends ViewModel {
         });
     }
 
+    private StringResource toHoursString(PlaceHours hours) {
+
+        String weekdaysOpening = hours.getWeekdays().getOpening();
+        String weekdaysClosing = hours.getWeekdays().getClosing();
+        String weekendOpening = hours.getWeekend().getOpening();
+        String weekendClosing = hours.getWeekend().getClosing();
+
+        return new StringResource(R.string.detail_hours, weekdaysOpening, weekdaysClosing, weekendOpening, weekendClosing);
+    }
+
     private List<StringResource> toPricesString(PlacePrice price) {
 
         List<StringResource> result = new ArrayList<>();
@@ -95,16 +104,6 @@ public class DetailViewModel extends ViewModel {
             return new StringResource(facebookUrl);
         }
         return new StringResource(R.string.detail_facebook_unknown);
-    }
-
-    private StringResource toHoursString(PlaceHours hours) {
-
-        String weekdaysOpening = hours.getWeekdays().getOpening();
-        String weekdaysClosing = hours.getWeekdays().getClosing();
-        String weekendOpening = hours.getWeekend().getOpening();
-        String weekendClosing = hours.getWeekend().getClosing();
-
-        return new StringResource(R.string.detail_hours, weekdaysOpening, weekdaysClosing, weekendOpening, weekendClosing);
     }
 
     @NonNull
