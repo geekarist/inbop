@@ -26,15 +26,12 @@ import me.cpele.inbop.detail.fragment.DetailFragment;
 
 public class ItineraryFragment
         extends DetailFragment
-        implements OnMapReadyCallback, ItineraryContract.View {
+        implements OnMapReadyCallback {
 
     @BindView(R.id.itinerary_tv_address)
     TextView mAddressTextViewddressTextView;
 
     private Place mPlace;
-    private ItineraryContract.Presenter mPresenter;
-    private MapFragment mMapFragment;
-    private FragmentManager mFragmentManager;
 
     public static ItineraryFragment newInstance(Context context, Place place) {
 
@@ -56,22 +53,18 @@ public class ItineraryFragment
         mAddressTextViewddressTextView.setText(mPlace.getPosition().getAddress());
 
         FragmentActivity activity = getActivity();
-        mFragmentManager = activity.getFragmentManager();
-        mMapFragment = (MapFragment) mFragmentManager.findFragmentById(R.id.itinerary_mf);
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
 
-        mPresenter.onCheckPosition(mPlace);
+        if (mPlace.getPosition() != null
+                && mPlace.getPosition().getLat() != null
+                && mPlace.getPosition().getLon() != null) {
+            mapFragment.getMapAsync(this);
+        } else {
+            fragmentManager.beginTransaction().hide(mapFragment).commit();
+        }
 
         return view;
-    }
-
-    @Override
-    public void onHideMap() {
-        mFragmentManager.beginTransaction().hide(mMapFragment).commit();
-    }
-
-    @Override
-    public void onGetMap() {
-        mMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -87,15 +80,5 @@ public class ItineraryFragment
         LatLng placePosition = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(placePosition));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
-    }
-
-    @Override
-    public void onBind(ItineraryContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void onUnbind() {
-        mPresenter = null;
     }
 }

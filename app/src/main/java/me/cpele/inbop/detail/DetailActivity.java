@@ -26,9 +26,7 @@ import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
-import me.cpele.inbop.detail.fragment.itinerary.ItineraryContract;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
-import me.cpele.inbop.detail.fragment.itinerary.ItineraryPresenter;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.list.PlacesRepository;
 
@@ -47,7 +45,6 @@ public class DetailActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     private ItineraryFragment mItineraryFragment;
-    private ItineraryContract.Presenter mItineraryPresenter;
 
     private UsefulInfoFragment mUsefulInfoFragment;
     private PlacesRepository mRepository;
@@ -76,13 +73,6 @@ public class DetailActivity extends AppCompatActivity {
         viewPager.setAdapter(detailPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        tearDownItinerary();
-        super.onDestroy();
     }
 
     private void restoreFragments(@Nullable Bundle savedInstanceState) {
@@ -122,10 +112,6 @@ public class DetailActivity extends AppCompatActivity {
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
 
         mItineraryFragment = findOrCreateItineraryFragment(place);
-        mItineraryPresenter = new ItineraryPresenter();
-
-        mItineraryFragment.onBind(mItineraryPresenter);
-        mItineraryPresenter.onBind(mItineraryFragment);
 
         detailPagerAdapter.add(mItineraryFragment);
     }
@@ -133,11 +119,6 @@ public class DetailActivity extends AppCompatActivity {
     private ItineraryFragment findOrCreateItineraryFragment(Place place) {
 
         return mItineraryFragment != null ? mItineraryFragment : ItineraryFragment.newInstance(this, place);
-    }
-
-    private void tearDownItinerary() {
-        mItineraryFragment.onUnbind();
-        mItineraryPresenter.onUnbind();
     }
 
     private void setupUsefulInfo(Place place, DetailPagerAdapter detailPagerAdapter) {
