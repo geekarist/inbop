@@ -14,6 +14,7 @@ import me.cpele.inbop.R;
 import me.cpele.inbop.TextualUtils;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
+import me.cpele.inbop.apiclient.model.PlacePosition;
 import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.list.PlacesRepository;
@@ -33,6 +34,7 @@ public class DetailViewModel extends ViewModel {
     private MediatorLiveData<String> mUrl = new MediatorLiveData<>();
     private MediatorLiveData<StringResource> mFacebook = new MediatorLiveData<>();
     private MediatorLiveData<String> mEmail = new MediatorLiveData<>();
+    private MediatorLiveData<PlacePosition> mPosition = new MediatorLiveData<>();
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
@@ -61,6 +63,13 @@ public class DetailViewModel extends ViewModel {
         mFacebook.addSource(mPlace, (@NonNull Place place) -> {
             if (place.getFacebook() != null) {
                 mFacebook.setValue(extractPageName(place.getFacebook()));
+            }
+        });
+
+        mPosition.addSource(mPlace, (@NonNull Place place) -> {
+            PlacePosition position = place.getPosition();
+            if (position != null && position.getLat() != null && position.getLon() != null) {
+                mPosition.setValue(position);
             }
         });
     }
@@ -146,6 +155,10 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<StringResource> getFacebookClickEvent() {
         return mFacebookClickEvent;
+    }
+
+    public LiveData<PlacePosition> getPosition() {
+        return mPosition;
     }
 
     public static class Factory implements ViewModelProvider.Factory {

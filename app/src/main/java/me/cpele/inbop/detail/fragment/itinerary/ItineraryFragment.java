@@ -1,10 +1,11 @@
 package me.cpele.inbop.detail.fragment.itinerary;
 
 import android.app.FragmentManager;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +23,23 @@ import butterknife.ButterKnife;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.PlacePosition;
+import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
+
+import static me.cpele.inbop.utils.Asserting.notNull;
 
 public class ItineraryFragment
         extends DetailFragment
         implements OnMapReadyCallback {
 
     @BindView(R.id.itinerary_tv_address)
-    TextView mAddressTextViewddressTextView;
+    TextView mAddressTextView;
+    @BindView(R.id.itinerary_tv_address_label)
+    TextView mAddressLabelTextView;
 
     private Place mPlace;
+    private MapFragment mMapFragment;
 
     public static ItineraryFragment newInstance(Context context, Place place) {
 
@@ -50,19 +58,20 @@ public class ItineraryFragment
         String placeId = getArguments().getString(ARG_PLACE);
         mPlace = CustomApp.getInstance().getPlacesRepository().findPlaceByIdSync(placeId);
 
-        mAddressTextViewddressTextView.setText(mPlace.getPosition().getAddress());
+        DetailViewModel viewModel = ViewModelProviders.of(getActivity()).get(DetailViewModel.class);
 
-        FragmentActivity activity = getActivity();
-        FragmentManager fragmentManager = activity.getFragmentManager();
-        MapFragment mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
+        viewModel.getPosition().observe(this, (@NonNull PlacePosition position) -> {
 
-        if (mPlace.getPosition() != null
-                && mPlace.getPosition().getLat() != null
-                && mPlace.getPosition().getLon() != null) {
-            mapFragment.getMapAsync(this);
-        } else {
-            fragmentManager.beginTransaction().hide(mapFragment).commit();
-        }
+            if (position.getAddress() != null) {
+                mAddressTextView.setText(position.getAddress());
+                mAddressLabelTextView.setVisibility(View.VISIBLE);
+                mAddressTextView.setVisibility(View.VISIBLE);
+            }
+
+            FragmentManager fragmentManager = getActivity().getFragmentManager();
+            mMapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
+            mMapFragment.getMapAsync(this);
+        });
 
         return view;
     }
@@ -74,11 +83,11 @@ public class ItineraryFragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         double lat = mPlace.getPosition().getLat();
         double lon = mPlace.getPosition().getLon();
         LatLng placePosition = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(placePosition));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
+        notNull(mMapFragment.getView()).setVisibility(View.VISIBLE);
     }
 }
