@@ -4,9 +4,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.apiclient.model.Place;
@@ -24,10 +26,13 @@ public class PlacesRepository {
     private MutableLiveData<ListResource> mData;
     @NonNull
     private PlacesDao mDao;
+    @NonNull
+    private final Executor mDiskExecutor;
 
-    public PlacesRepository(@NonNull PlacesService placesService, @NonNull PlacesDao dao) {
+    public PlacesRepository(@NonNull PlacesService placesService, @NonNull PlacesDao dao, @NonNull Executor diskExecutor) {
         mPlacesService = placesService;
         mDao = dao;
+        mDiskExecutor = diskExecutor;
         mData = new MutableLiveData<>();
         refresh();
     }
@@ -41,17 +46,17 @@ public class PlacesRepository {
             @Override
             public void onResponse(@NonNull Call<PlaceList> call, @NonNull Response<PlaceList> response) {
                 PlaceList body = response.body();
-                ListResource resource;
                 if (body == null) {
                     NullPointerException exception = new NullPointerException("Body should not be null");
-                    resource = ListResource.error(exception);
+                    mData.postValue(ListResource.error(exception));
                 } else {
                     List<Place> places = body.getPlaces();
-                    mDao.insert(places);
-                    initStars(places);
-                    resource = ListResource.success(places);
+                    mDiskExecutor.execute(() -> {
+                        mDao.insert(places);
+                        initStars(places);
+                        mData.postValue(ListResource.success(places));
+                    });
                 }
-                mData.postValue(resource);
             }
 
             @Override
@@ -62,6 +67,7 @@ public class PlacesRepository {
         });
     }
 
+    @WorkerThread
     private void initStars(List<Place> places) {
         for (Place place : places) {
             boolean starred = mDao.findPlaceByIdSync(place.getId()).isStarred();

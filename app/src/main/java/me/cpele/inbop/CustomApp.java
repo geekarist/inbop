@@ -9,6 +9,9 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.db.AppDatabase;
 import me.cpele.inbop.list.PlacesRepository;
@@ -44,11 +47,13 @@ public class CustomApp extends MultiDexApplication {
             StrictMode.enableDefaults();
         }
 
+        ExecutorService diskExecutor = Executors.newSingleThreadExecutor();
+
         AppDatabase database = Room
                 .databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
                 .allowMainThreadQueries()
                 .build();
-        mPlacesRepository = new PlacesRepository(placesService, database.getPlacesDao());
+        mPlacesRepository = new PlacesRepository(placesService, database.getPlacesDao(), diskExecutor);
     }
 
     @NonNull
