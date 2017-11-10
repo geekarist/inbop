@@ -36,6 +36,7 @@ public class DetailViewModel extends ViewModel {
     private MediatorLiveData<String> mEmail = new MediatorLiveData<>();
     private MediatorLiveData<PlacePosition> mPosition = new MediatorLiveData<>();
     private MediatorLiveData<String> mAddress = new MediatorLiveData<>();
+    private MediatorLiveData<String> mTransports = new MediatorLiveData<>();
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
@@ -76,6 +77,10 @@ public class DetailViewModel extends ViewModel {
 
         mAddress.addSource(mPosition, (@NonNull PlacePosition position) -> {
             if (position.getAddress() != null) mAddress.setValue(position.getAddress());
+        });
+
+        mTransports.addSource(mPosition, (@NonNull PlacePosition position) -> {
+            if (position.getTransport() != null) mTransports.setValue(position.getTransport());
         });
     }
 
@@ -168,6 +173,10 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<String> getAddress() {
         return mAddress;
+    }
+
+    public LiveData<String> getTransports() {
+        return mTransports;
     }
 
     public static class Factory implements ViewModelProvider.Factory {

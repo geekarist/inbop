@@ -17,7 +17,9 @@
             class="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
 
         <TextView
             android:id="@+id/itinerary_tv_address_label"
@@ -25,7 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/detail_address_label"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
 
         <TextView
             android:id="@+id/itinerary_tv_address"
@@ -33,7 +37,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:text="Place address"/>
+            tools:text="Place address"
+            tools:visibility="visible"
+            />
+
+        <TextView
+            android:id="@+id/itinerary_tv_transport_label"
+            style="@style/CustomTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_transport_label"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+        <TextView
+            android:id="@+id/itinerary_tv_transport"
+            style="@style/CustomBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:text="Métro 8 Alfortville ou RER A Maisons-Alfort"
+            tools:visibility="visible"
+            />
 
     </LinearLayout>
 

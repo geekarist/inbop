@@ -22,4 +22,5 @@
     <string name="detail_unstar">Retirer des favoris</string>
     <string name="detail_star_indication">Ajout du favori : %1$s</string>
     <string name="detail_unstar_indication">Retrait du favori : %1$s</string>
+    <string name="detail_transport_label">Transports en commun</string>
 </resources>

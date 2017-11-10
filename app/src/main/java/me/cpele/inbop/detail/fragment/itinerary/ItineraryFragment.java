@@ -32,6 +32,10 @@ public class ItineraryFragment extends DetailFragment {
     TextView mAddressTextView;
     @BindView(R.id.itinerary_tv_address_label)
     TextView mAddressLabelTextView;
+    @BindView(R.id.itinerary_tv_transport)
+    TextView mTransportsTextView;
+    @BindView(R.id.itinerary_tv_transport_label)
+    TextView mTransportsLabelTextView;
 
     private MapFragment mMapFragment;
 
@@ -70,6 +74,12 @@ public class ItineraryFragment extends DetailFragment {
             mAddressTextView.setText(address);
             mAddressLabelTextView.setVisibility(View.VISIBLE);
             mAddressTextView.setVisibility(View.VISIBLE);
+        });
+
+        viewModel.getTransports().observe(this, (@NonNull String value) -> {
+            mTransportsTextView.setText(value);
+            mTransportsLabelTextView.setVisibility(View.VISIBLE);
+            mTransportsTextView.setVisibility(View.VISIBLE);
         });
 
         return view;

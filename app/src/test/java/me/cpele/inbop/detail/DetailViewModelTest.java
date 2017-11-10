@@ -42,6 +42,7 @@ public class DetailViewModelTest {
     private Place mPlace;
     private String mActualAddress;
     private PlacePosition mActualPosition;
+    private String mActualTransport;
 
     @Before
     public void setUp() throws Exception {
@@ -60,6 +61,7 @@ public class DetailViewModelTest {
         detailViewModel.getFacebook().observeForever(value -> mActualFacebook = value);
         detailViewModel.getAddress().observeForever(value -> mActualAddress = value);
         detailViewModel.getPosition().observeForever(value -> mActualPosition = value);
+        detailViewModel.getTransports().observeForever(value -> mActualTransport = value);
     }
 
     @Test
@@ -145,6 +147,16 @@ public class DetailViewModelTest {
     }
 
     @Test
+    public void should_set_place_transports() {
+
+        mPlace.setPosition(new PlacePosition().setLat(0d).setLon(0d)).setTransport("transport");
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualTransport, equalTo("transport"));
+    }
+
+    @Test
     public void should_set_place_position() {
 
         mPlace.setPosition(new PlacePosition().setLat(2d).setLon(1d));
@@ -153,5 +165,6 @@ public class DetailViewModelTest {
 
         assertThat(mActualPosition, equalTo(new PlacePosition().setLon(1d).setLat(2d)));
         assertNull(mActualAddress);
+        assertNull(mActualTransport);
     }
 }
