@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 
 import java.util.UUID;
 
-@SuppressWarnings({"SameParameterValue", "ConstantConditions", "SimplifiableIfStatement"})
+@SuppressWarnings({"SameParameterValue", "ConstantConditions", "SimplifiableIfStatement", "UnusedReturnValue"})
 @Parcel
 @Entity
 public class Place {
@@ -98,8 +98,9 @@ public class Place {
         return position;
     }
 
-    public void setPosition(PlacePosition position) {
+    public Place setPosition(PlacePosition position) {
         this.position = position;
+        return this;
     }
 
     public PlaceHours getHours() {

@@ -14,11 +14,13 @@ import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlaceHoursByDays;
+import me.cpele.inbop.apiclient.model.PlacePosition;
 import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.list.PlacesRepository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -38,6 +40,8 @@ public class DetailViewModelTest {
     private String mActualDesc;
     private StringResource mActualFacebook;
     private Place mPlace;
+    private String mActualAddress;
+    private PlacePosition mActualPosition;
 
     @Before
     public void setUp() throws Exception {
@@ -54,6 +58,8 @@ public class DetailViewModelTest {
         detailViewModel.getPrice().observeForever(stringResources -> mActualPrice = stringResources);
         detailViewModel.getUrl().observeForever(url -> mActualUrl = url);
         detailViewModel.getFacebook().observeForever(value -> mActualFacebook = value);
+        detailViewModel.getAddress().observeForever(value -> mActualAddress = value);
+        detailViewModel.getPosition().observeForever(value -> mActualPosition = value);
     }
 
     @Test
@@ -126,5 +132,26 @@ public class DetailViewModelTest {
         mPlaceData.setValue(mPlace);
 
         assertThat(mActualUrl, equalTo("url"));
+    }
+
+    @Test
+    public void should_set_place_address() {
+
+        mPlace.setPosition(new PlacePosition().setLat(0d).setLon(0d)).setAddress("address");
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualAddress, equalTo("address"));
+    }
+
+    @Test
+    public void should_set_place_position() {
+
+        mPlace.setPosition(new PlacePosition().setLat(2d).setLon(1d));
+
+        mPlaceData.setValue(mPlace);
+
+        assertThat(mActualPosition, equalTo(new PlacePosition().setLon(1d).setLat(2d)));
+        assertNull(mActualAddress);
     }
 }
