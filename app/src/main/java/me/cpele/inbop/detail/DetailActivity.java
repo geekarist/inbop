@@ -1,5 +1,6 @@
 package me.cpele.inbop.detail;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -144,8 +145,15 @@ public class DetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_detail_options, menu);
         MenuItem starItem = menu.findItem(R.id.detail_star);
-        updateStarMenuItem(starItem);
+        createOrGetViewModel().isStarred().observe(this,
+                (@NonNull Boolean starred) -> updateStarMenuItem(starItem, starred));
         return true;
+    }
+
+    private DetailViewModel createOrGetViewModel() {
+        String placeId = getIntent().getStringExtra(EXTRA_PLACE);
+        DetailViewModel.Factory factory = new DetailViewModel.Factory(mRepository, placeId);
+        return ViewModelProviders.of(this, factory).get(DetailViewModel.class);
     }
 
     public static Intent newIntent(Context context, Place place) {
@@ -168,7 +176,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 mRepository.toggleStar(getPlace().getId());
                 indicateStarringChange();
-                updateStarMenuItem(item);
+                updateStarMenuItem(item, this.getPlace().isStarred());
 
                 return true;
         }
@@ -189,12 +197,12 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, indication, Toast.LENGTH_SHORT).show();
     }
 
-    private void updateStarMenuItem(MenuItem item) {
+    private static void updateStarMenuItem(MenuItem item, boolean starred) {
 
         int starLabel;
         int starIcon;
 
-        if (getPlace().isStarred()) {
+        if (starred) {
             starLabel = R.string.detail_unstar;
             starIcon = R.drawable.ic_favorite_white_24dp;
         } else {

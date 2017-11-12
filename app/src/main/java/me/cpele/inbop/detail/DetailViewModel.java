@@ -37,6 +37,7 @@ public class DetailViewModel extends ViewModel {
     private MediatorLiveData<PlacePosition> mPosition = new MediatorLiveData<>();
     private MediatorLiveData<String> mAddress = new MediatorLiveData<>();
     private MediatorLiveData<String> mTransports = new MediatorLiveData<>();
+    private MediatorLiveData<Boolean> mStarred = new MediatorLiveData<>();
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
@@ -82,6 +83,8 @@ public class DetailViewModel extends ViewModel {
         mTransports.addSource(mPosition, (@NonNull PlacePosition position) -> {
             if (position.getTransport() != null) mTransports.setValue(position.getTransport());
         });
+
+        mStarred.addSource(mPlace, (@NonNull Place place) -> mStarred.setValue(place.isStarred()));
     }
 
     private StringResource toHoursString(PlaceHours hours) {
@@ -177,6 +180,10 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<String> getTransports() {
         return mTransports;
+    }
+
+    public LiveData<Boolean> isStarred() {
+        return mStarred;
     }
 
     public static class Factory implements ViewModelProvider.Factory {
