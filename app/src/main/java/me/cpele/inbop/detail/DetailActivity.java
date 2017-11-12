@@ -175,8 +175,7 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.detail_star:
 
                 mRepository.toggleStar(getPlace().getId());
-                indicateStarringChange();
-                updateStarMenuItem(item, this.getPlace().isStarred());
+                indicateStarringChange(this, getPlace().isStarred(), this.getPlace().getName());
 
                 return true;
         }
@@ -184,17 +183,15 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void indicateStarringChange() {
-
-        Place place = getPlace();
+    private static void indicateStarringChange(Context context, boolean starred, String name) {
 
         int indicationId;
-        if (place.isStarred()) indicationId = R.string.detail_star_indication;
+        if (starred) indicationId = R.string.detail_star_indication;
         else indicationId = R.string.detail_unstar_indication;
 
-        String indication = getString(indicationId, getPlace().getName());
+        String indication = context.getString(indicationId, name);
 
-        Toast.makeText(this, indication, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, indication, Toast.LENGTH_SHORT).show();
     }
 
     private static void updateStarMenuItem(MenuItem item, boolean starred) {
