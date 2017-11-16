@@ -19,6 +19,9 @@ import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.list.PlacesRepository;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -43,6 +46,8 @@ public class DetailViewModelTest {
     private String mActualAddress;
     private PlacePosition mActualPosition;
     private String mActualTransport;
+    private StringResource mActualStarIndication;
+    private Boolean mActualStarred;
 
     @Before
     public void setUp() throws Exception {
@@ -62,6 +67,8 @@ public class DetailViewModelTest {
         detailViewModel.getAddress().observeForever(value -> mActualAddress = value);
         detailViewModel.getPosition().observeForever(value -> mActualPosition = value);
         detailViewModel.getTransports().observeForever(value -> mActualTransport = value);
+        detailViewModel.getStarIndicationEvent().observeForever(value -> mActualStarIndication = value);
+        detailViewModel.isStarred().observeForever(value -> mActualStarred = value);
     }
 
     @Test
@@ -166,5 +173,47 @@ public class DetailViewModelTest {
         assertThat(mActualPosition, equalTo(new PlacePosition().setLon(1d).setLat(2d)));
         assertNull(mActualAddress);
         assertNull(mActualTransport);
+    }
+
+    @Test
+    public void should_not_display_star_indication_on_first_display() {
+
+        mPlace.setName("just-starred-place");
+        mPlace.setStarred(true);
+
+        mPlaceData.setValue(mPlace);
+
+        assertTrue(mActualStarred);
+        assertNull(mActualStarIndication);
+    }
+
+    @Test
+    public void should_display_star_indication_on_next_display() {
+
+        mPlace.setName("just-starred-place");
+        mPlace.setStarred(true);
+        mPlaceData.setValue(mPlace);
+
+        mPlaceData.setValue(mPlace);
+
+        assertTrue(mActualStarred);
+        assertEquals(
+                new StringResource(R.string.detail_star_indication, "just-starred-place"),
+                mActualStarIndication);
+    }
+
+    @Test
+    public void should_display_unstar_indication_on_next_display() {
+
+        mPlace.setName("just-unstarred-place");
+        mPlace.setStarred(false);
+        mPlaceData.setValue(mPlace);
+
+        mPlaceData.setValue(mPlace);
+
+        assertFalse(mActualStarred);
+        assertEquals(
+                new StringResource(R.string.detail_unstar_indication, "just-unstarred-place"),
+                mActualStarIndication);
     }
 }

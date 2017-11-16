@@ -25,6 +25,8 @@ public class DetailViewModel extends ViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
 
+    private boolean mInitialView;
+
     @NonNull
     private LiveData<Place> mPlace;
     private MediatorLiveData<String> mImgUrl = new MediatorLiveData<>();
@@ -38,6 +40,7 @@ public class DetailViewModel extends ViewModel {
     private MediatorLiveData<String> mAddress = new MediatorLiveData<>();
     private MediatorLiveData<String> mTransports = new MediatorLiveData<>();
     private MediatorLiveData<Boolean> mStarred = new MediatorLiveData<>();
+    private SingleLiveEvent<StringResource> mStarIndicationEvent = new SingleLiveEvent<>();
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
@@ -84,7 +87,24 @@ public class DetailViewModel extends ViewModel {
             if (position.getTransport() != null) mTransports.setValue(position.getTransport());
         });
 
-        mStarred.addSource(mPlace, (@NonNull Place place) -> mStarred.setValue(place.isStarred()));
+        mInitialView = true;
+
+        mStarred.addSource(mPlace, (@NonNull Place place) -> {
+
+            mStarred.setValue(place.isStarred());
+
+            if (mInitialView) {
+                mInitialView = false;
+                return;
+            }
+
+            int indicationId;
+            indicationId = place.isStarred() ?
+                    R.string.detail_star_indication : R.string.detail_unstar_indication;
+            String name = place.getName();
+            StringResource starIndication = new StringResource(indicationId, name);
+            mStarIndicationEvent.setValue(starIndication);
+        });
     }
 
     private StringResource toHoursString(PlaceHours hours) {
@@ -184,6 +204,10 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<Boolean> isStarred() {
         return mStarred;
+    }
+
+    public LiveData<StringResource> getStarIndicationEvent() {
+        return mStarIndicationEvent;
     }
 
     public static class Factory implements ViewModelProvider.Factory {

@@ -28,6 +28,7 @@ import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
+import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.list.PlacesRepository;
 
@@ -145,8 +146,17 @@ public class DetailActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_detail_options, menu);
         MenuItem starItem = menu.findItem(R.id.detail_star);
+
         createOrGetViewModel().isStarred().observe(this,
                 (@NonNull Boolean starred) -> updateStarMenuItem(starItem, starred));
+
+        createOrGetViewModel()
+                .getStarIndicationEvent()
+                .observe(this, (@NonNull StringResource starIndication) -> {
+                    DetailActivity context = DetailActivity.this;
+                    String strIndication = starIndication.asString(context);
+                    Toast.makeText(context, strIndication, Toast.LENGTH_SHORT).show();
+                });
         return true;
     }
 
@@ -165,33 +175,15 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
-
             case R.id.detail_star:
-
                 mRepository.toggleStar(getPlace().getId());
-                indicateStarringChange(this, getPlace().isStarred(), this.getPlace().getName());
-
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    private static void indicateStarringChange(Context context, boolean starred, String name) {
-
-        int indicationId;
-        if (starred) indicationId = R.string.detail_star_indication;
-        else indicationId = R.string.detail_unstar_indication;
-
-        String indication = context.getString(indicationId, name);
-
-        Toast.makeText(context, indication, Toast.LENGTH_SHORT).show();
     }
 
     private static void updateStarMenuItem(MenuItem item, boolean starred) {
