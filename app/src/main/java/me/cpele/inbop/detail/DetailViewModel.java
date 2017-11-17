@@ -25,6 +25,8 @@ public class DetailViewModel extends ViewModel {
 
     private static final String TAG = DetailViewModel.class.getSimpleName();
 
+    private PlacesRepository mRepository;
+
     private boolean mInitialView;
 
     @NonNull
@@ -44,6 +46,8 @@ public class DetailViewModel extends ViewModel {
     private SingleLiveEvent<StringResource> mFacebookClickEvent = new SingleLiveEvent<>();
 
     public DetailViewModel(PlacesRepository repository, String placeId) {
+        mRepository = repository;
+
         mPlace = repository.findPlaceById(placeId);
 
         mImgUrl.addSource(mPlace, (@NonNull Place place) -> {
@@ -208,6 +212,10 @@ public class DetailViewModel extends ViewModel {
 
     public LiveData<StringResource> getStarIndicationEvent() {
         return mStarIndicationEvent;
+    }
+
+    public void toggleStar(String id) {
+        mRepository.toggleStar(id);
     }
 
     public static class Factory implements ViewModelProvider.Factory {

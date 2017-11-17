@@ -180,7 +180,7 @@ public class DetailActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.detail_star:
-                mRepository.toggleStar(getPlace().getId());
+                createOrGetViewModel().toggleStar(getPlace().getId());
                 return true;
         }
         return super.onOptionsItemSelected(item);
