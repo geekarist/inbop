@@ -32,8 +32,6 @@ import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
 import me.cpele.inbop.list.PlacesRepository;
 
-import static me.cpele.inbop.utils.Asserting.notNull;
-
 public class DetailActivity extends AppCompatActivity {
 
     private static final String EXTRA_PLACE = "EXTRA_PLACE";
@@ -49,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
     private ItineraryFragment mItineraryFragment;
 
     private UsefulInfoFragment mUsefulInfoFragment;
-    private PlacesRepository mRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,21 +57,19 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
 
-        mRepository = CustomApp.getInstance().getPlacesRepository();
-
-        Place place = getPlace();
-
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(place.getName());
 
         DetailPagerAdapter detailPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager());
-        setupUsefulInfo(place, detailPagerAdapter);
-        setupItinerary(place, detailPagerAdapter);
         viewPager.setAdapter(detailPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
+
+        createOrGetViewModel().getPlace().observe(this, (@NonNull Place place) -> {
+            getSupportActionBar().setTitle(place.getName());
+            setupUsefulInfo(place, detailPagerAdapter);
+            setupItinerary(place, detailPagerAdapter);
+        });
     }
 
     private void restoreFragments(@Nullable Bundle savedInstanceState) {
@@ -112,14 +107,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupItinerary(Place place, DetailPagerAdapter detailPagerAdapter) {
-
         mItineraryFragment = findOrCreateItineraryFragment(place);
-
         detailPagerAdapter.add(mItineraryFragment);
+        detailPagerAdapter.notifyDataSetChanged();
     }
 
     private ItineraryFragment findOrCreateItineraryFragment(Place place) {
-
         return mItineraryFragment != null ? mItineraryFragment : ItineraryFragment.newInstance(this, place);
     }
 
@@ -127,18 +120,12 @@ public class DetailActivity extends AppCompatActivity {
 
         mUsefulInfoFragment = findOrCreateUsefulInfoFragment(place);
         detailPagerAdapter.add(mUsefulInfoFragment);
+        detailPagerAdapter.notifyDataSetChanged();
     }
 
     private UsefulInfoFragment findOrCreateUsefulInfoFragment(Place place) {
 
         return mUsefulInfoFragment != null ? mUsefulInfoFragment : UsefulInfoFragment.newInstance(this, place);
-    }
-
-    @NonNull
-    private Place getPlace() {
-        String placeId = getIntent().getStringExtra(EXTRA_PLACE);
-        Place placeById = notNull(mRepository.findPlaceByIdSync(placeId));
-        return notNull(placeById);
     }
 
     @Override
@@ -162,7 +149,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private DetailViewModel createOrGetViewModel() {
         String placeId = getIntent().getStringExtra(EXTRA_PLACE);
-        DetailViewModel.Factory factory = new DetailViewModel.Factory(mRepository, placeId);
+        PlacesRepository placesRepository = CustomApp.getInstance().getPlacesRepository();
+        DetailViewModel.Factory factory = new DetailViewModel.Factory(placesRepository, placeId);
         return ViewModelProviders.of(this, factory).get(DetailViewModel.class);
     }
 
@@ -180,7 +168,7 @@ public class DetailActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.detail_star:
-                createOrGetViewModel().toggleStar(getPlace().getId());
+                createOrGetViewModel().toggleStar(getIntent().getStringExtra(EXTRA_PLACE));
                 return true;
         }
         return super.onOptionsItemSelected(item);
