@@ -30,7 +30,7 @@ import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.fragment.itinerary.ItineraryFragment;
 import me.cpele.inbop.detail.fragment.useful_info.StringResource;
 import me.cpele.inbop.detail.fragment.useful_info.UsefulInfoFragment;
-import me.cpele.inbop.list.PlacesRepository;
+import me.cpele.inbop.repository.PlacesRepository;
 
 public class DetailActivity extends AppCompatActivity {
 

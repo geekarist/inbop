@@ -27,7 +27,7 @@ import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
-import me.cpele.inbop.list.PlacesRepository;
+import me.cpele.inbop.repository.PlacesRepository;
 
 public class UsefulInfoFragment extends DetailFragment {
 

@@ -17,7 +17,7 @@ import me.cpele.inbop.apiclient.model.PlaceHours;
 import me.cpele.inbop.apiclient.model.PlacePosition;
 import me.cpele.inbop.apiclient.model.PlacePrice;
 import me.cpele.inbop.detail.fragment.useful_info.StringResource;
-import me.cpele.inbop.list.PlacesRepository;
+import me.cpele.inbop.repository.PlacesRepository;
 
 import static me.cpele.inbop.utils.Asserting.notNull;
 

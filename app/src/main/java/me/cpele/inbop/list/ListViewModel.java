@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
+import me.cpele.inbop.repository.PlacesRepository;
+
 public class ListViewModel extends ViewModel {
 
     private final PlacesRepository mModel;

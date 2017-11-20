@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import me.cpele.inbop.repository.PlacesRepository;
+
 class ListViewModelFactory implements ViewModelProvider.Factory {
 
     private PlacesRepository mModel;

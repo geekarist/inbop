@@ -1,4 +1,4 @@
-package me.cpele.inbop.list;
+package me.cpele.inbop.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -14,6 +14,7 @@ import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.apiclient.model.Place;
 import me.cpele.inbop.apiclient.model.PlaceList;
 import me.cpele.inbop.db.PlacesDao;
+import me.cpele.inbop.list.ListResource;
 import me.cpele.inbop.utils.Asserting;
 import retrofit2.Call;
 import retrofit2.Response;

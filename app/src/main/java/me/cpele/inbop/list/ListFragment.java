@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
+import me.cpele.inbop.repository.PlacesRepository;
 import me.cpele.inbop.utils.Asserting;
 
 public class ListFragment extends Fragment implements ListAdapter.Listener {

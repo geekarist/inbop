@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 import me.cpele.inbop.apiclient.PlacesService;
 import me.cpele.inbop.db.AppDatabase;
-import me.cpele.inbop.list.PlacesRepository;
+import me.cpele.inbop.repository.PlacesRepository;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
