@@ -1,43 +1,43 @@
 package me.cpele.inbop.detail.fragment.itinerary;
 
 import android.app.FragmentManager;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.apiclient.model.PlacePosition;
+import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
 
-public class ItineraryFragment
-        extends DetailFragment
-        implements OnMapReadyCallback, ItineraryContract.View {
+import static me.cpele.inbop.utils.Asserting.notNull;
 
-    private static final String ARG_PLACE = "ARG_PLACE";
+public class ItineraryFragment extends DetailFragment {
 
     @BindView(R.id.itinerary_tv_address)
-    TextView mAddressTextViewddressTextView;
+    TextView mAddressTextView;
+    @BindView(R.id.itinerary_tv_address_label)
+    TextView mAddressLabelTextView;
+    @BindView(R.id.itinerary_tv_transport)
+    TextView mTransportsTextView;
+    @BindView(R.id.itinerary_tv_transport_label)
+    TextView mTransportsLabelTextView;
 
-    private Place mPlace;
-    private ItineraryContract.Presenter mPresenter;
     private MapFragment mMapFragment;
-    private FragmentManager mFragmentManager;
 
     public static ItineraryFragment newInstance(Context context, Place place) {
 
@@ -53,51 +53,40 @@ public class ItineraryFragment
         View view = inflater.inflate(R.layout.fragment_detail_itinerary, container, false);
         ButterKnife.bind(this, view);
 
-        mPlace = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        DetailViewModel viewModel = ViewModelProviders.of(getActivity()).get(DetailViewModel.class);
 
-        mAddressTextViewddressTextView.setText(mPlace.getPosition().getAddress());
+        viewModel.getPosition().observe(this, (@NonNull PlacePosition position) -> {
 
-        FragmentActivity activity = getActivity();
-        mFragmentManager = activity.getFragmentManager();
-        mMapFragment = (MapFragment) mFragmentManager.findFragmentById(R.id.itinerary_mf);
+            FragmentManager fragmentManager = getActivity().getFragmentManager();
+            mMapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.itinerary_mf);
 
-        mPresenter.onCheckPosition(mPlace);
+            mMapFragment.getMapAsync(googleMap -> {
+                double lat = position.getLat();
+                double lon = position.getLon();
+                LatLng placePosition = new LatLng(lat, lon);
+                googleMap.addMarker(new MarkerOptions().position(placePosition));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
+                notNull(mMapFragment.getView()).setVisibility(View.VISIBLE);
+            });
+        });
+
+        viewModel.getAddress().observe(this, (@NonNull String address) -> {
+            mAddressTextView.setText(address);
+            mAddressLabelTextView.setVisibility(View.VISIBLE);
+            mAddressTextView.setVisibility(View.VISIBLE);
+        });
+
+        viewModel.getTransports().observe(this, (@NonNull String value) -> {
+            mTransportsTextView.setText(value);
+            mTransportsLabelTextView.setVisibility(View.VISIBLE);
+            mTransportsTextView.setVisibility(View.VISIBLE);
+        });
 
         return view;
     }
 
     @Override
-    public void onHideMap() {
-        mFragmentManager.beginTransaction().hide(mMapFragment).commit();
-    }
-
-    @Override
-    public void onGetMap() {
-        mMapFragment.getMapAsync(this);
-    }
-
-    @Override
     public String getTitle() {
         return getContext().getString(R.string.detail_title_itinerary);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        double lat = mPlace.getPosition().getLat();
-        double lon = mPlace.getPosition().getLon();
-        LatLng placePosition = new LatLng(lat, lon);
-        googleMap.addMarker(new MarkerOptions().position(placePosition));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(placePosition, 15));
-    }
-
-    @Override
-    public void onBind(ItineraryContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void onUnbind() {
-        mPresenter = null;
     }
 }

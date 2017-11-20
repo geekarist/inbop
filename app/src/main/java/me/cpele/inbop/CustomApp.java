@@ -1,34 +1,38 @@
 package me.cpele.inbop;
 
+import android.arch.persistence.room.Room;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import me.cpele.inbop.apiclient.PlacesService;
-import me.cpele.inbop.detail.AppPreferences;
+import me.cpele.inbop.db.AppDatabase;
+import me.cpele.inbop.repository.PlacesRepository;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomApp extends MultiDexApplication {
 
-    private static CustomApp instance;
+    private static CustomApp sInstance;
 
-    private PlacesService placesService;
-    private AppPreferences preferences;
-    private Gson gson;
+    private PlacesRepository mPlacesRepository;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        if (instance == null) {
-            instance = this;
+        if (sInstance == null) {
+            sInstance = this;
         }
 
-        gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
                 .create();
 
@@ -37,24 +41,28 @@ public class CustomApp extends MultiDexApplication {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        placesService = retrofit.create(PlacesService.class);
+        PlacesService placesService = retrofit.create(PlacesService.class);
 
         if (BuildConfig.DEBUG) {
             StrictMode.enableDefaults();
         }
 
-        preferences = new AppPreferences(this, gson);
+        ExecutorService diskExecutor = Executors.newSingleThreadExecutor();
+
+        AppDatabase database = Room
+                .databaseBuilder(getApplicationContext(), AppDatabase.class, "AppDatabase")
+                .allowMainThreadQueries()
+                .build();
+        mPlacesRepository = new PlacesRepository(placesService, database.getPlacesDao(), diskExecutor);
     }
 
+    @NonNull
     public static CustomApp getInstance() {
-        return instance;
+        return sInstance;
     }
 
-    public PlacesService getPlacesService() {
-        return placesService;
-    }
-
-    public AppPreferences getPreferences() {
-        return preferences;
+    @NonNull
+    public PlacesRepository getPlacesRepository() {
+        return mPlacesRepository;
     }
 }

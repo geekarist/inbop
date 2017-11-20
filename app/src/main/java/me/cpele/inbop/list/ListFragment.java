@@ -1,43 +1,45 @@
 package me.cpele.inbop.list;
 
-import android.content.res.Configuration;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
-import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.repository.PlacesRepository;
+import me.cpele.inbop.utils.Asserting;
 
-public class ListFragment extends Fragment implements ListContract.View {
+public class ListFragment extends Fragment implements ListAdapter.Listener {
 
     private static final String TAG = ListActivity.class.getSimpleName();
 
     @BindView(R.id.list_rv)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R.id.list_pb_loading)
-    View loadingLayout;
+    View mLoadingLayout;
     @BindView(R.id.list_ll_error_loading)
-    View errorLoadingLayout;
+    View mErrorLoadingLayout;
+    @BindView(R.id.list_sw)
+    SwipeRefreshLayout mSwipeRefresh;
 
-    @Nullable
-    private ListContract.Presenter mPresenter;
-    @NonNull
-    private ListAdapter mAdapter = new ListAdapter();
-    private LinearLayoutManager mLayoutManager;
+    private ListAdapter mAdapter;
+    private PlacesRepository mRepository;
+
+    @OnClick(R.id.list_bt_reload)
+    public void onClickReload() {
+        mRepository.refresh();
+    }
 
     @Nullable
     @Override
@@ -56,77 +58,49 @@ public class ListFragment extends Fragment implements ListContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new ColumnSpacingDecoration());
+        mAdapter = new ListAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new ColumnSpacingDecoration());
 
-        setupOrientation();
+        mRepository = CustomApp.getInstance().getPlacesRepository();
 
-        recyclerView.setLayoutManager(mLayoutManager);
-    }
+        mSwipeRefresh.setOnRefreshListener(() -> mRepository.refresh());
 
-    @Override
-    public void attach(ListContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
+        ListViewModelFactory factory = new ListViewModelFactory(mRepository);
+        ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
 
-    @Override
-    public void detach() {
-        mPresenter = null;
+        viewModel.getData().observe(this, resource -> {
+
+            resource = Asserting.notNull(resource);
+
+            mRecyclerView.setVisibility(resource.status.placesVisibility);
+            mLoadingLayout.setVisibility(resource.status.loadingVisibility);
+            mErrorLoadingLayout.setVisibility(resource.status.errorVisibility);
+
+            if (resource.places != null) {
+                mAdapter.refresh(resource.places);
+            }
+
+            if (resource.exception != null) {
+                Log.w(TAG, "Error loading places", resource.exception);
+            }
+
+            mSwipeRefresh.setRefreshing(false);
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        reload();
-    }
-
-    @OnClick(R.id.list_bt_reload)
-    public void onClickReload() {
-        reload();
+        mRecyclerView.setLayoutManager(LayoutManagerFactory.create(getContext()));
     }
 
     @Override
-    public void onPlacesLoaded(List<Place> places) {
-        mAdapter.clear();
-        mAdapter.addAll(places);
-        loadingLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        errorLoadingLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onPlacesLoadingFail(Throwable t) {
-        Log.w(TAG, "Error loading places", t);
-        loadingLayout.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.GONE);
-        errorLoadingLayout.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onSetupForPortrait() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-    }
-
-    @Override
-    public void onSetupForLandscape() {
-        mLayoutManager = new GridLayoutManager(getContext(), 2);
-    }
-
-    private void setupOrientation() {
-
-        int orientation = getResources().getConfiguration().orientation;
-        boolean landscape = orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (mPresenter != null) mPresenter.onCheckOrientation(landscape);
-    }
-
-    private void reload() {
-
-        loadingLayout.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-        errorLoadingLayout.setVisibility(View.INVISIBLE);
-
-        if (mPresenter != null) mPresenter.onLoadPlaces();
+    public void toggleStar(String id) {
+        ListViewModelFactory factory = new ListViewModelFactory(mRepository);
+        ListViewModel viewModel = ViewModelProviders.of(this, factory).get(ListViewModel.class);
+        viewModel.toggleStar(id);
     }
 
     private static class ColumnSpacingDecoration extends RecyclerView.ItemDecoration {

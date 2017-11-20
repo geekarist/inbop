@@ -1,12 +1,9 @@
 package me.cpele.inbop.apiclient.model;
 
-import org.parceler.Parcel;
-
-@Parcel
 public class PlaceHoursByDays {
 
-    String opening;
-    String closing;
+    public String opening;
+    public String closing;
 
     public PlaceHoursByDays() {
     }

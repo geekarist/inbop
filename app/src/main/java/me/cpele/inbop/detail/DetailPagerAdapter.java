@@ -28,7 +28,7 @@ class DetailPagerAdapter extends FragmentPagerAdapter {
     }
 
     void add(DetailFragment fragment) {
-        fragmentList.add(fragment);
+        if (!fragmentList.contains(fragment)) fragmentList.add(fragment);
     }
 
     @Override

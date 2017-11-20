@@ -5,13 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list_rv"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/list_sw"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="3dp"
-        android:visibility="invisible" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                android:id="@+id/list_rv"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:clipToPadding="false"
+                                                android:padding="3dp"
+                                                android:visibility="visible"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/list_ll_error_loading"
@@ -48,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="visible"
-        tools:targetApi="lollipop" />
+        tools:targetApi="lollipop"
+        tools:visibility="gone"/>
 
 </FrameLayout>

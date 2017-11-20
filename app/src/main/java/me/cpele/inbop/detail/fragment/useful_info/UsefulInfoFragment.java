@@ -1,9 +1,11 @@
 package me.cpele.inbop.detail.fragment.useful_info;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +17,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.parceler.Parcels;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.cpele.inbop.CustomApp;
 import me.cpele.inbop.R;
 import me.cpele.inbop.apiclient.model.Place;
+import me.cpele.inbop.detail.DetailViewModel;
 import me.cpele.inbop.detail.fragment.DetailFragment;
+import me.cpele.inbop.repository.PlacesRepository;
 
-public class UsefulInfoFragment extends DetailFragment implements UsefulInfoContract.View {
+public class UsefulInfoFragment extends DetailFragment {
 
     private static final String ARG_PLACE = "ARG_PLACE";
     private String TAG = getClass().getSimpleName();
@@ -43,9 +48,7 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     Button facebookButton;
     @BindView(R.id.useful_tv_email)
     TextView emailTextView;
-
-    private Place place;
-    private UsefulInfoContract.Presenter mPresenter;
+    private DetailViewModel mDetailViewModel;
 
     public static UsefulInfoFragment newInstance(Context context, Place place) {
 
@@ -55,101 +58,79 @@ public class UsefulInfoFragment extends DetailFragment implements UsefulInfoCont
     }
 
     @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_detail_useful_info, container, false);
         ButterKnife.bind(this, view);
 
-        place = Parcels.unwrap(getArguments().getParcelable(ARG_PLACE));
+        PlacesRepository repository = CustomApp.getInstance().getPlacesRepository();
+        String placeId = getArguments().getString(ARG_PLACE);
+        DetailViewModel.Factory factory = new DetailViewModel.Factory(repository, placeId);
 
-        mPresenter.loadPlace(place);
+        mDetailViewModel = ViewModelProviders
+                .of(getActivity(), factory)
+                .get(DetailViewModel.class);
+
+        mDetailViewModel.getImgUrl().observe(getActivity(), url -> {
+            Glide.with(this).load(url).centerCrop().into(imageView);
+            imageView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getHours().observe(getActivity(), (@NonNull StringResource stringRes) -> {
+            hoursTextView.setText(stringRes.asString(getContext()));
+            hoursTextView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getPrice().observe(getActivity(), (@NonNull List<StringResource> stringResourceList) -> {
+            String joinedPrices = StringResource.join(stringResourceList, getContext());
+            pricesTextView.setText(joinedPrices);
+            pricesTextView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getDescription().observe(getActivity(), (String strDesc) -> {
+            specificityTextView.setText(strDesc);
+            specificityTextView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getUrl().observe(getActivity(), url -> {
+            urlTextView.setText(url);
+            urlTextView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getFacebook().observe(getActivity(), (@NonNull StringResource stringResource) -> {
+            facebookButton.setText(stringResource.asString(getContext()));
+            facebookButton.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getEmail().observe(getActivity(), email -> {
+            emailTextView.setText(email);
+            emailTextView.setVisibility(View.VISIBLE);
+        });
+
+        mDetailViewModel.getFacebookClickEvent().observe(getActivity(),
+                (@NonNull StringResource stringResource) -> {
+                    String url = getString(
+                            R.string.detail_facebook_url,
+                            stringResource.asString(getContext()));
+                    startFacebookForUrl(url);
+                });
 
         return view;
     }
 
     @OnClick(R.id.useful_bt_facebook)
     void onClickFacebook() {
-        Log.i(TAG, "Clicked on facebook: " + place);
-        mPresenter.openFacebookForPlace(place);
+        mDetailViewModel.triggerFacebookClick();
     }
 
-    @Override
     public String getTitle() {
         return getContext().getString(R.string.detail_title_useful);
     }
 
-    // region Presentation
-
-    @Override
-    public void onBind(UsefulInfoContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void onUnbind() {
-        mPresenter = null;
-    }
-
-    @Override
-    public void displayEmail(String email) {
-        emailTextView.setText(email);
-        emailTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public String buildString(int msgId, Object... args) {
-        return getString(msgId, args);
-    }
-
-    @Override
-    public void displayFacebook(String fbPage) {
-        facebookButton.setText(fbPage);
-        facebookButton.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void displayUrl(String url) {
-        urlTextView.setText(url);
-        urlTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void displayDescription(String description) {
-        specificityTextView.setText(description);
-        specificityTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void displayPrices(CharSequence prices) {
-        pricesTextView.setText(prices);
-        pricesTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void displayHours(String hours) {
-        hoursTextView.setText(hours);
-        hoursTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void displayImage(String imgUrl) {
-        Glide.with(this).load(imgUrl).centerCrop().into(imageView);
-        imageView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void informNoFacebookForPlace() {
-        Log.i(TAG, "No facebook url is defined for place");
-    }
-
-    @Override
     public void startFacebookForUrl(String url) {
         Uri uri = Uri.parse(url);
         Log.d(TAG, String.valueOf(uri));
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
-
-    // endregion
 }
