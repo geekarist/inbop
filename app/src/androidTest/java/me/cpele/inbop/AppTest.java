@@ -5,9 +5,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatTextView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeUnit;
 
 import me.cpele.inbop.list.ListActivity;
 
@@ -26,8 +29,13 @@ public class AppTest {
     @Rule
     public ActivityTestRule<ListActivity> activityTestRule = new ActivityTestRule<>(ListActivity.class);
 
+    @Before
+    public void setUp() throws Exception {
+        TimeUnit.SECONDS.sleep(5);
+    }
+
     @Test
-    public void shouldDisplayPlace() {
+    public void shouldDisplayPlace() throws InterruptedException {
 
         String itemToClick = "Antrebloc";
 
