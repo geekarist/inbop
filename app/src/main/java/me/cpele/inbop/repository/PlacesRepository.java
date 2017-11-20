@@ -113,8 +113,4 @@ public class PlacesRepository {
     public LiveData<Place> findPlaceById(String placeId) {
         return mDao.findPlaceById(placeId);
     }
-
-    public Place findPlaceByIdSync(String placeId) {
-        return mDao.findPlaceByIdSync(placeId);
-    }
 }

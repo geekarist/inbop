@@ -25,13 +25,4 @@ public class ListViewModel extends ViewModel {
     public void toggleStar(String id) {
         mModel.toggleStar(id);
     }
-
-//    @Override
-//    public void checkOrientation(boolean landscape) {
-//        if (landscape) {
-//            mView.onSetupForLandscape();
-//        } else {
-//            mView.onSetupForPortrait();
-//        }
-//    }
 }
