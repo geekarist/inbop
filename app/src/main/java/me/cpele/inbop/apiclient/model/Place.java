@@ -6,12 +6,9 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import org.parceler.Parcel;
-
 import java.util.UUID;
 
 @SuppressWarnings({"SameParameterValue", "ConstantConditions", "SimplifiableIfStatement", "UnusedReturnValue"})
-@Parcel
 @Entity
 public class Place {
 

@@ -1,8 +1,5 @@
 package me.cpele.inbop.apiclient.model;
 
-import org.parceler.Parcel;
-
-@Parcel
 public class PlaceHoursByDays {
 
     public String opening;

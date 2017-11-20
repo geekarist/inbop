@@ -2,10 +2,7 @@ package me.cpele.inbop.apiclient.model;
 
 import android.arch.persistence.room.Embedded;
 
-import org.parceler.Parcel;
-
 @SuppressWarnings("SimplifiableIfStatement")
-@Parcel
 public class PlaceHours {
 
     @Embedded(prefix = "weekdays")
