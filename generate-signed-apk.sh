@@ -2,4 +2,4 @@
 
 set -eux
 
-./gradlew clean testProductionReleaseUnitTest publishProductionRelease
+./gradlew clean androidGitVersion testProductionReleaseUnitTest publishProductionRelease
