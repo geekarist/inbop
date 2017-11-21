@@ -19,10 +19,15 @@ static def getPropertyOrEnv(properties, name) {
     return prop
 }
 
+androidGitVersion {
+    codeFormat = 'MMNNPPBB'
+}
+
 //noinspection GroovyMissingReturnStatement
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
+
     defaultConfig {
 
         buildConfigField('String', 'PLACES_API_PATH', '"/geekarist/inbop-api/master/places.json"')
@@ -100,10 +105,6 @@ android {
     lintOptions {
         warning 'InvalidPackage'
         return true
-    }
-
-    androidGitVersion {
-        codeFormat = 'MMNNPPBB'
     }
 }
 
